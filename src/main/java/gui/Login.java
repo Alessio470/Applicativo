@@ -9,6 +9,7 @@ public class Login {
     private JLabel textPassword;
     private JTextField FieldNome;
     private JPasswordField FieldPassword;
+    private JButton button1;
     final int carattere = 20;
 
     private static JFrame frame;
@@ -26,7 +27,7 @@ public class Login {
         frame.setContentPane(new Login().Login);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(400, 250);
+        frame.setSize(625, 270);
         frame.setVisible(true);
     }
 
