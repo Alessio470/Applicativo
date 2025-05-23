@@ -28,7 +28,7 @@ public class Home extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
                 frame.setVisible(false);
-                frame.dispose();
+                frame.dispose(); int a;
             }
         });
     }

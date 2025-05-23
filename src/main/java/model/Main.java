@@ -27,11 +27,16 @@ public class Main {
         // Creazione di un utente generico e prenotazione di un volo
         UtenteGenerico utente = new UtenteGenerico("utente1", "password1");
         UtenteGenerico utente2 = new UtenteGenerico("utente2", "password2");
+
         UtenteGenerico utente3 = new UtenteGenerico("utente3", "password3");
+        UtenteGenerico utente4 = new UtenteGenerico("utente4", "password4");
+
 
         utentiRegistrati.add(utente);
         utentiRegistrati.add(utente2);
         utentiRegistrati.add(utente3);
+        utentiRegistrati.add(utente4);
+
 
 
         Login login = new Login(new Controller(utentiRegistrati));

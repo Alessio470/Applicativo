@@ -47,7 +47,8 @@ public class Login extends JFrame {
                     JOptionPane.showMessageDialog(framelogin, "Login effettuato");
                     JFrame homeFrame = new Home(framelogin,controller);
                     homeFrame.setVisible(true);
-                    framelogin.dispose();
+                    framelogin.dispose(); int t;
+
                 } else {
                     JOptionPane.showMessageDialog(framelogin, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
