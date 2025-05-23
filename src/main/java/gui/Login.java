@@ -16,7 +16,7 @@ public class Login {
         textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
         textNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
         textPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
-        FieldNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
+        FieldNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 29));
         FieldPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
     }
 
