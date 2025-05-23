@@ -37,8 +37,8 @@ public class Login extends JFrame {
 
                 if (Controller.loginValido(username, password)) {
                     JOptionPane.showMessageDialog(framelogin, "Login effettuato");
-                    JFrame homeFrame = new Home(framelogin,);
-                    homeFrame.setVisible(true);
+                    //JFrame homeFrame = new Home(framelogin,);
+                    //homeFrame.setVisible(true);
                     framelogin.dispose();
                 } else {
                     JOptionPane.showMessageDialog(framelogin, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -50,6 +50,7 @@ public class Login extends JFrame {
 
     public static void main(String[] args) {
         framelogin = new JFrame("Home");
+        framelogin.setContentPane(Login);
         framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         framelogin.pack();
         framelogin.setSize(625, 270);
