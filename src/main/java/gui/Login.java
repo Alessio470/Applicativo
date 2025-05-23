@@ -31,7 +31,8 @@ public class Login {
 
                 if (username.equals("a") && password.equals("b")) {
                     JOptionPane.showMessageDialog(frame, "Login effettuato");
-                    //new Home().setVisible(true);
+                    Home home = new Home(frame, username);
+                    home.frame.setVisible(true);
                    frame.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
