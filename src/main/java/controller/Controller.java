@@ -2,18 +2,16 @@ package controller;
 
 import model.*;
 
+import java.util.ArrayList;
+
 
 public class Controller {
-    private String nome;
+    ArrayList<Utente> utentiRegistratiRef;
 
-    public Controller() {
+    public Controller(ArrayList<Utente> utentiRegistrati) {
+this.utentiRegistratiRef = utentiRegistratiRef;
 
     }
-    public Controller(String nome) {
-        this.nome = nome;
-    }
-    public String getNome() {return nome;}
-    public void setNome(String nome) {this.nome = nome;}
 
 
     public static boolean loginValido(String username, String password) {

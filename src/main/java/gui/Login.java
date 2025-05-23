@@ -1,6 +1,6 @@
 package gui;
 
-import controller.*;
+import controller.Controller;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,9 +16,13 @@ public class Login extends JFrame {
     private JButton buttonLogin;
     final int carattere = 20;
 
+    private Controller controller;
+
     private static JFrame framelogin;
 
-    public Login(){
+    public Login(Controller controller){
+        this.controller = controller;
+
         textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
         textNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
         textPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
@@ -31,9 +35,9 @@ public class Login extends JFrame {
                 String username = FieldNome.getText();
                 String password = new String(FieldPassword.getPassword());
 
-                if () {
+                if (Controller.loginValido(username, password)) {
                     JOptionPane.showMessageDialog(framelogin, "Login effettuato");
-                    JFrame homeFrame = new Home(framelogin,new Controller(username));
+                    JFrame homeFrame = new Home(framelogin,);
                     homeFrame.setVisible(true);
                     framelogin.dispose();
                 } else {
@@ -46,7 +50,6 @@ public class Login extends JFrame {
 
     public static void main(String[] args) {
         framelogin = new JFrame("Home");
-        framelogin.setContentPane(new Login().Login);
         framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         framelogin.pack();
         framelogin.setSize(625, 270);
