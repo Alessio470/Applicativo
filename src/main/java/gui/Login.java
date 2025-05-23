@@ -9,15 +9,16 @@ public class Login {
     private JLabel textPassword;
     private JTextField FieldNome;
     private JPasswordField FieldPassword;
+    final int carattere = 20;
 
     private static JFrame frame;
 
     public Login(){
-        textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
-        textNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
-        textPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
-        FieldNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 29));
-        FieldPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 30));
+        textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
+        textNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
+        textPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
+        FieldNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
+        FieldPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
     }
 
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Login {
         frame.setContentPane(new Login().Login);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(800, 600);
+        frame.setSize(400, 250);
         frame.setVisible(true);
     }
 
