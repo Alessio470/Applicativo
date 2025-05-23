@@ -1,14 +1,13 @@
 package model;
 
 public class Gate {
-    private int numeroGate;
+    private String numeroGate;
 
-    //Costruttore
-    public Gate(int numeroGate) {
-        this.numeroGate = numeroGate;
+    public Gate(int numero) {
+        this.numeroGate = String.valueOf(numero);
     }
 
-    public int getNumeroGate() {
+    public String getNumeroGate() {
         return numeroGate;
     }
 }

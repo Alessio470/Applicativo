@@ -1,10 +1,11 @@
 package model;
+
 import model.enums.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        // Creazione di un volo in partenza da Napoli, usando solo stringhe per data, orario e ritardo
+        // Creazione di un volo in partenza da Napoli
         VoloPartenzaDaNapoli volo1 = new VoloPartenzaDaNapoli("NAP123", "ITA Airways", "2025-04-22", "14:30", "0 minuti", StatoVolo.programmato, "Roma Fiumicino");
 
         // Creazione di un gate

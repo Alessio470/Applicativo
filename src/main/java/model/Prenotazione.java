@@ -1,5 +1,6 @@
 package model;
-import model.enums.*;
+
+import model.enums.StatoPrenotazione;
 
 public class Prenotazione {
     private String numeroBiglietto;
@@ -7,11 +8,10 @@ public class Prenotazione {
     private String nomePasseggero;
     private String cognomePasseggero;
     private String numeroPosto;
-    // Stato attuale della prenotazione (confermata, in attesa, cancellata).
     private StatoPrenotazione statoPrenotazione;
     private Volo volo;
 
-    //Costruttore
+    // Costruttore
     public Prenotazione(String numeroBiglietto, String codiceFiscalePasseggero, String nomePasseggero, String cognomePasseggero, String numeroPosto, StatoPrenotazione statoPrenotazione, Volo volo) {
         this.numeroBiglietto = numeroBiglietto;
         this.codiceFiscalePasseggero = codiceFiscalePasseggero;
@@ -22,17 +22,21 @@ public class Prenotazione {
         this.volo = volo;
     }
 
-    //Restituisce il numero del biglietto della prenotazione.
     public String getNumeroBiglietto() {
         return numeroBiglietto;
     }
 
-    //Restituisce il nome del passeggero associato alla prenotazione.
     public String getNomePasseggero() {
         return nomePasseggero;
     }
 
-    public String visualizzaBiglietto() {
-        return nomePasseggero + " " + cognomePasseggero + " - Biglietto: " + numeroBiglietto;
+    // Metodo per visualizzare le informazioni del biglietto
+    public void visualizzaBiglietto() {
+        System.out.println("Biglietto: " + numeroBiglietto + ", Passeggero: " + nomePasseggero + " " + cognomePasseggero);
+    }
+
+    @Override
+    public String toString() {
+        return "Prenotazione: " + numeroBiglietto + ", Passeggero: " + nomePasseggero + " " + cognomePasseggero + ", Posto: " + numeroPosto + ", Stato: " + statoPrenotazione;
     }
 }

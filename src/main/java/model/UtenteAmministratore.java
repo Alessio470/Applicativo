@@ -1,27 +1,29 @@
 package model;
 
 public class UtenteAmministratore extends Utente {
-
-    //Costruttore, username e password ereditati dalla superclasse Utente.
     public UtenteAmministratore(String username, String password) {
         super(username, password);
     }
 
-    //Metodo per inserire un nuovo volo nel sistema
-    public void inserisciVolo(Volo volo) {
-        System.out.println("Volo inserito: " + volo.getCodiceVolo());
-        //TODO
+    //TODO
+    @Override
+    public void visualizzaVoli() {
+        System.out.println("Visualizzazione voli per amministratore.");
     }
 
-    //Metodo per aggiornare le informazioni di un volo esistente
-    public void aggiornaVolo(Volo volo) {
-        System.out.println("Volo aggiornato: " + volo.getCodiceVolo());
-        //TODO
+    //TODO
+    public void inserisciVolo() {
+        System.out.println("Inserimento nuovo volo.");
     }
 
-    //Metodo per modificare l'assegnazione del gate a un volo in partenza da Napoli
-    public void modificaGate(VoloPartenzaDaNapoli volo, Gate nuovoGate) {
-        volo.setGate(nuovoGate);
-        System.out.println("Gate modificato per volo: " + volo.getCodiceVolo());
+    //TODO
+    public void aggiornaVolo() {
+        System.out.println("Aggiornamento volo effettuato.");
+    }
+
+    // Metodo per modificare il gate di imbarco del volo
+    public void modificaGate(VoloPartenzaDaNapoli volo, Gate gate) {
+        volo.setGate(gate);
+        System.out.println("Gate modificato: " + gate.getNumeroGate());
     }
 }

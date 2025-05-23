@@ -1,5 +1,6 @@
 package model;
-import model.enums.*;
+
+import model.enums.StatoVolo;
 
 public abstract class Volo {
     protected String codiceVolo;
@@ -7,10 +8,9 @@ public abstract class Volo {
     protected String dataVolo;
     protected String orarioPrevisto;
     protected String ritardo;
-    //Stato corrente del volo (programmato, decollato, in ritardo, atterrato, cancellato).
     protected StatoVolo stato;
 
-    //Costruttore
+    // Costruttore
     public Volo(String codiceVolo, String compagniaAerea, String dataVolo, String orarioPrevisto, String ritardo, StatoVolo stato) {
         this.codiceVolo = codiceVolo;
         this.compagniaAerea = compagniaAerea;
