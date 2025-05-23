@@ -1,17 +1,19 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Home {
+public class Home extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
     private JPanel contentPane;
 
     public JFrame frame;
 
-    public Home(JFrame frameChiamante, String nomeInserito) {
+    public Home(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Home");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,7 +21,7 @@ public class Home {
         frame.setVisible(true);
         frame.setSize(625,270);
 
-        textBenvenuto.setText("Benvenuto " + nomeInserito);
+        textBenvenuto.setText("Benvenuto " + controller.getNome());
 
         buttonExit.addActionListener(new ActionListener() {
             @Override

@@ -1,10 +1,12 @@
 package gui;
 
+import controller.*;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login {
+public class Login extends JFrame {
     private JPanel Login;
     private JLabel textLogin;
     private JLabel textNome;
@@ -14,7 +16,7 @@ public class Login {
     private JButton buttonLogin;
     final int carattere = 20;
 
-    private static JFrame frame;
+    private static JFrame framelogin;
 
     public Login(){
         textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
@@ -29,13 +31,13 @@ public class Login {
                 String username = FieldNome.getText();
                 String password = new String(FieldPassword.getPassword());
 
-                if (username.equals("a") && password.equals("b")) {
-                    JOptionPane.showMessageDialog(frame, "Login effettuato");
-                    Home home = new Home(frame, username);
-                    home.frame.setVisible(true);
-                   frame.setVisible(false);
+                if () {
+                    JOptionPane.showMessageDialog(framelogin, "Login effettuato");
+                    JFrame homeFrame = new Home(framelogin,new Controller(username));
+                    homeFrame.setVisible(true);
+                    framelogin.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(framelogin, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -43,12 +45,12 @@ public class Login {
     }
 
     public static void main(String[] args) {
-        frame = new JFrame("Home");
-        frame.setContentPane(new Login().Login);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(625, 270);
-        frame.setVisible(true);
+        framelogin = new JFrame("Home");
+        framelogin.setContentPane(new Login().Login);
+        framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        framelogin.pack();
+        framelogin.setSize(625, 270);
+        framelogin.setVisible(true);
     }
 
 
