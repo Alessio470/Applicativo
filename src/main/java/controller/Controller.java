@@ -1,34 +1,27 @@
 package controller;
 
-import model.*;
-
+import model.Utente;
 import java.util.ArrayList;
 
-
 public class Controller {
-    ArrayList<Utente> utentiRegistratiRef;
-    String username;
+    private ArrayList<Utente> utentiRegistratiRef;
+    private String username;
 
     public Controller(ArrayList<Utente> utentiRegistrati) {
-this.utentiRegistratiRef = utentiRegistratiRef;
-
+        this.utentiRegistratiRef = utentiRegistrati;
     }
 
-    public String getUsername() {return username;}
-
-
-    public static boolean loginValido(String username, String password) {
-            for (Utente u : utentiRegistratiRef) {
-                if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
-                    this.username=username;
-                    return true;
-                }
+    public boolean loginValido(String username, String password) {
+        for (Utente u : utentiRegistratiRef) {
+            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                this.username = username; // salva l'utente che ha fatto login
+                return true;
             }
-            return false;
         }
-
-
+        return false;
     }
 
-
-
+    public String getUsername() {
+        return username;
+    }
+}

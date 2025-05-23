@@ -43,7 +43,7 @@ public class Login extends JFrame {
                 String username = FieldNome.getText();
                 String password = new String(FieldPassword.getPassword());
 
-                if (Controller.loginValido(username, password)) {
+                if (controller.loginValido(username, password)) {
                     JOptionPane.showMessageDialog(framelogin, "Login effettuato");
                     JFrame homeFrame = new Home(framelogin,controller);
                     homeFrame.setVisible(true);
