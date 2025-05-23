@@ -16,12 +16,20 @@ public class Login extends JFrame {
     private JButton buttonLogin;
     final int carattere = 20;
 
+
     private Controller controller;
 
     private static JFrame framelogin;
 
     public Login(Controller controller){
         this.controller = controller;
+
+        framelogin = new JFrame("Home");
+        framelogin.setContentPane(Login);
+        framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        framelogin.pack();
+        framelogin.setSize(625, 270);
+        framelogin.setVisible(true);
 
         textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
         textNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
@@ -48,14 +56,6 @@ public class Login extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        framelogin = new JFrame("Home");
-        framelogin.setContentPane(Login);
-        framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        framelogin.pack();
-        framelogin.setSize(625, 270);
-        framelogin.setVisible(true);
-    }
 
 
 }

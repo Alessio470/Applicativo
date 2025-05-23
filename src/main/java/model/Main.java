@@ -33,7 +33,9 @@ public class Main {
         utentiRegistrati.add(utente2);
         utentiRegistrati.add(utente3);
 
+
         Login login = new Login(new Controller(utentiRegistrati));
+
         login.setVisible(true);
 
 
