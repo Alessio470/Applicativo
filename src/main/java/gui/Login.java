@@ -24,7 +24,7 @@ public class Login extends JFrame {
     public Login(Controller controller){
         this.controller = controller;
 
-        framelogin = new JFrame("Home");
+        framelogin = new JFrame("Login");
         framelogin.setContentPane(Login);
         framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         framelogin.pack();
@@ -45,8 +45,8 @@ public class Login extends JFrame {
 
                 if (Controller.loginValido(username, password)) {
                     JOptionPane.showMessageDialog(framelogin, "Login effettuato");
-                    //JFrame homeFrame = new Home(framelogin,);
-                    //homeFrame.setVisible(true);
+                    JFrame homeFrame = new Home(framelogin,controller);
+                    homeFrame.setVisible(true);
                     framelogin.dispose();
                 } else {
                     JOptionPane.showMessageDialog(framelogin, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);

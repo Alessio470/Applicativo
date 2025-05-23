@@ -35,6 +35,8 @@ public class UtenteGenerico extends Utente {
         return null;
     }
 
+    public String getUsername() {return username;}
+    public String getPassword() {return password;}
 
     // Metodo per visualizzare tutte le prenotazioni effettuate dall'utente
     public void visualizzaPrenotazioni() {

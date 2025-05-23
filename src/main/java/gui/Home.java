@@ -21,7 +21,7 @@ public class Home extends JFrame {
         frame.setVisible(true);
         frame.setSize(625,270);
 
-       // textBenvenuto.setText("Benvenuto " + controller.getNome());
+       textBenvenuto.setText("Benvenuto " + controller.getUsername());
 
         buttonExit.addActionListener(new ActionListener() {
             @Override

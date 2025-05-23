@@ -12,4 +12,6 @@ public class Utente {
     public void visualizzaVoli() {
         System.out.println("Visualizzazione voli disponibile.");
     }
+    public String getUsername() {return username;}
+    public String getPassword() {return password;}
 }
