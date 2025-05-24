@@ -26,7 +26,7 @@ public class Home extends JFrame {
         DefaultListModel<String> model = new DefaultListModel<>();
 
         for (Prenotazione p : controller.getPrenotazioniUtenteGenerico()) {
-            model.addElement(p.toString());  // o qualsiasi info tu voglia mostrare
+            model.addElement(p.);  // o qualsiasi info tu voglia mostrare
         }
 
         listPrenotazioni.setModel(model);
