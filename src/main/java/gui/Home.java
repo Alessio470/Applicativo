@@ -9,7 +9,8 @@ import java.awt.event.ActionListener;
 public class Home extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
-    private JPanel contentPane;int i;
+    private JPanel contentPane;
+    private JList listPrenotazioni;
 
     public JFrame frame;
 
