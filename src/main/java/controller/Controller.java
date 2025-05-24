@@ -8,7 +8,7 @@ public class Controller {
     private String username;
 
     public Controller(ArrayList<Utente> utentiRegistrati) {
-        this.utentiRegistratiRef = utentiRegistrati;
+        this.utentiRegistratiRef = utentiRegistrati;int i;
     }
 
     public boolean loginValido(String username, String password) {

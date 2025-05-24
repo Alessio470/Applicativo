@@ -22,7 +22,7 @@ public class Login extends JFrame {
     private static JFrame framelogin;
 
     public Login(Controller controller){
-        this.controller = controller;
+        this.controller = controller;int t;
 
         framelogin = new JFrame("Login");
         framelogin.setContentPane(login);

@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
+        ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();int t;
 
         // Creazione di un volo in partenza da Napoli
         VoloPartenzaDaNapoli volo1 = new VoloPartenzaDaNapoli("NAP123", "ITA Airways", "2025-04-22", "14:30", "0 minuti", StatoVolo.programmato, "Roma Fiumicino");

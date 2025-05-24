@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class Home extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
-    private JPanel contentPane;
+    private JPanel contentPane;int i;
 
     public JFrame frame;
 
