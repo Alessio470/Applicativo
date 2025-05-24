@@ -7,12 +7,10 @@ import model.enums.*;
 import java.util.ArrayList;
 
 public class Main {
-    public static ArrayList<Utente> utentiRegistrati;
 
     public static void main(String[] args) {
 
         ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
-
 
         // Creazione di un volo in partenza da Napoli
         VoloPartenzaDaNapoli volo1 = new VoloPartenzaDaNapoli("NAP123", "ITA Airways", "2025-04-22", "14:30", "0 minuti", StatoVolo.programmato, "Roma Fiumicino");
