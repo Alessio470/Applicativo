@@ -9,9 +9,13 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
+
+
         ArrayList<Volo> voli = new ArrayList();
+
         Volo volo1 = new VoloPartenzaDaNapoli("aaa", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
         Volo volo2 = new VoloPartenzaDaNapoli("bbb", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
+
         voli.add(volo1);
         voli.add(volo2);
 
@@ -38,18 +42,17 @@ public class Main {
         utentiRegistrati.add(admin);
         utentiRegistrati.add(admin2);
 
+        Prenotazione prenotazione = new Prenotazione("TCK123", "RSSMRA00A01H501Z", "Mario", "Rossi", "12A", StatoPrenotazione.confermata, volo1);
+
+        // Effettuazione della prenotazione e visualizzazione
+        for(int i = 0; i < 20; i++){
+        utente.prenotaVolo(volo1, prenotazione);}
+
+        //utente.visualizzaPrenotazioni();
 
 
         Login login = new Login(new Controller(utentiRegistrati, voli));
 
         login.setVisible(true);
-
-
-        Prenotazione prenotazione = new Prenotazione("TCK123", "RSSMRA00A01H501Z", "Mario", "Rossi", "12A", StatoPrenotazione.confermata, volo1);
-
-
-        // Effettuazione della prenotazione e visualizzazione
-        utente.prenotaVolo(volo1, prenotazione);
-        utente.visualizzaPrenotazioni();
     }
 }

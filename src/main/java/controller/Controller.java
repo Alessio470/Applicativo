@@ -45,17 +45,16 @@ public class Controller {
     public String getUsernameGenerico(){
         return utenteLoggin.getUsername();
     }
-    /*
 
     public List<Prenotazione> getPrenotazioniUtenteGenerico() {
         if (utenteLoggin != null) {
-            return utenteLoggin.getPrenotazioni();
+            return utenteLoggin.getPrenotazioniL();
         } else {
             return new ArrayList<>();
         }
     }
 
-     */
+
 
     public void aggiungiVolo(Volo volo) {
         VoliRef.add(volo);

@@ -29,11 +29,22 @@ public class Prenotazione {
     public String getNomePasseggero() {
         return nomePasseggero;
     }
+    public String getCodiceFiscalePasseggero() {return codiceFiscalePasseggero; }
+
+    public String getCognomePasseggero() { return cognomePasseggero; }
+
+    public String getNumeroPosto() { return numeroPosto; }
+
+    public StatoPrenotazione getStatoPrenotazione() { return statoPrenotazione; }
+
+    public Volo getVolo() { return volo; }
+
 
     // Metodo per visualizzare le informazioni del biglietto
     public void visualizzaBiglietto() {
         System.out.println("Biglietto: " + numeroBiglietto + ", Passeggero: " + nomePasseggero + " " + cognomePasseggero);
     }
+
 
     @Override
     public String toString() {

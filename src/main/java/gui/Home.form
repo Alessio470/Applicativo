@@ -39,7 +39,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="fe887" class="javax.swing.JList" binding="listPrenotazioni">
+                  <component id="4a2c7" class="javax.swing.JTable" binding="tablePrenotazioni">
                     <constraints/>
                     <properties/>
                   </component>

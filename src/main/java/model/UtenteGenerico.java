@@ -16,7 +16,7 @@ public class UtenteGenerico extends Utente {
     // Metodo per effettuare una nuova prenotazione
     public void prenotaVolo(Volo volo, Prenotazione prenotazione) {
         prenotazioni.add(prenotazione);
-        System.out.println("Prenotazione effettuata per volo " + volo.getCodiceVolo());
+        //System.out.println("Prenotazione effettuata per volo " + volo.getCodiceVolo());
     }
 
     // Metodo per simulare la modifica di una prenotazione esistente
