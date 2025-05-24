@@ -1,10 +1,11 @@
 package gui;
 
 import controller.Controller;
-import model.VoloPartenzaDaNapoli;
-import model.enums.StatoVolo;
+
+import model.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,16 +28,39 @@ public class HomepageAmministratore extends JFrame {
         setSize(625, 400);
         setVisible(true);
 
+        String[] colonne = {
+                "Codice Volo", "Compagnia", "Data", "Orario Previsto", "Ritardo", "Stato"
+        };
+
         labelBenvenuto.setText("Benvenuto " + controller.getUsernameAdmin());
+
+        DefaultTableModel model = new DefaultTableModel(colonne, 0);
+
+        // Popola il modello con i dati dei voli
+        for (Volo v : controller.getVoli()) {
+            Object[] riga = {
+                    v.getCodiceVolo(),
+                    v.getCompagniaAerea(),
+                    v.getDataVolo(),
+                    v.getOrarioPrevisto(),
+                    v.getRitardo(),
+                    (v.getStato() != null ? v.getStato().toString() : "N/A")
+            };
+            model.addRow(riga);
+        }
+
+// Imposta il modello alla JTable
+        table1.setModel(model);
 
         buttonInserisciVolo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VoloPartenzaDaNapoli nuovoVolo = new VoloPartenzaDaNapoli(
-                        "NAP999", "Lufthansa", "2025-05-10", "18:00", "0 minuti",
-                        StatoVolo.programmato, "Milano Linate"
+                // Creazione manuale di un nuovo volo (esempio statico)
+                //TODO controller che chiama un altra mini gui con inserisci dati
+                // VoloPartenzaDaNapoli nuovoVolo =
                 );
-                controller.aggiungiVolo(nuovoVolo);
+
+                //controller.aggiungiVolo(nuovoVolo);
                 JOptionPane.showMessageDialog(HomepageAmministratore.this, "Volo inserito con successo.");
             }
         });
