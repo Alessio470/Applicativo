@@ -44,4 +44,8 @@ public class UtenteGenerico extends Utente {
             System.out.println(p);
         }
     }
+
+    public List<Prenotazione> getPrenotazioniL() {
+        return this.prenotazioni;
+    }
 }

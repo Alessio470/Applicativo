@@ -16,13 +16,11 @@ public class Login extends JFrame {
     private JButton buttonLogin;
     final int carattere = 20;
 
-
     private Controller controller;
-
     private static JFrame framelogin;
 
-    public Login(Controller controller){
-        this.controller = controller;int t;
+    public Login(Controller controller) {
+        this.controller = controller;
 
         framelogin = new JFrame("Login");
         framelogin.setContentPane(login);
@@ -45,18 +43,23 @@ public class Login extends JFrame {
 
                 if (controller.loginValido(username, password)) {
                     JOptionPane.showMessageDialog(framelogin, "Login effettuato");
-                    JFrame homeFrame = new Home(framelogin,controller);
-                    homeFrame.setVisible(true);
-                    framelogin.dispose();
-
+                    switch (controller.userType()) {
+                        case "Generico":
+                            JFrame homeFrame = new Home(framelogin, controller);
+                            homeFrame.setVisible(true);
+                            framelogin.dispose();
+                            break;
+                        case "Admin":
+                            // TODO gui admin
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(framelogin, "Tipo utente sconosciuto");
+                            break;
+                    }
                 } else {
                     JOptionPane.showMessageDialog(framelogin, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         });
     }
-
-
-
 }

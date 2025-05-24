@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();int t;int i;
+        ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
 
 
         // Creazione di un volo in partenza da Napoli
