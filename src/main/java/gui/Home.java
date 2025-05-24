@@ -10,6 +10,7 @@ public class Home extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
     private JPanel contentPane;
+    private JList listPrenotazioni;
 
     public JFrame frame;
 
@@ -28,7 +29,7 @@ public class Home extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
                 frame.setVisible(false);
-                frame.dispose(); int a;
+                frame.dispose();
             }
         });
     }

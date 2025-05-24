@@ -7,7 +7,6 @@ import model.enums.*;
 import java.util.ArrayList;
 
 public class Main {
-    public static ArrayList<Utente> utentiRegistrati;
 
     public static void main(String[] args) {
 
