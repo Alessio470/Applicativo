@@ -50,7 +50,9 @@ public class Login extends JFrame {
                             framelogin.dispose();
                             break;
                         case "Admin":
-                            // TODO gui admin
+                            JFrame homeAdmin = new HomepageAmministratore(framelogin, controller);
+                            homeAdmin.setVisible(true);
+                            framelogin.dispose();
                             break;
                         default:
                             JOptionPane.showMessageDialog(framelogin, "Tipo utente sconosciuto");

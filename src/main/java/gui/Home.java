@@ -21,13 +21,16 @@ public class Home extends JFrame {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(625,270);
-       textBenvenuto.setText("Benvenuto " + controller.getUsernameGenerico());
+        textBenvenuto.setText("Benvenuto " + controller.getUsernameGenerico());
 
         DefaultListModel<String> model = new DefaultListModel<>();
 
+        /*
         for (Prenotazione p : controller.getPrenotazioniUtenteGenerico()) {
             model.addElement(p.);  // o qualsiasi info tu voglia mostrare
         }
+
+         */
 
         listPrenotazioni.setModel(model);
 

@@ -9,19 +9,16 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
+        ArrayList<Volo> voli = new ArrayList();
+        Volo volo1 = new VoloPartenzaDaNapoli("aaa", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
+        Volo volo2 = new VoloPartenzaDaNapoli("bbb", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
+        voli.add(volo1);
+        voli.add(volo2);
 
         ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
 
-
-        // Creazione di un volo in partenza da Napoli
-        VoloPartenzaDaNapoli volo1 = new VoloPartenzaDaNapoli("NAP123", "ITA Airways", "2025-04-22", "14:30", "0 minuti", StatoVolo.programmato, "Roma Fiumicino");
-
-        // Creazione di un gate
-        Gate gate5 = new Gate(5);
-
         // Creazione di un amministratore e modifica del gate del volo
-        UtenteAmministratore admin = new UtenteAmministratore("admin", "password");
-        admin.modificaGate(volo1, gate5);
+        //admin.modificaGate(volo1, gate5);
 
         // Creazione di un utente generico e prenotazione di un volo
         UtenteGenerico utente = new UtenteGenerico("utente1", "password1");
@@ -30,15 +27,20 @@ public class Main {
         UtenteGenerico utente3 = new UtenteGenerico("utente3", "password3");
         UtenteGenerico utente4 = new UtenteGenerico("utente4", "password4");
 
+        UtenteAmministratore admin = new UtenteAmministratore("admin1", "password1");
+        UtenteAmministratore admin2 = new UtenteAmministratore("admin2", "password2");
+
 
         utentiRegistrati.add(utente);
         utentiRegistrati.add(utente2);
         utentiRegistrati.add(utente3);
         utentiRegistrati.add(utente4);
+        utentiRegistrati.add(admin);
+        utentiRegistrati.add(admin2);
 
 
 
-        Login login = new Login(new Controller(utentiRegistrati));
+        Login login = new Login(new Controller(utentiRegistrati, voli));
 
         login.setVisible(true);
 

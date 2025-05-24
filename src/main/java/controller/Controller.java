@@ -1,21 +1,21 @@
 package controller;
 
-import model.Prenotazione;
-import model.Utente;
-import model.UtenteAmministratore;
-import model.UtenteGenerico;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
     private ArrayList<Utente> utentiRegistratiRef;
+    private ArrayList<Volo> VoliRef;
+
     private String username;
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
 
-    public Controller(ArrayList<Utente> utentiRegistrati) {
+    public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> Voli) {
         this.utentiRegistratiRef = utentiRegistrati;
+        this.VoliRef = Voli;
     }
 
     public boolean loginValido(String username, String password) {
@@ -45,6 +45,7 @@ public class Controller {
     public String getUsernameGenerico(){
         return utenteLoggin.getUsername();
     }
+    /*
 
     public List<Prenotazione> getPrenotazioniUtenteGenerico() {
         if (utenteLoggin != null) {
@@ -54,6 +55,15 @@ public class Controller {
         }
     }
 
+     */
+
+    public void aggiungiVolo(Volo volo) {
+        VoliRef.add(volo);
+    }
+
+    public ArrayList<Volo> getVoli() {
+        return VoliRef;
+    }
 
 
 }
