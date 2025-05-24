@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,30 @@ public class Controller {
     public ArrayList<Volo> getVoli() {
         return VoliRef;
     }
+
+    public void aggiornaTabella() {
+        String[] colonne = {
+                "Codice Volo", "Compagnia Aerea", "Data Volo",
+                "Orario Previsto", "Ritardo", "Stato"
+        };
+
+        DefaultTableModel model = new DefaultTableModel(colonne, 0);
+
+        for (Volo v : controller.getVoli()) { // Presumo che ritorni anche VoloPartenzaDaNapoli
+            Object[] riga = {
+                    v.getCodiceVolo(), // Sta roba non funziona
+                    v.getCompagniaAerea(),
+                    v.getDataVolo(),
+                    v.getOrarioPrevisto(),
+                    v.getRitardo(),
+                    v.getStato().toString()
+            };
+            model.addRow(riga);
+        }
+
+        table1.setModel(model);
+    }
+
 
 
 }

@@ -2,6 +2,8 @@ package gui;
 
 import controller.Controller;
 
+import gui.*;
+import gui.addVoli.addVoli;
 import model.*;
 
 import javax.swing.*;
@@ -55,13 +57,9 @@ public class HomepageAmministratore extends JFrame {
         buttonInserisciVolo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Creazione manuale di un nuovo volo (esempio statico)
-                //TODO controller che chiama un altra mini gui con inserisci dati
-                // VoloPartenzaDaNapoli nuovoVolo =
-                );
-
-                //controller.aggiungiVolo(nuovoVolo);
-                JOptionPane.showMessageDialog(HomepageAmministratore.this, "Volo inserito con successo.");
+                JFrame addVoloFrame = new addVoli(controller, HomepageAmministratore.this);
+                addVoloFrame.setVisible(true);
+                HomepageAmministratore.this.setVisible(false);
             }
         });
 
