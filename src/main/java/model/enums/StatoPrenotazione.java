@@ -1,5 +1,5 @@
 package model.enums;
 
 public enum StatoPrenotazione {
-    confermata, inAttesa, cancellata
+    CONFERMATA,IN_ATTESA,CANCELLATA
 }

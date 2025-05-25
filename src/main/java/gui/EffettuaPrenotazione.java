@@ -73,7 +73,7 @@ public class EffettuaPrenotazione extends JFrame {
                     nome,
                     cognome,
                     numeroPosto,
-                    StatoPrenotazione.confermata,
+                    StatoPrenotazione.CONFERMATA,
                     volo
             );
 
