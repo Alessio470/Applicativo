@@ -57,5 +57,6 @@ public class Main {
         Login login = new Login(new Controller(utentiRegistrati,voli));
 
         login.setVisible(true);
+
     }
 }

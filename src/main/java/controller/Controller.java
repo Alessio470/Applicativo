@@ -11,7 +11,7 @@ public class Controller {
     private ArrayList<Utente> utentiRegistratiRef;
     private ArrayList<Volo> voliRegistratiRef;
 
-    private String username;
+
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
 
@@ -89,7 +89,7 @@ public class Controller {
         return voliReturn;
     }
 
-    public void aggiornaVolo(String username, Volo nuovoVolo) {
+    public void aggiornaVolo(Volo nuovoVolo) {
         if(utenteAmministratore != null){
             utenteAmministratore.inserisciVolo(nuovoVolo);
         }
