@@ -12,8 +12,11 @@ public class PrenotazioniUtente extends JFrame {
     private JTable table1;
     private JButton buttonTornaIndietro;
     private JLabel labelTesto;
+private Controller controller;
 
     public PrenotazioniUtente(Controller controller, JFrame frameChiamante) {
+        this.controller = controller;
+
         setTitle("Le tue prenotazioni");
         setContentPane(contentPane);
         setSize(800, 400);
