@@ -5,6 +5,7 @@ import model.Volo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class HomeUtenteGenerico extends JFrame {
     private JLabel textBenvenuto;
@@ -28,7 +29,7 @@ public class HomeUtenteGenerico extends JFrame {
 
         textBenvenuto.setText("Benvenuto " + controller.getUsernameGenerico());
 
-        aggiornaTabellaVoli();
+        aggiornaTabella();
 
         buttonExit.addActionListener(e -> {
             frameChiamante.setVisible(true);
@@ -50,22 +51,10 @@ public class HomeUtenteGenerico extends JFrame {
 
     }
 
-    private void aggiornaTabellaVoli() {
-        String[] colonne = {"Codice", "Compagnia", "Data", "Orario", "Ritardo", "Stato"};
-
-        DefaultTableModel model = new DefaultTableModel(colonne, 0);
-
-        for (Volo v : controller.getVoliAUtente()) {
-            model.addRow(new Object[]{
-                    v.getCodiceVolo(),
-                    v.getCompagniaAerea(),
-                    v.getDataVolo(),
-                    v.getOrarioPrevisto(),
-                    v.getRitardo(),
-                    v.getStato()
-            });
-        }
-
-        tableVoliGenerali.setModel(model);
+    public void aggiornaTabella() {
+        ModelloTabellaVoli modello = new ModelloTabellaVoli();
+        ArrayList<Volo> listaVoli = controller.getVoli();
+        modello.settaVoliDaMostrare(listaVoli);
+        tableVoliGenerali.setModel(modello);
     }
 }

@@ -1,11 +1,13 @@
 package gui;
 
 import controller.Controller;
+import model.Volo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class HomepageAmministratore extends JFrame {
     private JLabel labelBenvenuto;
@@ -57,7 +59,9 @@ public class HomepageAmministratore extends JFrame {
     }
 
     public void aggiornaTabella() {
-        DefaultTableModel model = controller.getModelloTabellaVoli();
-        table1.setModel(model);
+        ModelloTabellaVoli modello = new ModelloTabellaVoli();
+        ArrayList<Volo> listaVoli = controller.getVoli();
+        modello.settaVoliDaMostrare(listaVoli);
+        table1.setModel(modello);
     }
 }

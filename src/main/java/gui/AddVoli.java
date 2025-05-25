@@ -84,6 +84,7 @@ public class AddVoli extends JFrame {
                 }
             }
         });
+
         buttonIndietro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
