@@ -28,6 +28,7 @@ public class AddVoli extends JFrame {
     private JRadioButton inRitardoRadioButton;
     private JRadioButton atterratoRadioButton;
     private JRadioButton cancellatoRadioButton;
+    private JButton buttonIndietro;
 
     private Controller controller;
     private JFrame frameChiamante;
@@ -81,6 +82,13 @@ public class AddVoli extends JFrame {
                 if (frameChiamante instanceof HomepageAmministratore) {
                     ((HomepageAmministratore) frameChiamante).aggiornaTabella();
                 }
+            }
+        });
+        buttonIndietro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                dispose();
             }
         });
     }

@@ -1,67 +1,71 @@
 package gui;
 
 import controller.Controller;
-import model.*;
-
+import model.Volo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class HomeUtenteGenerico extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
     private JPanel contentPane;
-    private JTable tablePrenotazioni;
-    private JList listPrenotazioni;
+    private JTable tableVoliGenerali;
+    private JButton buttonVisualizzaVoliPrenotati;
+    private JButton buttonEffettuaPrenotazione;
 
-    public JFrame frame;
+    private JFrame frame;
+    private Controller controller;
 
     public HomeUtenteGenerico(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Home");
+        this.controller = controller;
+        this.frame = new JFrame("Home");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(625, 270);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setSize(625,270);
+
         textBenvenuto.setText("Benvenuto " + controller.getUsernameGenerico());
 
-        // Definizione delle colonne della tabella
-        String[] colonne = {
-                "Biglietto", "Nome", "Cognome", "Codice Fiscale",
-                "Posto", "Stato", "Codice Volo"
-        };
+        aggiornaTabellaVoli();
 
-        // Modello della tabella
+        buttonExit.addActionListener(e -> {
+            frameChiamante.setVisible(true);
+            frame.dispose();
+        });
+
+        buttonVisualizzaVoliPrenotati.addActionListener(e -> {
+            JFrame prenotazioniFrame = new PrenotazioniUtente(controller, frame);
+            prenotazioniFrame.setVisible(true);
+            frame.setVisible(false);
+        });
+
+        buttonEffettuaPrenotazione.addActionListener(e -> {
+            JFrame finestraPrenota = new EffettuaPrenotazione(controller, frame);
+            finestraPrenota.setVisible(true);
+            frame.setVisible(false);
+        });
+
+
+    }
+
+    private void aggiornaTabellaVoli() {
+        String[] colonne = {"Codice", "Compagnia", "Data", "Orario", "Ritardo", "Stato"};
+
         DefaultTableModel model = new DefaultTableModel(colonne, 0);
 
-        for (Prenotazione p : controller.getPrenotazioniUtenteGenerico()) {
-            Volo v = p.getVolo(); // Prendi il volo associato alla prenotazione
-
-            Object[] riga = {
-                    p.getNumeroBiglietto(),
-                    p.getNomePasseggero(),
-                    p.getCognomePasseggero(),
-                    p.getCodiceFiscalePasseggero(),
-                    p.getNumeroPosto(),
-                    p.getStatoPrenotazione().toString(),
-                    (v != null ? v.getCodiceVolo() : "N/A")
-            };
-
-            model.addRow(riga);
+        for (Volo v : controller.getVoli()) {
+            model.addRow(new Object[]{
+                    v.getCodiceVolo(),
+                    v.getCompagniaAerea(),
+                    v.getDataVolo(),
+                    v.getOrarioPrevisto(),
+                    v.getRitardo(),
+                    v.getStato()
+            });
         }
 
-        tablePrenotazioni.setModel(model);
-
-
-        buttonExit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
-                frame.setVisible(false);
-                frame.dispose();
-            }
-        });
+        tableVoliGenerali.setModel(model);
     }
 }

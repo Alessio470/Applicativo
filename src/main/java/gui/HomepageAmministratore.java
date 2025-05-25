@@ -1,8 +1,6 @@
 package gui;
 
 import controller.Controller;
-import gui.AddVoli;
-import model.Volo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +13,7 @@ public class HomepageAmministratore extends JFrame {
     private JButton buttonAggiornaVolo;
     private JTable table1;
     private JPanel contentPane;
+    private JButton buttonIndietro;
 
     private Controller controller;
 
@@ -38,11 +37,20 @@ public class HomepageAmministratore extends JFrame {
                 addVoloFrame.setVisible(true);
                 HomepageAmministratore.this.setVisible(false);
             }
+
         });
 
         buttonAggiornaVolo.addActionListener(e -> {
             aggiornaTabella();
             JOptionPane.showMessageDialog(this, "Tabella aggiornata.");
+        });
+
+        buttonIndietro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Login(controller); // riapre la schermata di login
+                dispose();
+            }
         });
 
         setVisible(true);
