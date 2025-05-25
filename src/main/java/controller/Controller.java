@@ -21,6 +21,11 @@ public class Controller {
     }
 
     public boolean loginValido(String username, String password) {
+
+        this.utenteLoggin = null;
+        this.utenteAmministratore = null;
+
+
         for (Utente u : utentiRegistratiRef) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                 if (u instanceof UtenteGenerico) {
@@ -37,6 +42,7 @@ public class Controller {
     public String userType() {
         if (utenteAmministratore != null) return "Admin";
         else if (utenteLoggin != null) return "Generico";
+
         else return "Nessun utente loggato";
     }
 
