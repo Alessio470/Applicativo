@@ -11,13 +11,10 @@ public class Main {
     public static void main(String[] args) {
 
 
-        ArrayList<Volo> voli = new ArrayList();
 
         Volo volo1 = new VoloPartenzaDaNapoli("aaa", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
         Volo volo2 = new VoloPartenzaDaNapoli("bbb", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
 
-        voli.add(volo1);
-        voli.add(volo2);
 
         ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
 
@@ -32,7 +29,12 @@ public class Main {
         UtenteGenerico utente4 = new UtenteGenerico("utente4", "password4");
 
         UtenteAmministratore admin = new UtenteAmministratore("admin1", "password1");
+        admin.inserisciVolo(volo1);
+        admin.inserisciVolo(volo2);
+
         UtenteAmministratore admin2 = new UtenteAmministratore("admin2", "password2");
+        admin2.inserisciVolo(volo1);
+        admin2.inserisciVolo(volo2);
 
 
         utentiRegistrati.add(utente);
@@ -51,7 +53,7 @@ public class Main {
         //utente.visualizzaPrenotazioni();
 
 
-        Login login = new Login(new Controller(utentiRegistrati, voli));
+        Login login = new Login(new Controller(utentiRegistrati));
 
         login.setVisible(true);
     }

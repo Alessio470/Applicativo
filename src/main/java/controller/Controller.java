@@ -9,15 +9,13 @@ import java.util.List;
 
 public class Controller {
     private ArrayList<Utente> utentiRegistratiRef;
-    private ArrayList<Volo> voliRef;
 
     private String username;
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
 
-    public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> voli) {
+    public Controller(ArrayList<Utente> utentiRegistrati) {
         this.utentiRegistratiRef = utentiRegistrati;
-        this.voliRef = voli;
     }
 
     public boolean loginValido(String username, String password) {
@@ -63,22 +61,33 @@ public class Controller {
     }
 
     public void aggiungiVolo(Volo volo) {
-        voliRef.add(volo);
+        utenteAmministratore.inserisciVolo(volo);
     }
 
     public ArrayList<Volo> getVoli() {
-        return voliRef;
+        return utenteAmministratore.getVoliGestiti();
     }
 
     public DefaultTableModel getModelloTabellaVoli() {
+
+
         String[] colonne = {
                 "Codice Volo", "Compagnia Aerea", "Data Volo",
                 "Orario Previsto", "Ritardo", "Stato"
         };
-
         DefaultTableModel model = new DefaultTableModel(colonne, 0);
 
-        for (Volo v : this.getVoli()) {
+
+        ArrayList<Volo> listaVoli;
+
+        if(utenteAmministratore!=null){
+            listaVoli = utenteAmministratore.getVoliGestiti();
+        }else {
+            listaVoli = new ArrayList<>();
+        }
+
+
+        for (Volo v : listaVoli) {
             Object[] riga = {
                     v.getCodiceVolo(),
                     v.getCompagniaAerea(),
@@ -91,5 +100,7 @@ public class Controller {
         }
 
         return model;
+
     }
+
 }
