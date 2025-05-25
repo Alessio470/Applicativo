@@ -17,17 +17,15 @@ public class Login extends JFrame {
     final int carattere = 20;
 
     private Controller controller;
-    private static JFrame framelogin;
 
     public Login(Controller controller) {
         this.controller = controller;
 
-        framelogin = new JFrame("Login");
-        framelogin.setContentPane(login);
-        framelogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        framelogin.pack();
-        framelogin.setSize(625, 270);
-        framelogin.setVisible(true);
+        setTitle("Login");
+        setContentPane(login);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(625, 270);
+        setLocationRelativeTo(null);
 
         textLogin.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
         textNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
@@ -35,33 +33,34 @@ public class Login extends JFrame {
         fieldNome.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
         fieldPassword.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, carattere));
 
-        buttonLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = fieldNome.getText();
-                String password = new String(fieldPassword.getPassword());
+        setVisible(true);
 
-                if (controller.loginValido(username, password)) {
-                    JOptionPane.showMessageDialog(framelogin, "Login effettuato");
-                    switch (controller.userType()) {
-                        case "Generico":
-                            JFrame homeFrame = new Home(framelogin, controller);
-                            homeFrame.setVisible(true);
-                            framelogin.dispose();
-                            break;
-                        case "Admin":
-                            JFrame homeAdmin = new HomepageAmministratore(framelogin, controller);
-                            homeAdmin.setVisible(true);
-                            framelogin.dispose();
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(framelogin, "Tipo utente sconosciuto");
-                            break;
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(framelogin, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
+        buttonLogin.addActionListener(e -> {
+            String username = fieldNome.getText();
+            String password = new String(fieldPassword.getPassword());
+
+            if (controller.loginValido(username, password)) {
+                JOptionPane.showMessageDialog(this, "Login effettuato");
+
+                switch (controller.userType()) {
+                    case "Generico":
+                        JFrame homeFrame = new HomeUtenteGenerico(this, controller);
+                        homeFrame.setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Admin":
+                        JFrame homeAdmin = new HomepageAmministratore(this, controller);
+                        homeAdmin.setVisible(true);
+                        this.dispose();
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(this, "Tipo utente sconosciuto");
+                        break;
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 }
+

@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.enums.StatoVolo;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -8,24 +9,25 @@ import java.util.List;
 
 public class Controller {
     private ArrayList<Utente> utentiRegistratiRef;
-    private ArrayList<Volo> VoliRef;
+    private ArrayList<Volo> voliRef;
 
     private String username;
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
 
-    public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> Voli) {
+    public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> voli) {
         this.utentiRegistratiRef = utentiRegistrati;
-        this.VoliRef = Voli;
+        this.voliRef = voli;
     }
 
     public boolean loginValido(String username, String password) {
         for (Utente u : utentiRegistratiRef) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
-
-                if (u instanceof UtenteGenerico) {this.utenteLoggin = (UtenteGenerico) u;}
-                else if (u instanceof UtenteAmministratore) {this.utenteAmministratore = (UtenteAmministratore) u;}
-
+                if (u instanceof UtenteGenerico) {
+                    this.utenteLoggin = (UtenteGenerico) u;
+                } else if (u instanceof UtenteAmministratore) {
+                    this.utenteAmministratore = (UtenteAmministratore) u;
+                }
                 return true;
             }
         }
@@ -35,16 +37,15 @@ public class Controller {
     public String userType() {
         if (utenteAmministratore != null) return "Admin";
         else if (utenteLoggin != null) return "Generico";
-
         else return "Nessun utente loggato";
     }
 
-    public String getUsernameAdmin(){
-        return utenteAmministratore.getUsername();
+    public String getUsernameAdmin() {
+        return (utenteAmministratore != null) ? utenteAmministratore.getUsername() : null;
     }
 
-    public String getUsernameGenerico(){
-        return utenteLoggin.getUsername();
+    public String getUsernameGenerico() {
+        return (utenteLoggin != null) ? utenteLoggin.getUsername() : null;
     }
 
     public List<Prenotazione> getPrenotazioniUtenteGenerico() {
@@ -55,17 +56,15 @@ public class Controller {
         }
     }
 
-
-
     public void aggiungiVolo(Volo volo) {
-        VoliRef.add(volo);
+        voliRef.add(volo);
     }
 
     public ArrayList<Volo> getVoli() {
-        return VoliRef;
+        return voliRef;
     }
 
-    public void aggiornaTabella() {
+    public DefaultTableModel getModelloTabellaVoli() {
         String[] colonne = {
                 "Codice Volo", "Compagnia Aerea", "Data Volo",
                 "Orario Previsto", "Ritardo", "Stato"
@@ -73,21 +72,18 @@ public class Controller {
 
         DefaultTableModel model = new DefaultTableModel(colonne, 0);
 
-        for (Volo v : controller.getVoli()) { // Presumo che ritorni anche VoloPartenzaDaNapoli
+        for (Volo v : this.getVoli()) {
             Object[] riga = {
-                    v.getCodiceVolo(), // Sta roba non funziona
+                    v.getCodiceVolo(),
                     v.getCompagniaAerea(),
                     v.getDataVolo(),
                     v.getOrarioPrevisto(),
                     v.getRitardo(),
-                    v.getStato().toString()
+                    (v.getStato() != null ? v.getStato().toString() : "N/A")
             };
             model.addRow(riga);
         }
 
-        table1.setModel(model);
+        return model;
     }
-
-
-
 }

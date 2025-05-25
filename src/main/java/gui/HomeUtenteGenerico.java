@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Home extends JFrame {
+public class HomeUtenteGenerico extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
     private JPanel contentPane;
@@ -18,7 +18,7 @@ public class Home extends JFrame {
 
     public JFrame frame;
 
-    public Home(JFrame frameChiamante, Controller controller) {
+    public HomeUtenteGenerico(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Home");
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

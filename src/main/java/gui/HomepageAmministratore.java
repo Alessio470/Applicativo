@@ -1,10 +1,8 @@
 package gui;
 
 import controller.Controller;
-
-import gui.*;
-import gui.addVoli.addVoli;
-import model.*;
+import gui.AddVoli;
+import model.Volo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,48 +21,35 @@ public class HomepageAmministratore extends JFrame {
     public HomepageAmministratore(JFrame frameChiamante, Controller controller) {
         this.controller = controller;
 
-        // ✅ Usa direttamente this invece di un campo frame
         setTitle("Homepage Amministratore");
         setContentPane(contentPane);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(625, 400);
-        setVisible(true);
-
-        String[] colonne = {
-                "Codice Volo", "Compagnia", "Data", "Orario Previsto", "Ritardo", "Stato"
-        };
+        setLocationRelativeTo(null); // Centra la finestra
 
         labelBenvenuto.setText("Benvenuto " + controller.getUsernameAdmin());
 
-        DefaultTableModel model = new DefaultTableModel(colonne, 0);
-
-        // Popola il modello con i dati dei voli
-        for (Volo v : controller.getVoli()) {
-            Object[] riga = {
-                    v.getCodiceVolo(),
-                    v.getCompagniaAerea(),
-                    v.getDataVolo(),
-                    v.getOrarioPrevisto(),
-                    v.getRitardo(),
-                    (v.getStato() != null ? v.getStato().toString() : "N/A")
-            };
-            model.addRow(riga);
-        }
-
-// Imposta il modello alla JTable
-        table1.setModel(model);
+        aggiornaTabella(); // Prima inizializzazione tabella
 
         buttonInserisciVolo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame addVoloFrame = new addVoli(controller, HomepageAmministratore.this);
+                JFrame addVoloFrame = new AddVoli(controller, HomepageAmministratore.this);
                 addVoloFrame.setVisible(true);
                 HomepageAmministratore.this.setVisible(false);
             }
         });
 
         buttonAggiornaVolo.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Funzionalità aggiornamento volo in arrivo...");
+            aggiornaTabella();
+            JOptionPane.showMessageDialog(this, "Tabella aggiornata.");
         });
+
+        setVisible(true);
+    }
+
+    public void aggiornaTabella() {
+        DefaultTableModel model = controller.getModelloTabellaVoli();
+        table1.setModel(model);
     }
 }
