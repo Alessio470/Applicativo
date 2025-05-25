@@ -89,7 +89,7 @@ public class Controller {
         return voliReturn;
     }
 
-    public void aggiornaVolo(String username, Volo nuovoVolo) {
+    public void aggiornaVolo(Volo nuovoVolo) {
         if(utenteAmministratore != null){
             utenteAmministratore.inserisciVolo(nuovoVolo);
         }
