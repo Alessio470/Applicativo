@@ -1,6 +1,10 @@
 package gui;
 
+import model.Gate;
 import model.Volo;
+import model.VoloArrivoANapoli;
+import model.VoloPartenzaDaNapoli;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
@@ -8,7 +12,7 @@ public class ModelloTabellaVoli extends AbstractTableModel {
     private ArrayList<Volo> voliDaMostrare;
 
     private final String[] intestazioni = {
-            "Codice Volo", "AAAAAAAAAAA", "Data", "Orario", "Ritardo", "Stato"
+            "Codice volo", "Compagnia aerea", "Data", "Orario", "Ritardo", "Stato", "Origine", "Destinazione", "Gate"
     };
 
     @Override
@@ -41,6 +45,9 @@ public class ModelloTabellaVoli extends AbstractTableModel {
             case 3 -> v.getOrarioPrevisto();
             case 4 -> v.getRitardo();
             case 5 -> v.getStato();
+            case 6 -> (v instanceof VoloArrivoANapoli arr) ? arr.getAeroportoOrigine() : "Napoli";
+            case 7 -> (v instanceof VoloPartenzaDaNapoli part) ? part.getAeroportoDestinazione() : "Napoli";
+            case 8 -> (v instanceof VoloPartenzaDaNapoli part && part.getNumeroGate() != null) ? part.getGate().getNumeroGate() : "-";
             default -> null;
         };
     }

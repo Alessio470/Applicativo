@@ -4,7 +4,6 @@ import controller.Controller;
 import model.Volo;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class HomeUtenteGenerico extends JFrame {
@@ -47,8 +46,6 @@ public class HomeUtenteGenerico extends JFrame {
             finestraPrenota.setVisible(true);
             frame.setVisible(false);
         });
-
-
     }
 
     public void aggiornaTabella() {

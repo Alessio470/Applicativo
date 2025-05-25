@@ -10,4 +10,6 @@ public class Gate {
     public String getNumeroGate() {
         return numeroGate;
     }
+
+    
 }

@@ -17,4 +17,20 @@ public class VoloPartenzaDaNapoli extends Volo {
     public void setGate(Gate gate) {
         this.gate = gate;
     }
+
+    public String getAeroportoOrigine() {
+        return aeroportoOrigine;
+    }
+    public String getAeroportoDestinazione() {
+        return aeroportoDestinazione;
+    }
+
+    public Gate getGate() {
+        return gate;
+    }
+
+    public String getNumeroGate() {
+        return (gate != null) ? gate.getNumeroGate() : null;
+    }
+
 }

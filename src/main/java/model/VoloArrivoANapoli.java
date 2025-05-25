@@ -11,4 +11,12 @@ public class VoloArrivoANapoli extends Volo {
         super(codiceVolo, compagniaAerea, dataVolo, orarioPrevisto, ritardo, stato);
         this.aeroportoOrigine = aeroportoOrigine;
     }
+
+    public String getAeroportoOrigine() {
+        return aeroportoOrigine;
+    }
+
+    public String getAeroportoDestinazione() {
+        return aeroportoDestinazione;
+    }
 }

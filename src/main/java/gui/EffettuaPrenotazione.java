@@ -6,7 +6,6 @@ import model.enums.StatoPrenotazione;
 import model.enums.StatoVolo;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;

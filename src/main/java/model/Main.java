@@ -23,9 +23,6 @@ public class Main {
 
         ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
 
-        // Creazione di un amministratore e modifica del gate del volo
-        //admin.modificaGate(volo1, gate5);
-
         // Creazione di un utente generico e prenotazione di un volo
         UtenteGenerico utente = new UtenteGenerico("utente1", "password1");
         UtenteGenerico utente2 = new UtenteGenerico("utente2", "password2");
@@ -56,9 +53,6 @@ public class Main {
         // Effettuazione della prenotazione e visualizzazione
         for(int i = 0; i < 20; i++){
         utente.prenotaVolo(volo1, prenotazione);}
-
-        //utente.visualizzaPrenotazioni();
-
 
         Login login = new Login(new Controller(utentiRegistrati,voli));
 

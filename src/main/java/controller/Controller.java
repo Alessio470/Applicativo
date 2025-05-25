@@ -28,12 +28,13 @@ public class Controller {
 
         for (Utente u : utentiRegistratiRef) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
-                if (u instanceof UtenteGenerico) {this.utenteLoggin = (UtenteGenerico) u; }
-                else if (u instanceof UtenteAmministratore){ this.utenteAmministratore = (UtenteAmministratore) u; }
+                if (u instanceof UtenteGenerico) {
+                    this.utenteLoggin = (UtenteGenerico) u;
+                } else if (u instanceof UtenteAmministratore){
+                    this.utenteAmministratore = (UtenteAmministratore) u;
+                }
                 return true;
-
             }
-
         }
         return false;
     }
@@ -42,7 +43,6 @@ public class Controller {
     public String userType() {
         if (utenteAmministratore != null) return "Admin";
         else if (utenteLoggin != null) return "Generico";
-
         else return "Nessun utente loggato";
     }
 
@@ -88,6 +88,19 @@ public class Controller {
 
         return voliReturn;
     }
+
+    public void aggiornaVolo(String username, Volo nuovoVolo) {
+        if(utenteAmministratore != null){
+            utenteAmministratore.inserisciVolo(nuovoVolo);
+        }
+    }
+
+    public void modificaGate(VoloPartenzaDaNapoli volo, Gate gate) {
+        if(utenteAmministratore != null){
+            utenteAmministratore.modificaGate(volo, gate);
+        }
+    }
+
 
     public DefaultTableModel getModelloTabellaVoli() {
 
