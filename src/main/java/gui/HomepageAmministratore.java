@@ -60,7 +60,7 @@ public class HomepageAmministratore extends JFrame {
 
     public void aggiornaTabella() {
         ModelloTabellaVoli modello = new ModelloTabellaVoli();
-        ArrayList<Volo> listaVoli = controller.getVoli();
+        ArrayList<Volo> listaVoli = controller.getVoliAmministratore();
         modello.settaVoliDaMostrare(listaVoli);
         table1.setModel(modello);
     }

@@ -23,11 +23,19 @@ public class EffettuaPrenotazione extends JFrame {
 
     private Controller controller;
     private JFrame frameChiamante;
-    private List<Volo> voliPrenotabili = new ArrayList<>();
+    private List<Volo> voliPrenotabili;
 
     public EffettuaPrenotazione(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
+
         this.frameChiamante = frameChiamante;
+
+        this.voliPrenotabili = new ArrayList<>();
+        for (Volo v : controller.getVoli()) {
+            if (v.getStato() == StatoVolo.PROGRAMMATO) {
+                this.voliPrenotabili.add(v);
+            }
+        }
 
         setTitle("Effettua Prenotazione");
         setContentPane(contentPane);
@@ -87,7 +95,7 @@ public class EffettuaPrenotazione extends JFrame {
         ArrayList<Volo> filtrati = new ArrayList<>();
 
         for (Volo v : controller.getVoli()) {
-            if (v instanceof VoloPartenzaDaNapoli && v.getStato() == StatoVolo.programmato) {
+            if (v instanceof VoloPartenzaDaNapoli && v.getStato() == StatoVolo.PROGRAMMATO) {
                 filtrati.add(v);
             }
         }
