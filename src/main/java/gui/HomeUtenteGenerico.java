@@ -55,7 +55,7 @@ public class HomeUtenteGenerico extends JFrame {
 
         DefaultTableModel model = new DefaultTableModel(colonne, 0);
 
-        for (Volo v : controller.getVoli()) {
+        for (Volo v : controller.getVoliAUtente()) {
             model.addRow(new Object[]{
                     v.getCodiceVolo(),
                     v.getCompagniaAerea(),

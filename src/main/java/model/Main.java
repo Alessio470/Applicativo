@@ -10,11 +10,16 @@ public class Main {
 
     public static void main(String[] args) {
 
+        ArrayList<Volo> voli = new ArrayList<>();
+        Volo volo1 = new VoloPartenzaDaNapoli("aaa", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.PROGRAMMATO, "Turchia");
+        Volo volo2 = new VoloPartenzaDaNapoli("bbb", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.PROGRAMMATO, "Turchia");
+        Volo volo3 = new VoloPartenzaDaNapoli("ccc", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.IN_RITARDO, "Turchia");
+        Volo volo4 = new VoloPartenzaDaNapoli("ddd", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.CANCELLATO, "Turchia");
 
-
-        Volo volo1 = new VoloPartenzaDaNapoli("aaa", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
-        Volo volo2 = new VoloPartenzaDaNapoli("bbb", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.programmato, "Turchia");
-
+        voli.add(volo1);
+        voli.add(volo2);
+        voli.add(volo3);
+        voli.add(volo4);
 
         ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
 
@@ -31,10 +36,12 @@ public class Main {
         UtenteAmministratore admin = new UtenteAmministratore("admin1", "password1");
         admin.inserisciVolo(volo1);
         admin.inserisciVolo(volo2);
+        admin.inserisciVolo(volo3);
+        admin.inserisciVolo(volo4);
 
         UtenteAmministratore admin2 = new UtenteAmministratore("admin2", "password2");
-        admin2.inserisciVolo(volo1);
-        admin2.inserisciVolo(volo2);
+        admin2.inserisciVolo(volo3);
+        admin2.inserisciVolo(volo4);
 
 
         utentiRegistrati.add(utente);
@@ -53,7 +60,7 @@ public class Main {
         //utente.visualizzaPrenotazioni();
 
 
-        Login login = new Login(new Controller(utentiRegistrati));
+        Login login = new Login(new Controller(utentiRegistrati,voli));
 
         login.setVisible(true);
     }

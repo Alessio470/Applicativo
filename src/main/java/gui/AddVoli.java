@@ -60,11 +60,11 @@ public class AddVoli extends JFrame {
                 String ritardo = textField5.getText();
 
                 StatoVolo stato = null;
-                if (programmatoRadioButton.isSelected()) stato = StatoVolo.programmato;
-                else if (decollatoRadioButton.isSelected()) stato = StatoVolo.decollato;
-                else if (inRitardoRadioButton.isSelected()) stato = StatoVolo.in_ritardo;
-                else if (cancellatoRadioButton.isSelected()) stato = StatoVolo.cancellato;
-                else if (atterratoRadioButton.isSelected()) stato = StatoVolo.atterrato;
+                if (programmatoRadioButton.isSelected()) stato = StatoVolo.PROGRAMMATO;
+                else if (decollatoRadioButton.isSelected()) stato = StatoVolo.DECOLLATO;
+                else if (inRitardoRadioButton.isSelected()) stato = StatoVolo.IN_RITARDO;
+                else if (cancellatoRadioButton.isSelected()) stato = StatoVolo.CANCELLATO;
+                else if (atterratoRadioButton.isSelected()) stato = StatoVolo.ATTERRATO;
 
                 if (stato == null || codice.isEmpty() || compagnia.isEmpty() || data.isEmpty() || orario.isEmpty()) {
                     JOptionPane.showMessageDialog(AddVoli.this, "Compila tutti i campi obbligatori.");

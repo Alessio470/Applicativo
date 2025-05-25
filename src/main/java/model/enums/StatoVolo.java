@@ -1,5 +1,5 @@
 package model.enums;
 
 public enum StatoVolo {
-    programmato, decollato, in_ritardo, atterrato, cancellato
+    PROGRAMMATO, DECOLLATO, IN_RITARDO, ATTERRATO, CANCELLATO
 }

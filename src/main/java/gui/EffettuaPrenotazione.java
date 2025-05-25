@@ -88,7 +88,7 @@ public class EffettuaPrenotazione extends JFrame {
 
         voliPrenotabili.clear();
         for (Volo v : controller.getVoli()) {
-            if (v instanceof VoloPartenzaDaNapoli && v.getStato() == StatoVolo.programmato) {
+            if (v instanceof VoloPartenzaDaNapoli && v.getStato() == StatoVolo.PROGRAMMATO) {
                 voliPrenotabili.add(v);
                 model.addRow(new Object[]{
                         v.getCodiceVolo(),
