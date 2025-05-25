@@ -83,24 +83,16 @@ public class EffettuaPrenotazione extends JFrame {
     }
 
     private void aggiornaTabellaVoli() {
-        String[] colonne = {"Codice", "Compagnia", "Data", "Orario", "Ritardo", "Stato"};
-        DefaultTableModel model = new DefaultTableModel(colonne, 0);
+        ModelloTabellaVoli modello = new ModelloTabellaVoli();
+        ArrayList<Volo> filtrati = new ArrayList<>();
 
-        voliPrenotabili.clear();
         for (Volo v : controller.getVoli()) {
             if (v instanceof VoloPartenzaDaNapoli && v.getStato() == StatoVolo.programmato) {
-                voliPrenotabili.add(v);
-                model.addRow(new Object[]{
-                        v.getCodiceVolo(),
-                        v.getCompagniaAerea(),
-                        v.getDataVolo(),
-                        v.getOrarioPrevisto(),
-                        v.getRitardo(),
-                        v.getStato()
-                });
+                filtrati.add(v);
             }
         }
 
-        tableVoli.setModel(model);
+        modello.settaVoliDaMostrare(filtrati);
+        tableVoli.setModel(modello);
     }
 }
