@@ -16,7 +16,4 @@ public class VoloArrivoANapoli extends Volo {
         return aeroportoOrigine;
     }
 
-    public String getAeroportoDestinazione() {
-        return aeroportoDestinazione;
-    }
 }
