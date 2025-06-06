@@ -56,7 +56,7 @@ public class Main {
         utentiRegistrati.add(admin);
         utentiRegistrati.add(admin2);
 
-        Prenotazione prenotazione = new Prenotazione("TCK123", "RSSMRA00A01H501Z", "Mario", "Rossi", "12A", StatoPrenotazione.CONFERMATA, volo1);
+        Prenotazione prenotazione = new Prenotazione("TCK123", "RSSMRA00A01H501Z", "Vittoria", "oilgoG", "12A", StatoPrenotazione.CONFERMATA, volo1);
 
         // Effettuazione della prenotazione e visualizzazione
         for(int i = 0; i < 20; i++){
