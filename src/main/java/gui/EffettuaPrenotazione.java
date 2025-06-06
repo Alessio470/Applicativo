@@ -10,6 +10,9 @@ import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Effettua prenotazione.
+ */
 public class EffettuaPrenotazione extends JFrame {
     private JPanel contentPane;
     private JTable tableVoli;
@@ -24,6 +27,12 @@ public class EffettuaPrenotazione extends JFrame {
     private JFrame frameChiamante;
     private List<Volo> voliPrenotabili;
 
+    /**
+     * Instantiates a new Effettua prenotazione.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     */
     public EffettuaPrenotazione(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
 

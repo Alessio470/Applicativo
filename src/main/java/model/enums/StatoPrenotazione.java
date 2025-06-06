@@ -1,5 +1,19 @@
 package model.enums;
 
+/**
+ * The enum Stato prenotazione.
+ */
 public enum StatoPrenotazione {
-    CONFERMATA,IN_ATTESA,CANCELLATA
+    /**
+     * Confermata stato prenotazione.
+     */
+    CONFERMATA,
+    /**
+     * In attesa stato prenotazione.
+     */
+    IN_ATTESA,
+    /**
+     * Cancellata stato prenotazione.
+     */
+    CANCELLATA
 }

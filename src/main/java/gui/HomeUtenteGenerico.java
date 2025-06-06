@@ -6,6 +6,9 @@ import model.Volo;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/**
+ * The type Home utente generico.
+ */
 public class HomeUtenteGenerico extends JFrame {
     private JLabel textBenvenuto;
     private JButton buttonExit;
@@ -17,6 +20,12 @@ public class HomeUtenteGenerico extends JFrame {
     private JFrame frame;
     private Controller controller;
 
+    /**
+     * Instantiates a new Home utente generico.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
+     */
     public HomeUtenteGenerico(JFrame frameChiamante, Controller controller) {
         this.controller = controller;
         this.frame = new JFrame("Home");
@@ -48,6 +57,9 @@ public class HomeUtenteGenerico extends JFrame {
         });
     }
 
+    /**
+     * Aggiorna tabella.
+     */
     public void aggiornaTabella() {
         ModelloTabellaVoli modello = new ModelloTabellaVoli();
         ArrayList<Volo> listaVoli = controller.getVoli();

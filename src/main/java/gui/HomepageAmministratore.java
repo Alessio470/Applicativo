@@ -6,6 +6,9 @@ import model.Volo;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/**
+ * The type Homepage amministratore.
+ */
 public class HomepageAmministratore extends JFrame {
     private JLabel labelBenvenuto;
     private JButton buttonInserisciVolo;
@@ -16,6 +19,12 @@ public class HomepageAmministratore extends JFrame {
 
     private Controller controller;
 
+    /**
+     * Instantiates a new Homepage amministratore.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
+     */
     public HomepageAmministratore(JFrame frameChiamante, Controller controller) {
         this.controller = controller;
 
@@ -48,6 +57,9 @@ public class HomepageAmministratore extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Aggiorna tabella.
+     */
     public void aggiornaTabella() {
         ModelloTabellaVoli modello = new ModelloTabellaVoli();
         ArrayList<Volo> listaVoli = controller.getVoli();

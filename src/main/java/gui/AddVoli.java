@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Add voli.
+ */
 public class AddVoli extends JFrame {
     private JPanel panel1;
     private JPanel codVoloPanel;
@@ -33,6 +36,12 @@ public class AddVoli extends JFrame {
     private Controller controller;
     private JFrame frameChiamante;
 
+    /**
+     * Instantiates a new Add voli.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     */
     public AddVoli(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
         this.frameChiamante = frameChiamante;

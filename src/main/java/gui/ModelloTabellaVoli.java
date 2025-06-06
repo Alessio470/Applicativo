@@ -8,6 +8,9 @@ import model.VoloPartenzaDaNapoli;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
+/**
+ * The type Modello tabella voli.
+ */
 public class ModelloTabellaVoli extends AbstractTableModel {
     private ArrayList<Volo> voliDaMostrare;
 
@@ -30,6 +33,11 @@ public class ModelloTabellaVoli extends AbstractTableModel {
         return intestazioni.length;
     }
 
+    /**
+     * Sets voli da mostrare.
+     *
+     * @param lista the lista
+     */
     public void settaVoliDaMostrare(ArrayList<Volo> lista) {
         this.voliDaMostrare = lista;
     }
@@ -52,6 +60,12 @@ public class ModelloTabellaVoli extends AbstractTableModel {
         };
     }
 
+    /**
+     * Gets volo at.
+     *
+     * @param row the row
+     * @return the volo at
+     */
     public Volo getVoloAt(int row) {
         return voliDaMostrare.get(row);
     }

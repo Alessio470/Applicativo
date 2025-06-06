@@ -7,6 +7,9 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Controller.
+ */
 public class Controller {
     private ArrayList<Utente> utentiRegistratiRef;
     private ArrayList<Volo> voliRegistratiRef;
@@ -15,11 +18,24 @@ public class Controller {
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
 
+    /**
+     * Instantiates a new Controller.
+     *
+     * @param utentiRegistrati the utenti registrati
+     * @param voliRegistrati   the voli registrati
+     */
     public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> voliRegistrati) {
         this.utentiRegistratiRef = utentiRegistrati;
         this.voliRegistratiRef = voliRegistrati;
     }
 
+    /**
+     * Login valido boolean.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the boolean
+     */
     public boolean loginValido(String username, String password) {
 
         this.utenteLoggin = null;
@@ -40,6 +56,11 @@ public class Controller {
     }
 
 
+    /**
+     * User type string.
+     *
+     * @return the string
+     */
     public String userType() {
         if (utenteAmministratore != null) return "Admin";
         else if (utenteLoggin != null) return "Generico";
@@ -47,16 +68,31 @@ public class Controller {
     }
 
 
+    /**
+     * Gets username admin.
+     *
+     * @return the username admin
+     */
     public String getUsernameAdmin() {
         return (utenteAmministratore != null) ? utenteAmministratore.getUsername() : null;
     }
 
 
+    /**
+     * Gets username generico.
+     *
+     * @return the username generico
+     */
     public String getUsernameGenerico() {
         return (utenteLoggin != null) ? utenteLoggin.getUsername() : null;
     }
 
 
+    /**
+     * Gets prenotazioni utente generico.
+     *
+     * @return the prenotazioni utente generico
+     */
     public List<Prenotazione> getPrenotazioniUtenteGenerico() {
         if (utenteLoggin != null) {
             return utenteLoggin.getPrenotazioniL();
@@ -65,18 +101,38 @@ public class Controller {
         }
     }
 
+    /**
+     * Aggiungi volo.
+     *
+     * @param volo the volo
+     */
     public void aggiungiVolo(Volo volo) {
         utenteAmministratore.inserisciVolo(volo);
     }
 
+    /**
+     * Gets voli amministratore.
+     *
+     * @return the voli amministratore
+     */
     public ArrayList<Volo> getVoliAmministratore() {
         return utenteAmministratore.getVoliGestiti();
     }
 
+    /**
+     * Gets voli.
+     *
+     * @return the voli
+     */
     public ArrayList<Volo> getVoli() {
         return voliRegistratiRef;
     }
 
+    /**
+     * Gets voli a utente.
+     *
+     * @return the voli a utente
+     */
     public ArrayList<Volo> getVoliAUtente() {
     ArrayList<Volo> voliReturn = new ArrayList<>();
 
@@ -89,12 +145,23 @@ public class Controller {
         return voliReturn;
     }
 
+    /**
+     * Aggiorna volo.
+     *
+     * @param nuovoVolo the nuovo volo
+     */
     public void aggiornaVolo(Volo nuovoVolo) {
         if(utenteAmministratore != null){
             utenteAmministratore.inserisciVolo(nuovoVolo);
         }
     }
 
+    /**
+     * Modifica gate.
+     *
+     * @param volo the volo
+     * @param gate the gate
+     */
     public void modificaGate(VoloPartenzaDaNapoli volo, Gate gate) {
         if(utenteAmministratore != null){
             utenteAmministratore.modificaGate(volo, gate);
@@ -102,6 +169,11 @@ public class Controller {
     }
 
 
+    /**
+     * Gets modello tabella voli.
+     *
+     * @return the modello tabella voli
+     */
     public DefaultTableModel getModelloTabellaVoli() {
 
 

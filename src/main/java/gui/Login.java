@@ -4,6 +4,9 @@ import controller.Controller;
 
 import javax.swing.*;
 
+/**
+ * The type Login.
+ */
 public class Login extends JFrame {
     private JPanel login;
     private JLabel textLogin;
@@ -12,10 +15,18 @@ public class Login extends JFrame {
     private JTextField fieldNome;
     private JPasswordField fieldPassword;
     private JButton buttonLogin;
+    /**
+     * The Carattere.
+     */
     final int carattere = 20;
 
     private Controller controller;
 
+    /**
+     * Instantiates a new Login.
+     *
+     * @param controller the controller
+     */
     public Login(Controller controller) {
         this.controller = controller;
 

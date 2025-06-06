@@ -7,6 +7,9 @@ import model.Volo;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * The type Prenotazioni utente.
+ */
 public class PrenotazioniUtente extends JFrame {
     private JPanel contentPane;
     private JTable table1;
@@ -14,6 +17,12 @@ public class PrenotazioniUtente extends JFrame {
     private JLabel labelTesto;
 private Controller controller;
 
+    /**
+     * Instantiates a new Prenotazioni utente.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     */
     public PrenotazioniUtente(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
 
