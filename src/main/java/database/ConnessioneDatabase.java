@@ -1,39 +1,35 @@
-package Database;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnessioneDatabase {
+    private static ConnessioneDatabase instance;
+    private Connection connection;
 
-	// ATTRIBUTI
-	private static ConnessioneDatabase instance;
-	public Connection connection = null;
-	private String nome = "postgres";
-	private String password = "password";
-	private String url = "jdbc:postgresql://localhost:5433/Borsa";
-	private String driver = "org.postgresql.Driver";
+    private final String url = "jdbc:postgresql://localhost:5432/aeroporto";
+    private final String user = "postgres";
+    private final String password = "password"; // cambia con la tua password
+    private final String driver = "org.postgresql.Driver";
 
-	// COSTRUTTORE
-	private ConnessioneDatabase() throws SQLException {
-		try {
-			Class.forName(driver);
-			connection = DriverManager.getConnection(url, nome, password);
+    private ConnessioneDatabase() throws SQLException {
+        try {
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver non trovato: " + ex.getMessage());
+        }
+    }
 
-		} catch (ClassNotFoundException ex) {
-			System.out.println("Database Connection Creation Failed : " + ex.getMessage());
-			ex.printStackTrace();
-		}
+    public static ConnessioneDatabase getInstance() throws SQLException {
+        if (instance == null || instance.connection.isClosed()) {
+            instance = new ConnessioneDatabase();
+        }
+        return instance;
+    }
 
-	}
-
-
-	public static ConnessioneDatabase getInstance() throws SQLException {
-		if (instance == null) {
-			instance = new ConnessioneDatabase();
-		} else if (instance.connection.isClosed()) {
-			instance = new ConnessioneDatabase();
-		}
-		return instance;
-	}
+    public Connection getConnection() {
+        return connection;
+    }
 }
