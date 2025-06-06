@@ -85,7 +85,7 @@ public class EffettuaPrenotazione extends JFrame {
                     volo
             );
 
-            controller.getPrenotazioniUtenteGenerico().add(prenotazione);
+            controller.aggiungiPrenotazione(prenotazione);
 
             JOptionPane.showMessageDialog(this, "Prenotazione effettuata con successo.");
             frameChiamante.setVisible(true);
