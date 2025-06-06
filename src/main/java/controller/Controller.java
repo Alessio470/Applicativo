@@ -2,7 +2,11 @@ package controller;
 
 import model.*;
 import model.enums.StatoVolo;
+import dao.VoloDAO;
+import implementazionePostgresDAO.VoloPostgresDAO;
 
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +21,7 @@ public class Controller {
 
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
+    private VoloDAO voloDAO;
 
     /**
      * Instantiates a new Controller.
@@ -27,6 +32,12 @@ public class Controller {
     public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> voliRegistrati) {
         this.utentiRegistratiRef = utentiRegistrati;
         this.voliRegistratiRef = voliRegistrati;
+
+        try {
+            this.voloDAO = new VoloPostgresDAO();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nella connessione al database dei voli: " + e.getMessage());
+        }
     }
 
     /**
@@ -107,7 +118,11 @@ public class Controller {
      * @param volo the volo
      */
     public void aggiungiVolo(Volo volo) {
-        utenteAmministratore.inserisciVolo(volo);
+        try {
+            voloDAO.inserisciVolo(volo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nell'inserimento del volo: " + e.getMessage());
+        }
     }
 
     /**
@@ -125,7 +140,12 @@ public class Controller {
      * @return the voli
      */
     public ArrayList<Volo> getVoli() {
-        return voliRegistratiRef;
+        try {
+            return new ArrayList<>(voloDAO.leggiTuttiIVoli());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nella lettura dei voli: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     /**
