@@ -33,6 +33,9 @@ public class VoloPostgresDAO implements VoloDAO {
 		ps.setString(9, (v instanceof VoloPartenzaDaNapoli vp && vp.getGate() != null) ? vp.getGate().getNumeroGate() : null);
 
 		ps.executeUpdate();
+
+		System.out.println("✅ Sto salvando sul DB il volo: " + v.getCodiceVolo());
+
 		ps.close();
 	}
 

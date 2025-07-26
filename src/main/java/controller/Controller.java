@@ -2,7 +2,14 @@ package controller;
 
 import model.*;
 import model.enums.StatoVolo;
+import dao.VoloDAO;
+import dao.PrenotazioneDAO;
+import implementazionePostgresDAO.VoloPostgresDAO;
+import implementazionePostgresDAO.PrenotazionePostgresDAO;
 
+
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +24,8 @@ public class Controller {
 
     private UtenteGenerico utenteLoggin;
     private UtenteAmministratore utenteAmministratore;
+    private VoloDAO voloDAO;
+    private PrenotazioneDAO prenotazioneDAO;
 
     /**
      * Instantiates a new Controller.
@@ -27,6 +36,14 @@ public class Controller {
     public Controller(ArrayList<Utente> utentiRegistrati, ArrayList<Volo> voliRegistrati) {
         this.utentiRegistratiRef = utentiRegistrati;
         this.voliRegistratiRef = voliRegistrati;
+
+        try {
+            this.voloDAO = new VoloPostgresDAO();
+            this.prenotazioneDAO = new PrenotazionePostgresDAO();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nella connessione al database dei voli: " + e.getMessage());
+        }
+
     }
 
     /**
@@ -95,11 +112,26 @@ public class Controller {
      */
     public List<Prenotazione> getPrenotazioniUtenteGenerico() {
         if (utenteLoggin != null) {
-            return utenteLoggin.getPrenotazioniL();
-        } else {
-            return new ArrayList<>();
+            try {
+                // qui uso il codice fiscale come identificativo univoco
+                return prenotazioneDAO.getPrenotazioniPerUtente(utenteLoggin.getPrenotazioniL().isEmpty()
+                        ? "" // fallback se l'utente non ha ancora prenotato nulla
+                        : utenteLoggin.getPrenotazioniL().get(0).getCodiceFiscalePasseggero());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Errore durante il recupero delle prenotazioni: " + e.getMessage());
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public void aggiungiPrenotazione(Prenotazione p) {
+        try {
+            prenotazioneDAO.inserisciPrenotazione(p);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore durante il salvataggio della prenotazione: " + e.getMessage());
         }
     }
+
 
     /**
      * Aggiungi volo.
@@ -107,7 +139,11 @@ public class Controller {
      * @param volo the volo
      */
     public void aggiungiVolo(Volo volo) {
-        utenteAmministratore.inserisciVolo(volo);
+        try {
+            voloDAO.inserisciVolo(volo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nell'inserimento del volo: " + e.getMessage());
+        }
     }
 
     /**
@@ -125,7 +161,12 @@ public class Controller {
      * @return the voli
      */
     public ArrayList<Volo> getVoli() {
-        return voliRegistratiRef;
+        try {
+            return new ArrayList<>(voloDAO.leggiTuttiIVoli());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nella lettura dei voli: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     /**
