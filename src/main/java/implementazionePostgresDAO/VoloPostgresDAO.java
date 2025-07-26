@@ -3,7 +3,6 @@ package implementazionePostgresDAO;
 import dao.VoloDAO;
 import database.ConnessioneDatabase;
 import model.Volo;
-import model.VoloPartenzaDaNapoli;
 import model.enums.StatoVolo;
 
 import java.sql.*;

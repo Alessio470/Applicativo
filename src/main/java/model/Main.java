@@ -1,70 +1,93 @@
 package model;
 
-import controller.Controller;
-import gui.*;
-import model.enums.*;
+import model.enums.RuoloUtente;
+import model.enums.StatoPrenotazione;
+import model.enums.StatoVolo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-/**
- * The type Main.
- */
 public class Main {
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
     public static void main(String[] args) {
 
+        // Formattatore per data e ora
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        // Lista voli
         ArrayList<Volo> voli = new ArrayList<>();
-        Volo volo1 = new VoloPartenzaDaNapoli("aaa", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.PROGRAMMATO, "Turchia");
-        Volo volo2 = new VoloPartenzaDaNapoli("bbb", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.PROGRAMMATO, "Turchia");
-        Volo volo3 = new VoloPartenzaDaNapoli("ccc", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.IN_RITARDO, "Turchia");
-        Volo volo4 = new VoloPartenzaDaNapoli("ddd", "compagnia", "12/11/03", "12:00", "Nan", StatoVolo.CANCELLATO, "Turchia");
 
-        voli.add(volo1);
-        voli.add(volo2);
-        voli.add(volo3);
-        voli.add(volo4);
+        // Creo voli (arrivi e partenze unificati)
+        voli.add(new Volo(
+                "AAA123",
+                "CompagniaAerea1",
+                "Napoli",                  // aeroportoOrigine
+                "Turchia",                 // aeroportoDestinazione
+                LocalDateTime.parse("12/11/2025 12:00", dtf),
+                0,
+                StatoVolo.PROGRAMMATO,
+                1                          // gate assegnato
+        ));
 
-        ArrayList<Utente> utentiRegistrati  = new ArrayList<Utente>();
+        voli.add(new Volo(
+                "BBB456",
+                "CompagniaAerea2",
+                "Napoli",
+                "Germania",
+                LocalDateTime.parse("12/11/2025 14:00", dtf),
+                15,
+                StatoVolo.IN_RITARDO,
+                2
+        ));
 
-        // Creazione di un utente generico e prenotazione di un volo
-        UtenteGenerico utente = new UtenteGenerico("utente1", "password1");
-        UtenteGenerico utente2 = new UtenteGenerico("utente2", "password2");
+        voli.add(new Volo(
+                "CCC789",
+                "CompagniaAerea3",
+                "Francia",
+                "Napoli",
+                LocalDateTime.parse("12/11/2025 16:00", dtf),
+                0,
+                StatoVolo.PROGRAMMATO,
+                null                       // gate non assegnato ancora
+        ));
 
-        UtenteGenerico utente3 = new UtenteGenerico("utente3", "password3");
-        UtenteGenerico utente4 = new UtenteGenerico("utente4", "password4");
+        // Lista utenti registrati
+        ArrayList<Utente> utenti = new ArrayList<>();
 
-        UtenteAmministratore admin = new UtenteAmministratore("admin1", "password1");
-        admin.inserisciVolo(volo1);
-        admin.inserisciVolo(volo2);
-        admin.inserisciVolo(volo3);
-        admin.inserisciVolo(volo4);
+        // Creo utenti
+        Utente utente1 = new Utente(1, "utente1", "pass1", RuoloUtente.UTENTE);
+        Utente utente2 = new Utente(2, "admin1", "adminpass", RuoloUtente.AMMINISTRATORE);
 
-        UtenteAmministratore admin2 = new UtenteAmministratore("admin2", "password2");
-        admin2.inserisciVolo(volo3);
-        admin2.inserisciVolo(volo4);
+        utenti.add(utente1);
+        utenti.add(utente2);
 
+        // Creo prenotazione (utente1 prenota il volo AAA123)
+        Prenotazione prenotazione = new Prenotazione(
+                1,
+                utente1.getId(),
+                "AAA123",
+                "Mario Rossi",
+                "TCK001",
+                "12A",
+                StatoPrenotazione.CONFERMATA
+        );
 
-        utentiRegistrati.add(utente);
-        utentiRegistrati.add(utente2);
-        utentiRegistrati.add(utente3);
-        utentiRegistrati.add(utente4);
-        utentiRegistrati.add(admin);
-        utentiRegistrati.add(admin2);
+        // Stampa dati
+        System.out.println("Voli disponibili:");
+        for (Volo v : voli) {
+            System.out.println(v);
+        }
 
-        Prenotazione prenotazione = new Prenotazione("TCK123", "RSSMRA00A01H501Z", "Vittoria", "oilgoG", "12A", StatoPrenotazione.CONFERMATA, volo1);
+        System.out.println("\nUtenti registrati:");
+        for (Utente u : utenti) {
+            System.out.println(u);
+        }
 
-        // Effettuazione della prenotazione e visualizzazione
-        for(int i = 0; i < 20; i++){
-        utente.prenotaVolo(volo1, prenotazione);}
+        System.out.println("\nPrenotazione effettuata:");
+        System.out.println(prenotazione);
 
-        Login login = new Login(new Controller(utentiRegistrati,voli));
-
-        login.setVisible(true);
+        // Qui puoi aggiungere altre logiche come login, gestione prenotazioni, ecc.
 
     }
 }

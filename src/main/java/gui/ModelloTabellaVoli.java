@@ -1,9 +1,6 @@
 package gui;
 
-import model.Gate;
 import model.Volo;
-import model.VoloArrivoANapoli;
-import model.VoloPartenzaDaNapoli;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

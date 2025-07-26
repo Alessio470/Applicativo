@@ -1,28 +1,22 @@
 package model;
 
-/**
- * The type Gate.
- */
 public class Gate {
-    private String numeroGate;
+    private int numero;
+    private String descrizione;
 
-    /**
-     * Instantiates a new Gate.
-     *
-     * @param numero the numero
-     */
-    public Gate(int numero) {
-        this.numeroGate = String.valueOf(numero);
+    public Gate(int numero, String descrizione) {
+        this.numero = numero;
+        this.descrizione = descrizione;
     }
 
-    /**
-     * Gets numero gate.
-     *
-     * @return the numero gate
-     */
-    public String getNumeroGate() {
-        return numeroGate;
-    }
+    public int getNumero() { return numero; }
+    public String getDescrizione() { return descrizione; }
 
-    
+    public void setNumero(int numero) { this.numero = numero; }
+    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+
+    @Override
+    public String toString() {
+        return "Gate{" + "numero=" + numero + ", descrizione='" + descrizione + "'}";
+    }
 }

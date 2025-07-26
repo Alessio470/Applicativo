@@ -1,99 +1,50 @@
 package model;
 
 import model.enums.StatoVolo;
+import java.time.LocalDateTime;
 
-/**
- * The type Volo.
- */
-public abstract class Volo {
-    /**
-     * The Codice volo.
-     */
-    protected String codiceVolo;
-    /**
-     * The Compagnia aerea.
-     */
-    protected String compagniaAerea;
-    /**
-     * The Data volo.
-     */
-    protected String dataVolo;
-    /**
-     * The Orario previsto.
-     */
-    protected String orarioPrevisto;
-    /**
-     * The Ritardo.
-     */
-    protected String ritardo;
-    /**
-     * The Stato.
-     */
-    protected StatoVolo stato;
+public class Volo {
+    private String codice;
+    private String compagnia;
+    private String aeroportoOrigine;
+    private String aeroportoDestinazione;
+    private LocalDateTime dataOra;
+    private int ritardoMinuti;
+    private StatoVolo stato;
+    private Integer numeroGate; // nullable se non ancora assegnato
 
-    /**
-     * Instantiates a new Volo.
-     *
-     * @param codiceVolo     the codice volo
-     * @param compagniaAerea the compagnia aerea
-     * @param dataVolo       the data volo
-     * @param orarioPrevisto the orario previsto
-     * @param ritardo        the ritardo
-     * @param stato          the stato
-     */
-// Costruttore
-    public Volo(String codiceVolo, String compagniaAerea, String dataVolo, String orarioPrevisto, String ritardo, StatoVolo stato) {
-        this.codiceVolo = codiceVolo;//
-        this.compagniaAerea = compagniaAerea;//
-        this.dataVolo = dataVolo;//
-        this.orarioPrevisto = orarioPrevisto;//
-        this.ritardo = ritardo;
-        this.stato = stato;//
+    public Volo(String codice, String compagnia, String aeroportoOrigine, String aeroportoDestinazione,
+                LocalDateTime dataOra, int ritardoMinuti, StatoVolo stato, Integer numeroGate) {
+        this.codice = codice;
+        this.compagnia = compagnia;
+        this.aeroportoOrigine = aeroportoOrigine;
+        this.aeroportoDestinazione = aeroportoDestinazione;
+        this.dataOra = dataOra;
+        this.ritardoMinuti = ritardoMinuti;
+        this.stato = stato;
+        this.numeroGate = numeroGate;
     }
 
-
-    /**
-     * Gets compagnia aerea.
-     *
-     * @return the compagnia aerea
-     */
-    public String getCompagniaAerea() { return compagniaAerea; }
-
-    /**
-     * Gets data volo.
-     *
-     * @return the data volo
-     */
-    public String getDataVolo() { return dataVolo; }
-
-    /**
-     * Gets orario previsto.
-     *
-     * @return the orario previsto
-     */
-    public String getOrarioPrevisto() { return orarioPrevisto; }
-
-    /**
-     * Gets ritardo.
-     *
-     * @return the ritardo
-     */
-    public String getRitardo() { return ritardo; }
-
-    /**
-     * Gets stato.
-     *
-     * @return the stato
-     */
+    public String getCodice() { return codice; }
+    public String getCompagnia() { return compagnia; }
+    public String getAeroportoOrigine() { return aeroportoOrigine; }
+    public String getAeroportoDestinazione() { return aeroportoDestinazione; }
+    public LocalDateTime getDataOra() { return dataOra; }
+    public int getRitardoMinuti() { return ritardoMinuti; }
     public StatoVolo getStato() { return stato; }
+    public Integer getNumeroGate() { return numeroGate; }
 
-    /**
-     * Gets codice volo.
-     *
-     * @return the codice volo
-     */
-    public String getCodiceVolo() {
-        return codiceVolo;
+    public void setCodice(String codice) { this.codice = codice; }
+    public void setCompagnia(String compagnia) { this.compagnia = compagnia; }
+    public void setAeroportoOrigine(String aeroportoOrigine) { this.aeroportoOrigine = aeroportoOrigine; }
+    public void setAeroportoDestinazione(String aeroportoDestinazione) { this.aeroportoDestinazione = aeroportoDestinazione; }
+    public void setDataOra(LocalDateTime dataOra) { this.dataOra = dataOra; }
+    public void setRitardoMinuti(int ritardoMinuti) { this.ritardoMinuti = ritardoMinuti; }
+    public void setStato(StatoVolo stato) { this.stato = stato; }
+    public void setNumeroGate(Integer numeroGate) { this.numeroGate = numeroGate; }
+
+    @Override
+    public String toString() {
+        return "Volo{codice='" + codice + "', stato=" + stato + ", gate=" + numeroGate + '}';
     }
-
 }

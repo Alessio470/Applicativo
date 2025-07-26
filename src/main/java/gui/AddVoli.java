@@ -1,7 +1,6 @@
 package gui;
 
 import controller.Controller;
-import model.VoloPartenzaDaNapoli;
 import model.enums.StatoVolo;
 
 import javax.swing.*;
