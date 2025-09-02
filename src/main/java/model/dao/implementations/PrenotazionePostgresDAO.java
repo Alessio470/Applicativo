@@ -1,6 +1,6 @@
 package model.dao.implementations;
 
-import model.dao.PrenotazioneDAO;
+import model.dao.interfaces.PrenotazioneDAO;
 import database.ConnessioneDatabase;
 import model.Prenotazione;
 import model.Volo;

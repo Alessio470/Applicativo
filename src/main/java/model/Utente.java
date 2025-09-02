@@ -2,8 +2,8 @@ package model;
 
 import model.enums.RuoloUtente;
 
-public class Utente {
-    private String username;   // identificatore unico
+public abstract class Utente {
+    private String username;
     private String password;
     private RuoloUtente ruolo;
 
@@ -20,6 +20,11 @@ public class Utente {
     public void setUsername(String username) { this.username = username; }
     public void setPassword(String password) { this.password = password; }
     public void setRuolo(RuoloUtente ruolo) { this.ruolo = ruolo; }
+
+    // metodo utile per login
+    public boolean verificaPassword(String pass) {
+        return password.equals(pass);
+    }
 
     @Override
     public String toString() {

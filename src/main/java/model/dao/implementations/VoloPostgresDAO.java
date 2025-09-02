@@ -1,6 +1,6 @@
 package model.dao.implementations;
 
-import model.dao.VoloDAO;
+import model.dao.interfaces.VoloDAO;
 import database.ConnessioneDatabase;
 import model.Volo;
 import model.enums.StatoVolo;
