@@ -1,4 +1,4 @@
-package dao;
+package model.dao;
 
 import model.Prenotazione;
 import java.util.List;

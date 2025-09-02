@@ -1,6 +1,6 @@
-package implementazionePostgresDAO;
+package model.dao.implementations;
 
-import dao.VoloDAO;
+import model.dao.VoloDAO;
 import database.ConnessioneDatabase;
 import model.Volo;
 import model.enums.StatoVolo;

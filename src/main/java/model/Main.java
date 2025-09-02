@@ -1,8 +1,6 @@
 package model;
 
-import model.enums.RuoloUtente;
-import model.enums.StatoPrenotazione;
-import model.enums.StatoVolo;
+import model.enums.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,22 +10,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Formattatore per data e ora
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-        // Lista voli
         ArrayList<Volo> voli = new ArrayList<>();
 
-        // Creo voli (arrivi e partenze unificati)
         voli.add(new Volo(
                 "AAA123",
                 "CompagniaAerea1",
-                "Napoli",                  // aeroportoOrigine
-                "Turchia",                 // aeroportoDestinazione
+                "Napoli",
+                "Turchia",
                 LocalDateTime.parse("12/11/2025 12:00", dtf),
                 0,
                 StatoVolo.PROGRAMMATO,
-                1                          // gate assegnato
+                1
         ));
 
         voli.add(new Volo(
@@ -49,23 +44,21 @@ public class Main {
                 LocalDateTime.parse("12/11/2025 16:00", dtf),
                 0,
                 StatoVolo.PROGRAMMATO,
-                null                       // gate non assegnato ancora
+                null
         ));
 
-        // Lista utenti registrati
         ArrayList<Utente> utenti = new ArrayList<>();
 
-        // Creo utenti
-        Utente utente1 = new Utente(1, "utente1", "pass1", RuoloUtente.UTENTE);
-        Utente utente2 = new Utente(2, "admin1", "adminpass", RuoloUtente.AMMINISTRATORE);
+        Utente utente1 = new Utente("utente1", "pass1", RuoloUtente.UTENTE);
+        Utente utente2 = new Utente("admin1", "adminpass", RuoloUtente.AMMINISTRATORE);
 
         utenti.add(utente1);
         utenti.add(utente2);
 
-        // Creo prenotazione (utente1 prenota il volo AAA123)
+        // Prenotazione fatta da utente1 (username "utente1")
         Prenotazione prenotazione = new Prenotazione(
                 1,
-                utente1.getId(),
+                "utente1",               // usernameUtente
                 "AAA123",
                 "Mario Rossi",
                 "TCK001",
@@ -73,7 +66,6 @@ public class Main {
                 StatoPrenotazione.CONFERMATA
         );
 
-        // Stampa dati
         System.out.println("Voli disponibili:");
         for (Volo v : voli) {
             System.out.println(v);
@@ -86,8 +78,6 @@ public class Main {
 
         System.out.println("\nPrenotazione effettuata:");
         System.out.println(prenotazione);
-
-        // Qui puoi aggiungere altre logiche come login, gestione prenotazioni, ecc.
 
     }
 }

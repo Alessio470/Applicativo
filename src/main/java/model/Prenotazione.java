@@ -4,17 +4,17 @@ import model.enums.StatoPrenotazione;
 
 public class Prenotazione {
     private int id;
-    private Integer idUtente;       // può essere null se prenotazione fatta senza login
+    private String usernameUtente;    // può essere null se prenotazione senza login
     private String codiceVolo;
-    private String nomePasseggero;  // sempre valorizzato
+    private String nomePasseggero;    // sempre valorizzato
     private String numeroBiglietto;
     private String posto;
     private StatoPrenotazione stato;
 
-    public Prenotazione(int id, Integer idUtente, String codiceVolo, String nomePasseggero,
+    public Prenotazione(int id, String usernameUtente, String codiceVolo, String nomePasseggero,
                         String numeroBiglietto, String posto, StatoPrenotazione stato) {
         this.id = id;
-        this.idUtente = idUtente;
+        this.usernameUtente = usernameUtente;
         this.codiceVolo = codiceVolo;
         this.nomePasseggero = nomePasseggero;
         this.numeroBiglietto = numeroBiglietto;
@@ -23,7 +23,7 @@ public class Prenotazione {
     }
 
     public int getId() { return id; }
-    public Integer getIdUtente() { return idUtente; }
+    public String getUsernameUtente() { return usernameUtente; }
     public String getCodiceVolo() { return codiceVolo; }
     public String getNomePasseggero() { return nomePasseggero; }
     public String getNumeroBiglietto() { return numeroBiglietto; }
@@ -31,7 +31,7 @@ public class Prenotazione {
     public StatoPrenotazione getStato() { return stato; }
 
     public void setId(int id) { this.id = id; }
-    public void setIdUtente(Integer idUtente) { this.idUtente = idUtente; }
+    public void setUsernameUtente(String usernameUtente) { this.usernameUtente = usernameUtente; }
     public void setCodiceVolo(String codiceVolo) { this.codiceVolo = codiceVolo; }
     public void setNomePasseggero(String nomePasseggero) { this.nomePasseggero = nomePasseggero; }
     public void setNumeroBiglietto(String numeroBiglietto) { this.numeroBiglietto = numeroBiglietto; }

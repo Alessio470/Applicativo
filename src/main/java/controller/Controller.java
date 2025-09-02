@@ -2,10 +2,10 @@ package controller;
 
 import model.*;
 import model.enums.StatoVolo;
-import dao.VoloDAO;
-import dao.PrenotazioneDAO;
-import implementazionePostgresDAO.VoloPostgresDAO;
-import implementazionePostgresDAO.PrenotazionePostgresDAO;
+import model.dao.VoloDAO;
+import model.dao.PrenotazioneDAO;
+import model.dao.implementations.VoloPostgresDAO;
+import model.dao.implementations.PrenotazionePostgresDAO;
 
 
 

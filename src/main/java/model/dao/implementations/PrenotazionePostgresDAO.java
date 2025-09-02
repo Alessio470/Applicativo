@@ -1,6 +1,6 @@
-package implementazionePostgresDAO;
+package model.dao.implementations;
 
-import dao.PrenotazioneDAO;
+import model.dao.PrenotazioneDAO;
 import database.ConnessioneDatabase;
 import model.Prenotazione;
 import model.Volo;
