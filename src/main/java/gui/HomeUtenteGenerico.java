@@ -1,23 +1,29 @@
 package gui;
 
 import controller.Controller;
-import model.Volo;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * The type Home utente generico.
  */
-public class HomeUtenteGenerico extends JFrame {
-    private JLabel textBenvenuto;
-    private JButton buttonExit;
-    private JPanel contentPane;
-    private JTable tableVoliGenerali;
-    private JButton buttonVisualizzaVoliPrenotati;
-    private JButton buttonEffettuaPrenotazione;
 
-    private JFrame frame;
+
+public class HomeUtenteGenerico extends JFrame {
+    private JPanel contentPane;
+
+    private JFrame FrameHomeGenererico;
+    private JPanel FrameTitoli;
+    private JPanel FrameAlice;
+    private JPanel FrameTabellaVoli;
+    private JPanel FrameBottoneIndietro;
+    private JPanel FrameBottoneAreaPersonale;
+    private JPanel FrameEffettuaPrenotazione;
+    private JButton BottoneAereaPersonale;
+    private JButton FrameEffettiaPrenotazione;
+    private JTable table1;
+    private JButton BottoneIndietro;
+    private JLabel LabelTitolo;
     private Controller controller;
 
     /**
@@ -26,6 +32,8 @@ public class HomeUtenteGenerico extends JFrame {
      * @param frameChiamante the frame chiamante
      * @param controller     the controller
      */
+
+/*
     public HomeUtenteGenerico(JFrame frameChiamante, Controller controller) {
         this.controller = controller;
         this.frame = new JFrame("Home");
@@ -60,10 +68,14 @@ public class HomeUtenteGenerico extends JFrame {
     /**
      * Aggiorna tabella.
      */
+
+/*
     public void aggiornaTabella() {
         ModelloTabellaVoli modello = new ModelloTabellaVoli();
         ArrayList<Volo> listaVoli = controller.getVoli();
         modello.settaVoliDaMostrare(listaVoli);
         tableVoliGenerali.setModel(modello);
     }
+ */
 }
+

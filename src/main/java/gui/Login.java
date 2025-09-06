@@ -1,14 +1,27 @@
 package gui;
 
 import controller.Controller;
+import model.enums.RuoloUtente;
 
 import javax.swing.*;
 
-/**
- * The type Login.
- */
 public class Login extends JFrame {
     private JPanel login;
+    private JPanel Titolo;
+    private JPanel CampiRegistrazione;
+    private JPanel FrameUsername;
+    private JPanel FramePassword;
+    private JLabel TextEffettuaAccesso;
+    private JLabel TextUsername;
+    private JTextField FieldUsername;
+    private JLabel TextPassword;
+    private JTextField FieldPassword;
+    private JButton BottoneLogin;
+    private JButton BottoneRegistrati;
+    private JLabel LabelOppire;
+    private JPanel PanelLogin;
+    private JPanel PanelRegistrati;
+    private JPanel PanelOppure;
     private JLabel textLogin;
     private JLabel textNome;
     private JLabel textPassword;
@@ -19,14 +32,8 @@ public class Login extends JFrame {
      * The Carattere.
      */
     final int carattere = 20;
-
     private Controller controller;
 
-    /**
-     * Instantiates a new Login.
-     *
-     * @param controller the controller
-     */
     public Login(Controller controller) {
         this.controller = controller;
 
@@ -48,28 +55,31 @@ public class Login extends JFrame {
             String username = fieldNome.getText();
             String password = new String(fieldPassword.getPassword());
 
-            if (controller.loginValido(username, password)) {
+            if (controller.login(username, password)) {
                 JOptionPane.showMessageDialog(this, "Login effettuato");
 
-                switch (controller.userType()) {
-                    case "Generico":
+                RuoloUtente ruolo = controller.getUtenteLoggato().getRuolo();
+
+                /*
+                switch (ruolo) {
+                    case UTENTE -> {
                         JFrame homeFrame = new HomeUtenteGenerico(this, controller);
                         homeFrame.setVisible(true);
                         this.dispose();
-                        break;
-                    case "Admin":
+                    }
+                    case AMMINISTRATORE -> {
                         JFrame homeAdmin = new HomepageAmministratore(this, controller);
                         homeAdmin.setVisible(true);
                         this.dispose();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this, "Tipo utente sconosciuto");
-                        break;
+                    }
+                    default -> JOptionPane.showMessageDialog(this, "Tipo utente sconosciuto");
                 }
+
+                 */
+
             } else {
                 JOptionPane.showMessageDialog(this, "Credenziali non valide", "Errore", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 }
-

@@ -18,15 +18,16 @@ public class Passeggero {
         this.bagagli = new ArrayList<>();
     }
 
+    // --- Getter ---
     public String getNome() { return nome; }
     public String getCognome() { return cognome; }
     public String getCodiceFiscale() { return codiceFiscale; }
-
-    public void aggiungiPrenotazione(Prenotazione p) { prenotazioni.add(p); }
-    public void aggiungiBagaglio(Bagaglio b) { bagagli.add(b); }
-
     public List<Prenotazione> getPrenotazioni() { return prenotazioni; }
     public List<Bagaglio> getBagagli() { return bagagli; }
+
+    // --- Metodi utili ---
+    public void aggiungiPrenotazione(Prenotazione p) { prenotazioni.add(p); }
+    public void aggiungiBagaglio(Bagaglio b) { bagagli.add(b); }
 
     @Override
     public String toString() {

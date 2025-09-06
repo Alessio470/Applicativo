@@ -1,21 +1,36 @@
 package gui;
 
 import controller.Controller;
-import model.Volo;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * The type Homepage amministratore.
  */
+
 public class HomepageAmministratore extends JFrame {
     private JLabel labelBenvenuto;
-    private JButton buttonInserisciVolo;
-    private JButton buttonModificaGate;
+    private JButton BottoneInserisciVolo;
     private JButton buttonIndietro;
-    private JTable table1;
-    private JPanel contentPane;
+    private JTable TabellaVoli;
+    private JPanel PanelHomepageAmministratore;
+    private JPanel PanelTabellaVoli;
+    private JPanel PanelBottoni;
+    private JButton CONFERMAMODIFICAButton;
+    private JPanel PanelTitolo;
+    private JPanel PanelCampiModifica;
+    private JLabel LableCompagniaAerea;
+    private JTextField FieldCompagniaAerea;
+    private JLabel LableAeroportoOrigine;
+    private JTextField FieldAeroportoOrigine;
+    private JLabel LabelAeroporotoDestinazione;
+    private JTextField FieldAeroportoDestinazione;
+    private JLabel LabelDataVolo;
+    private JTextField FieldDataVolo;
+    private JLabel LabelOrario;
+    private JTextField FieldOrario;
+    private JLabel LabelStatoVolo;
+    private JComboBox ComboStatoVolo;
 
     private Controller controller;
 
@@ -25,6 +40,8 @@ public class HomepageAmministratore extends JFrame {
      * @param frameChiamante the frame chiamante
      * @param controller     the controller
      */
+
+/*
     public HomepageAmministratore(JFrame frameChiamante, Controller controller) {
         this.controller = controller;
 
@@ -60,6 +77,8 @@ public class HomepageAmministratore extends JFrame {
     /**
      * Aggiorna tabella.
      */
+
+/*
     public void aggiornaTabella() {
         ModelloTabellaVoli modello = new ModelloTabellaVoli();
         ArrayList<Volo> listaVoli = controller.getVoli();
@@ -67,5 +86,7 @@ public class HomepageAmministratore extends JFrame {
         table1.setModel(modello);
     }
 
+ */
 
 }
+

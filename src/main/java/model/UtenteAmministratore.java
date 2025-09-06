@@ -10,9 +10,10 @@ public class UtenteAmministratore extends Utente {
 
     public UtenteAmministratore(String username, String password) {
         super(username, password, RuoloUtente.AMMINISTRATORE);
-        voliGestiti = new ArrayList<>();
+        this.voliGestiti = new ArrayList<>();
     }
 
+    // --- Metodi di gestione voli ---
     public void inserisciVolo(Volo volo) {
         voliGestiti.add(volo);
     }
@@ -27,9 +28,17 @@ public class UtenteAmministratore extends Utente {
 
     public Volo cercaVolo(String codice) {
         for (Volo v : voliGestiti) {
-            if (v.getCodice().equals(codice)) return v;
+            if (v.getCodice().equals(codice)) {
+                return v;
+            }
         }
         return null;
+    }
+
+    public void modificaGate(Volo volo, Integer nuovoGate) {
+        if (voliGestiti.contains(volo)) {
+            volo.setNumeroGate(nuovoGate);
+        }
     }
 
     @Override

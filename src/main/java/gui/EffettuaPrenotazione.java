@@ -2,26 +2,39 @@ package gui;
 
 import controller.Controller;
 import model.*;
-import model.enums.StatoPrenotazione;
-import model.enums.StatoVolo;
 
 import javax.swing.*;
-import java.util.UUID;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The type Effettua prenotazione.
  */
+
 public class EffettuaPrenotazione extends JFrame {
-    private JPanel contentPane;
+    private JPanel FrameEffettuaPrenotazione;
     private JTable tableVoli;
-    private JTextField textField1; // Nome
-    private JTextField textField2; // Cognome
+    private JTextField FieldNome; // Nome
+    private JTextField FieldCognome;
+    private JTextField FieldCodiceFiscale;
     private JTextField textField3; // Codice fiscale
-    private JTextField textField4; // Numero posto
     private JButton buttonConfermaPrenotazione;
     private JButton buttonIndietro;
+    private JLabel LableNome;
+    private JLabel LabelCognome;
+    private JPanel PanelCampoCodiceFiscale; // Cognome
+    private JPanel PanelCampoNumeroPosto;
+    private JPanel PanelBottoni;
+    private JLabel LableCoficeFiscale;
+    private JPanel PanelTitolo;
+    private JPanel PanelTabellaVoli;
+    private JPanel PanelCampoNome;
+    private JPanel PanelCampoCognome;
+    private JLabel LableNumeroPosto;
+    private JTextField FieldNumeroPosto;
+    private JPanel PanelBagaglio;
+    private JLabel LabelBagaglio;
+    private JRadioButton RadioButtonNo;
+    private JRadioButton RadioButtonSI;
 
     private Controller controller;
     private JFrame frameChiamante;
@@ -33,6 +46,7 @@ public class EffettuaPrenotazione extends JFrame {
      * @param controller     the controller
      * @param frameChiamante the frame chiamante
      */
+/*
     public EffettuaPrenotazione(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
 
@@ -43,6 +57,7 @@ public class EffettuaPrenotazione extends JFrame {
             if (v.getStato() == StatoVolo.PROGRAMMATO) {
                 this.voliPrenotabili.add(v);
             }
+
         }
 
         setTitle("Effettua Prenotazione");
@@ -111,4 +126,7 @@ public class EffettuaPrenotazione extends JFrame {
         modello.settaVoliDaMostrare(filtrati);
         tableVoli.setModel(modello);
     }
+*/
 }
+
+

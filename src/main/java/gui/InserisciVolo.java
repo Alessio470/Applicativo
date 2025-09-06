@@ -1,36 +1,35 @@
 package gui;
 
 import controller.Controller;
-import model.enums.StatoVolo;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * The type Add voli.
- */
-public class AddVoli extends JFrame {
-    private JPanel panel1;
-    private JPanel codVoloPanel;
-    private JPanel nomeCompagniaPanel;
+*/
+public class InserisciVolo extends JFrame {
+    private JPanel PanelInserisciVoli;
+    private JPanel PanelCampoNomeCompagnia;
     private JPanel dataVoloPanel;
-    private JTextField textField1;
-    private JPanel orarioPrebistoPanel;
-    private JPanel statoPanel;
+    private JPanel orarioPrevistoPanel;
     private JPanel confirmButton;
-    private JPanel ritardoPanel;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
+    private JPanel PanelBottoni;
+    private JTextField FieldNomeCompagnia;
+    private JTextField FieldDataVolo;
+    private JTextField FieldOrario;
     private JButton buttonConfirm;
-    private JRadioButton programmatoRadioButton;
-    private JRadioButton decollatoRadioButton;
-    private JRadioButton inRitardoRadioButton;
-    private JRadioButton atterratoRadioButton;
-    private JRadioButton cancellatoRadioButton;
     private JButton buttonIndietro;
+    private JPanel PanelCampiInserimento;
+    private JLabel LabelNomeCompagnia;
+    private JLabel LabelDataVolo;
+    private JLabel LabelOrario;
+    private JTextField FieldAeroportoOrigine;
+    private JTextField FieldAeroportoDestinazione;
+    private JComboBox ComboStatiVolo;
+    private JPanel PanelAeroportoOrigine;
+    private JPanel PanelAeroportoDestinazione;
+    private JLabel LabelAeroportoOrigine;
+    private JLabel LabelAeroportoDestinazione;
 
     private Controller controller;
     private JFrame frameChiamante;
@@ -40,7 +39,8 @@ public class AddVoli extends JFrame {
      *
      * @param controller     the controller
      * @param frameChiamante the frame chiamante
-     */
+*/
+    /*
     public AddVoli(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
         this.frameChiamante = frameChiamante;
@@ -101,4 +101,9 @@ public class AddVoli extends JFrame {
             }
         });
     }
+
+     */
 }
+
+
+

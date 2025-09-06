@@ -1,12 +1,11 @@
 package model.dao.interfaces;
 
-import model.*;
+import model.Gate;
 import java.util.List;
 
 public interface GateDAO {
-    void inserisciGate(Gate gate);
-    Gate trovaPerCodice(String codice);
-    List<Gate> trovaTutti();
-    void aggiornaStato(String codice, model.enums.StatoGate stato);
+    void inserisciGate(Gate gate) throws Exception;
+    Gate trovaPerNumero(int numero) throws Exception;
+    List<Gate> trovaTutti() throws Exception;
+    void aggiornaVoloAssegnato(int numeroGate, String codiceVolo) throws Exception;
 }
-

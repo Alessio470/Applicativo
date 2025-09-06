@@ -1,6 +1,8 @@
 package model;
 
-import model.enums.*;
+import model.enums.StatoBagaglio;
+import model.enums.StatoPrenotazione;
+import model.enums.StatoVolo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,10 +14,10 @@ public class Main {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-        // --- Creazione voli ---
+        // --- Voli ---
         ArrayList<Volo> voli = new ArrayList<>();
 
-        voli.add(new Volo(
+        Volo voloA = new Volo(
                 "AAA123",
                 "CompagniaAerea1",
                 "Napoli",
@@ -24,9 +26,9 @@ public class Main {
                 0,
                 StatoVolo.PROGRAMMATO,
                 1
-        ));
+        );
 
-        voli.add(new Volo(
+        Volo voloB = new Volo(
                 "BBB456",
                 "CompagniaAerea2",
                 "Napoli",
@@ -35,9 +37,9 @@ public class Main {
                 15,
                 StatoVolo.IN_RITARDO,
                 2
-        ));
+        );
 
-        voli.add(new Volo(
+        Volo voloC = new Volo(
                 "CCC789",
                 "CompagniaAerea3",
                 "Francia",
@@ -46,77 +48,76 @@ public class Main {
                 0,
                 StatoVolo.PROGRAMMATO,
                 null
-        ));
+        );
 
-        // --- Creazione utenti ---
+        voli.add(voloA);
+        voli.add(voloB);
+        voli.add(voloC);
+
+        // --- Utenti ---
         ArrayList<Utente> utenti = new ArrayList<>();
+        UtenteGenerico user = new UtenteGenerico("utente1", "pass1");
+        UtenteAmministratore admin = new UtenteAmministratore("admin1", "adminpass");
+        utenti.add(user);
+        utenti.add(admin);
 
-        UtenteGenerico utente1 = new UtenteGenerico("utente1", "pass1");
-        UtenteAmministratore admin1 = new UtenteAmministratore("admin1", "adminpass");
-
-        utenti.add(utente1);
-        utenti.add(admin1);
-
-        // --- Creazione passeggeri ---
-        Passeggero passeggero1 = new Passeggero("Mario", "Rossi", "RSSMRA00A01H501Z");
-        Passeggero passeggero2 = new Passeggero("Luca", "Bianchi", "BNCLCU00B02H501X");
+        // --- Passeggeri ---
+        Passeggero p1 = new Passeggero("Mario", "Rossi", "RSSMRA00A01H501Z");
+        Passeggero p2 = new Passeggero("Luca", "Bianchi", "BNCLCU00B02H501X");
 
         // --- Prenotazioni ---
-        Prenotazione prenotazione1 = new Prenotazione(
+        Prenotazione pr1 = new Prenotazione(
                 1,
-                utente1.getUsername(),
-                "AAA123",
-                passeggero1.getNome(),
+                user.getUsername(),              // usernameUtente (prenotazione con login)
+                "AAA123",                        // codice volo
+                p1.getNome() + " " + p1.getCognome(),
                 "TCK001",
                 "12A",
                 StatoPrenotazione.CONFERMATA
         );
 
-        Prenotazione prenotazione2 = new Prenotazione(
+        Prenotazione pr2 = new Prenotazione(
                 2,
-                null,  // prenotazione senza login
+                null,                            // prenotazione senza login
                 "BBB456",
-                passeggero2.getNome(),
+                p2.getNome() + " " + p2.getCognome(),
                 "TCK002",
                 "14B",
                 StatoPrenotazione.IN_ATTESA
         );
 
-        // Associo le prenotazioni all'utente generico
-        utente1.prenotaVolo(prenotazione1);
-        // prenotazione2 non ha utente, quindi non la aggiungo a nessuno
+        // Collego le prenotazioni all'utente generico (solo quelle fatte da lui)
+        user.prenotaVolo(pr1);
 
-        // --- Creazione bagagli ---
-        Bagaglio bagaglio1 = new Bagaglio("BAG001", passeggero1, voli.get(0), StatoBagaglio.REGISTRATO);
-        Bagaglio bagaglio2 = new Bagaglio("BAG002", passeggero2, voli.get(1), StatoBagaglio.DISPONIBILE);
+        // (Opzionale) Collego anche lato volo per contare/prendere confermate
+        voloA.aggiungiPrenotazione(pr1);
+        voloB.aggiungiPrenotazione(pr2);
 
-        // --- Stampa voli ---
-        System.out.println("Voli disponibili:");
-        for (Volo v : voli) {
-            System.out.println(v);
-        }
+        // --- Bagagli ---
+        Bagaglio b1 = new Bagaglio("BAG001", p1, voloA, StatoBagaglio.REGISTRATO);
+        Bagaglio b2 = new Bagaglio("BAG002", p2, voloB, StatoBagaglio.DISPONIBILE);
 
-        // --- Stampa utenti ---
-        System.out.println("\nUtenti registrati:");
-        for (Utente u : utenti) {
-            System.out.println(u);
-        }
+        // Aggiorno stato bagaglio 1 per test
+        b1.setStato(StatoBagaglio.CARICATO);
 
-        // --- Stampa prenotazioni ---
-        System.out.println("\nPrenotazioni dell'utente " + utente1.getUsername() + ":");
-        for (Prenotazione p : utente1.getPrenotazioni()) {
-            System.out.println(p);
-        }
+        // --- Stampe di test ---
+        System.out.println("=== VOLI ===");
+        for (Volo v : voli) System.out.println(v);
 
-        // --- Prenotazioni per volo ---
-        System.out.println("\nPrenotazioni per il volo AAA123:");
-        for (Prenotazione p : utente1.getPrenotazioniPerVolo(voli.get(0))) {
-            System.out.println(p);
-        }
+        System.out.println("\n=== UTENTI ===");
+        for (Utente u : utenti) System.out.println(u);
 
-        // --- Stampa bagagli ---
-        System.out.println("\nBagagli registrati:");
-        System.out.println(bagaglio1);
-        System.out.println(bagaglio2);
+        System.out.println("\n=== PRENOTAZIONI DELL'UTENTE " + user.getUsername() + " ===");
+        for (Prenotazione p : user.getPrenotazioni()) System.out.println(p);
+
+        System.out.println("\n=== PRENOTAZIONI DELL'UTENTE PER IL VOLO AAA123 ===");
+        for (Prenotazione p : user.getPrenotazioniPerVolo(voloA)) System.out.println(p);
+
+        System.out.println("\n=== BAGAGLI ===");
+        System.out.println(b1);
+        System.out.println(b2);
+
+        System.out.println("\n=== PRENOTAZIONI CONFERMATE SU AAA123 (lato volo) ===");
+        for (Prenotazione p : voloA.getPrenotazioniConfermate()) System.out.println(p);
     }
 }

@@ -1,3 +1,4 @@
+
 package gui;
 
 import controller.Controller;
@@ -10,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 /**
  * The type Prenotazioni utente.
  */
+
+
 public class PrenotazioniUtente extends JFrame {
     private JPanel contentPane;
     private JTable table1;
@@ -23,6 +26,8 @@ private Controller controller;
      * @param controller     the controller
      * @param frameChiamante the frame chiamante
      */
+
+/*
     public PrenotazioniUtente(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
 
@@ -64,4 +69,5 @@ private Controller controller;
             dispose();
         });
     }
+*/
 }

@@ -21,13 +21,13 @@ public abstract class Utente {
     public void setPassword(String password) { this.password = password; }
     public void setRuolo(RuoloUtente ruolo) { this.ruolo = ruolo; }
 
-    // metodo utile per login
+    // Metodo utile per login
     public boolean verificaPassword(String pass) {
         return password.equals(pass);
     }
 
     @Override
     public String toString() {
-        return "Utente{username='" + username + "', ruolo=" + ruolo + '}';
+        return "Utente{username='" + username + "', ruolo=" + ruolo + "}";
     }
 }

@@ -13,22 +13,19 @@ public class UtenteGenerico extends Utente {
         this.prenotazioni = new ArrayList<>();
     }
 
-    // aggiunge una prenotazione
+    // --- Metodi di gestione prenotazioni ---
     public void prenotaVolo(Prenotazione prenotazione) {
         prenotazioni.add(prenotazione);
     }
 
-    // rimuove una prenotazione
     public void eliminaPrenotazione(Prenotazione prenotazione) {
         prenotazioni.remove(prenotazione);
     }
 
-    // restituisce tutte le prenotazioni
     public List<Prenotazione> getPrenotazioni() {
         return prenotazioni;
     }
 
-    // restituisce solo le prenotazioni relative a un volo specifico (confrontando il codice del volo)
     public List<Prenotazione> getPrenotazioniPerVolo(Volo volo) {
         List<Prenotazione> result = new ArrayList<>();
         for (Prenotazione p : prenotazioni) {
