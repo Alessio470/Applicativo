@@ -3,6 +3,8 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The type Home utente generico.
@@ -45,6 +47,12 @@ public class HomeUtenteGenerico extends JFrame {
                 loginFrame.toFront();
             }
         });
+        ButtonAereaPersonale.addActionListener(e -> {
+            AreaPersonale area = new AreaPersonale(this); // "this" è HomeUtenteGenerico
+            area.setVisible(true);
+            setVisible(false);
+        });
+
     }
 
 /*
