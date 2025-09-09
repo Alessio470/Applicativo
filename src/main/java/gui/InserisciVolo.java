@@ -31,6 +31,8 @@ public class InserisciVolo extends JFrame {
     private JPanel PanelButtonConferma;
     private JPanel PanelButtonIndietro;
     private JLabel LabelStato;
+    private JPanel PanelTitolo;
+    private JLabel LabelTitolo;
 
     private final JFrame homeAmministratore;
 
