@@ -81,4 +81,8 @@ public class Volo {
                 ", prenotazioni=" + prenotazioni.size() +
                 '}';
     }
+
+    public void setNumeroGate(Gate nuovoGate) {
+        this.gate = nuovoGate;
+    }
 }

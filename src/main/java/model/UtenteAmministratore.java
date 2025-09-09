@@ -35,7 +35,7 @@ public class UtenteAmministratore extends Utente {
         return null;
     }
 
-    public void modificaGate(Volo volo, Integer nuovoGate) {
+    public void modificaGate(Volo volo, Gate nuovoGate) {
         if (voliGestiti.contains(volo)) {
             volo.setNumeroGate(nuovoGate);
         }
