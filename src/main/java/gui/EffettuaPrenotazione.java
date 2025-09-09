@@ -42,16 +42,27 @@ public class EffettuaPrenotazione extends JFrame {
     private JPanel PanelButtonConfermaPrenotazione;
     private JPanel PanelButtonIndietro;
 
-    private Controller controller;
-    private JFrame frameChiamante;
-    private List<Volo> voliPrenotabili;
+    private final JFrame homeFrame;
 
-    /**
-     * Instantiates a new Effettua prenotazione.
-     *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     */
+    public EffettuaPrenotazione(JFrame homeFrame) {
+        this.homeFrame = homeFrame;
+
+        setTitle("Effettua Prenotazione");
+        setContentPane(PanelEffettuaPrenotazione);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pack();
+        setSize(800, 600);
+        setLocationRelativeTo(homeFrame);
+
+        ButtonIndietro.addActionListener(e -> {
+            dispose();
+            if (homeFrame != null) {
+                homeFrame.setVisible(true);
+                homeFrame.toFront();
+            }
+        });
+
+
 /*
     public EffettuaPrenotazione(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
@@ -133,6 +144,7 @@ public class EffettuaPrenotazione extends JFrame {
         tableVoli.setModel(modello);
     }
 */
+    }
 }
 
 

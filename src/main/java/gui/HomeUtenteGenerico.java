@@ -53,6 +53,12 @@ public class HomeUtenteGenerico extends JFrame {
             setVisible(false);
         });
 
+        ButtonEffettuaPrenotazione.addActionListener(e -> {
+            EffettuaPrenotazione prenotazione = new EffettuaPrenotazione(this);
+            prenotazione.setVisible(true);
+            setVisible(false);
+        });
+
     }
 
 /*
