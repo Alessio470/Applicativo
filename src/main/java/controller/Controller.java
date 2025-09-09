@@ -2,10 +2,7 @@ package controller;
 
 import model.*;
 import model.enums.StatoVolo;
-import model.dao.interfaces.VoloDAO;
-import model.dao.interfaces.PrenotazioneDAO;
-import model.dao.implementations.VoloImplDAO;
-import model.dao.implementations.PrenotazioneImplDAO;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +13,7 @@ import java.util.List;
  * Controller centrale del sistema.
  */
 public class Controller {
-
+/*
     private ArrayList<Utente> utentiRegistratiRef;
     private ArrayList<Volo> voliRegistratiRef;
 
@@ -154,4 +151,6 @@ public class Controller {
         }
         return model;
     }
+
+ */
 }

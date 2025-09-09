@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class EffettuaPrenotazione extends JFrame {
-    private JPanel FrameEffettuaPrenotazione;
+    private JPanel PanelEffettuaPrenotazione;
     private JTable tableVoli;
     private JTextField FieldNome; // Nome
     private JTextField FieldCognome;
@@ -21,20 +21,26 @@ public class EffettuaPrenotazione extends JFrame {
     private JButton buttonIndietro;
     private JLabel LableNome;
     private JLabel LabelCognome;
-    private JPanel PanelCampoCodiceFiscale; // Cognome
-    private JPanel PanelCampoNumeroPosto;
-    private JPanel PanelBottoni;
-    private JLabel LableCoficeFiscale;
+    private JPanel PanelCodiceFiscale; // Cognome
+    private JPanel PanelNumeroPosto;
+    private JPanel PanelButtons;
+    private JLabel LableCodiceFiscale;
     private JPanel PanelTitolo;
     private JPanel PanelTabellaVoli;
-    private JPanel PanelCampoNome;
-    private JPanel PanelCampoCognome;
+    private JPanel PanelNome;
+    private JPanel PanelCognome;
     private JLabel LableNumeroPosto;
     private JTextField FieldNumeroPosto;
     private JPanel PanelBagaglio;
     private JLabel LabelBagaglio;
     private JRadioButton RadioButtonNo;
-    private JRadioButton RadioButtonSI;
+    private JRadioButton RadioButtonSi;
+    private JLabel LabelTitolo;
+    private JTable TableVoli;
+    private JButton ButtonConfermaPrenotazione;
+    private JButton ButtonIndietro;
+    private JPanel PanelButtonConfermaPrenotazione;
+    private JPanel PanelButtonIndietro;
 
     private Controller controller;
     private JFrame frameChiamante;

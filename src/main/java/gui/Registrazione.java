@@ -3,22 +3,22 @@ package gui;
 import javax.swing.*;
 
 public class Registrazione {
-    private JPanel Registrazione;
-    private JPanel FrameTitolo;
-    private JPanel FrameCampi;
-    private JPanel FrameBottoni;
-    private JLabel TestoTitolo;
-    private JPanel FrameUsername;
-    private JPanel FramePassword;
-    private JPanel FrameConfermaP;
+    private JPanel PanelRegistrazione;
+    private JPanel PanelTitolo;
+    private JPanel PanelCampi;
+    private JPanel PanelButtons;
+    private JLabel LabelTitolo;
+    private JPanel PanelUsername;
+    private JPanel PanelPassword;
+    private JPanel PanelConfermaPassword;
     private JTextField FieldUsername;
     private JTextField FieldPassword;
-    private JTextField FieldConfermaP;
+    private JTextField FieldConfermaPassword;
     private JLabel LableUsername;
     private JLabel LabelPassword;
-    private JLabel LabelConfermaP;
-    private JPanel FrameBottoneRegistrati;
-    private JPanel FrameBottoneIndietro;
-    private JButton BottoneRegistrati;
-    private JButton BottoneIndietro;
+    private JLabel LabelConfermaPassword;
+    private JPanel PanelButtonRegistrati;
+    private JPanel PanelButtonIndietro;
+    private JButton ButtonRegistrati;
+    private JButton ButtonIndietro;
 }

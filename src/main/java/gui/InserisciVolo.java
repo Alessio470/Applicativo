@@ -9,16 +9,15 @@ import javax.swing.*;
 */
 public class InserisciVolo extends JFrame {
     private JPanel PanelInserisciVoli;
-    private JPanel PanelCampoNomeCompagnia;
-    private JPanel dataVoloPanel;
-    private JPanel orarioPrevistoPanel;
-    private JPanel confirmButton;
-    private JPanel PanelBottoni;
+    private JPanel PanelNomeCompagnia;
+    private JPanel PanelDataVolo;
+    private JPanel PanelOrarioPrevisto;
+    private JPanel PanelStato;
     private JTextField FieldNomeCompagnia;
     private JTextField FieldDataVolo;
     private JTextField FieldOrario;
-    private JButton buttonConfirm;
-    private JButton buttonIndietro;
+    private JButton ButtonConferma;
+    private JButton ButtonIndietro;
     private JPanel PanelCampiInserimento;
     private JLabel LabelNomeCompagnia;
     private JLabel LabelDataVolo;
@@ -30,6 +29,10 @@ public class InserisciVolo extends JFrame {
     private JPanel PanelAeroportoDestinazione;
     private JLabel LabelAeroportoOrigine;
     private JLabel LabelAeroportoDestinazione;
+    private JPanel PanelButtons;
+    private JPanel PanelButtonConferma;
+    private JPanel PanelButtonIndietro;
+    private JLabel LabelStato;
 
     private Controller controller;
     private JFrame frameChiamante;

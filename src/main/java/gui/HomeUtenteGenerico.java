@@ -12,16 +12,16 @@ import javax.swing.*;
 public class HomeUtenteGenerico extends JFrame {
     private JPanel contentPane;
 
-    private JFrame FrameHomeGenererico;
-    private JPanel FrameTitoli;
-    private JPanel FrameAlice;
-    private JPanel FrameTabellaVoli;
-    private JPanel FrameBottoneIndietro;
-    private JPanel FrameBottoneAreaPersonale;
-    private JPanel FrameEffettuaPrenotazione;
-    private JButton BottoneAereaPersonale;
-    private JButton FrameEffettiaPrenotazione;
-    private JTable table1;
+    private JPanel PanelHomeGenerico;
+    private JPanel PanelTitolo;
+    private JPanel PanelButton;
+    private JPanel PanelTabellaVoli;
+    private JPanel PanelBottoneIndietro;
+    private JPanel PanelButtonAreaPersonale;
+    private JPanel PanelButtonEffettuaPrenotazione;
+    private JButton ButtonAereaPersonale;
+    private JButton ButtonEffettuaPrenotazione;
+    private JTable TableVoli;
     private JButton BottoneIndietro;
     private JLabel LabelTitolo;
     private Controller controller;

@@ -9,14 +9,14 @@ import javax.swing.*;
  */
 
 public class HomepageAmministratore extends JFrame {
-    private JLabel labelBenvenuto;
-    private JButton BottoneInserisciVolo;
-    private JButton buttonIndietro;
+    private JLabel LabelTitolo;
+    private JButton ButtonInserisciVolo;
+    private JButton ButtonLogout;
     private JTable TabellaVoli;
     private JPanel PanelHomepageAmministratore;
     private JPanel PanelTabellaVoli;
-    private JPanel PanelBottoni;
-    private JButton CONFERMAMODIFICAButton;
+    private JPanel PanelButtonInserisciVolo;
+    private JButton ButtonConfermaModifica;
     private JPanel PanelTitolo;
     private JPanel PanelCampiModifica;
     private JLabel LableCompagniaAerea;
@@ -31,6 +31,15 @@ public class HomepageAmministratore extends JFrame {
     private JTextField FieldOrario;
     private JLabel LabelStatoVolo;
     private JComboBox ComboStatoVolo;
+    private JPanel PanelButtons;
+    private JPanel PanelButtonConfermaModifica;
+    private JPanel PanelButtonLogout;
+    private JPanel PanelCompagniaAerea;
+    private JPanel PanelAeroportoOrigine;
+    private JPanel PanelAeroportoDestinazione;
+    private JPanel PanelDataVolo;
+    private JPanel PanelOrarioPrevisto;
+    private JPanel PanelStatoVolo;
 
     private Controller controller;
 
