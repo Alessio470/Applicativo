@@ -3,6 +3,8 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The type Homepage amministratore.
@@ -43,12 +45,32 @@ public class HomepageAmministratore extends JFrame {
 
     private Controller controller;
 
-    /**
-     * Instantiates a new Homepage amministratore.
-     *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
-     */
+    public JFrame loginFrame;
+
+    public HomepageAmministratore(JFrame loginFrame) {
+        this.loginFrame = loginFrame;
+
+        setTitle("Home Utente Amministratore");
+        setContentPane(PanelHomepageAmministratore);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pack();
+        setSize(900, 550);
+        setLocationRelativeTo(loginFrame);
+
+        ButtonLogout.addActionListener(e -> {
+            dispose();
+            if (loginFrame != null) {
+                loginFrame.setVisible(true);
+                loginFrame.toFront();
+            }
+        });
+
+        ButtonInserisciVolo.addActionListener(e -> {
+            InserisciVolo inserisci = new InserisciVolo(this);
+            inserisci.setVisible(true);
+            setVisible(false);
+        });
+    }
 
 /*
     public HomepageAmministratore(JFrame frameChiamante, Controller controller) {

@@ -40,10 +40,18 @@ public class Login {
         ButtonLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                HomeUtenteGenerico home = new HomeUtenteGenerico(frame);
-                home.setLocationRelativeTo(frame);
-                home.setVisible(true);
-                frame.setVisible(false);
+                if(FieldUsername.getText().equals("admin") && FieldPassword.getText().equals("admin")) {
+                    HomepageAmministratore admin = new HomepageAmministratore(frame);
+                    admin.setLocationRelativeTo(frame);
+                    admin.setVisible(true);
+                    frame.setVisible(false);
+
+                }else {
+                    HomeUtenteGenerico home = new HomeUtenteGenerico(frame);
+                    home.setLocationRelativeTo(frame);
+                    home.setVisible(true);
+                    frame.setVisible(false);
+                }
             }
         });
     }

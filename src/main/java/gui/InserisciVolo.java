@@ -1,14 +1,12 @@
 package gui;
 
-import controller.Controller;
-
 import javax.swing.*;
 
 /**
  * The type Add voli.
 */
 public class InserisciVolo extends JFrame {
-    private JPanel PanelInserisciVoli;
+    private JPanel PanelInserisciVolo;
     private JPanel PanelNomeCompagnia;
     private JPanel PanelDataVolo;
     private JPanel PanelOrarioPrevisto;
@@ -34,15 +32,26 @@ public class InserisciVolo extends JFrame {
     private JPanel PanelButtonIndietro;
     private JLabel LabelStato;
 
-    private Controller controller;
-    private JFrame frameChiamante;
+    private final JFrame homeAmministratore;
 
-    /**
-     * Instantiates a new Add voli.
-     *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-*/
+    public InserisciVolo(JFrame homeAmministratore) {
+        this.homeAmministratore = homeAmministratore;
+
+        setTitle("Inserisci Volo");
+        setContentPane(PanelInserisciVolo);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        pack();
+        setSize(800, 450);
+        setLocationRelativeTo(homeAmministratore);
+
+        // Bottone Indietro → torna alla home amministratore
+        ButtonIndietro.addActionListener(e -> {
+            dispose();
+            if (homeAmministratore != null) {
+                homeAmministratore.setVisible(true);
+                homeAmministratore.toFront();
+            }
+        });
     /*
     public AddVoli(Controller controller, JFrame frameChiamante) {
         this.controller = controller;
@@ -106,6 +115,7 @@ public class InserisciVolo extends JFrame {
     }
 
      */
+    }
 }
 
 

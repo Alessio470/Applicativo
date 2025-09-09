@@ -3,8 +3,6 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * The type Home utente generico.
@@ -18,13 +16,13 @@ public class HomeUtenteGenerico extends JFrame {
     private JPanel PanelTitolo;
     private JPanel PanelButton;
     private JPanel PanelTabellaVoli;
-    private JPanel PanelBottoneIndietro;
+    private JPanel PanelButtonLogout;
     private JPanel PanelButtonAreaPersonale;
     private JPanel PanelButtonEffettuaPrenotazione;
     private JButton ButtonAereaPersonale;
     private JButton ButtonEffettuaPrenotazione;
     private JTable TableVoli;
-    private JButton BottoneIndietro;
+    private JButton ButtonLogout;
     private JLabel LabelTitolo;
     private Controller controller;
 
@@ -40,7 +38,7 @@ public class HomeUtenteGenerico extends JFrame {
         setSize(900, 550);
         setLocationRelativeTo(loginFrame);
 
-        BottoneIndietro.addActionListener(e -> {
+        ButtonLogout.addActionListener(e -> {
             dispose();
             if (loginFrame != null) {
                 loginFrame.setVisible(true);
