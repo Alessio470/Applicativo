@@ -27,16 +27,35 @@ public class Login {
 
     public static JFrame frame;
 
+    public Login() {
+        ButtonRegistrati.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Registrazione reg = new Registrazione(frame);
+                reg.setVisible(true);
+                frame.setVisible(false);
+            }
+        });
+
+        ButtonLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HomeUtenteGenerico home = new HomeUtenteGenerico(frame);
+                home.setLocationRelativeTo(frame);
+                home.setVisible(true);
+                frame.setVisible(false);
+            }
+        });
+    }
+
     public static void main(String[] args) {
         frame = new JFrame("Login");
         frame.setContentPane(new Login().PanelLogin);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(800, 400);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
-
-
 }
 

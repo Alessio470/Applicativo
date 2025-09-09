@@ -26,12 +26,26 @@ public class HomeUtenteGenerico extends JFrame {
     private JLabel LabelTitolo;
     private Controller controller;
 
-    /**
-     * Instantiates a new Home utente generico.
-     *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
-     */
+    public JFrame loginFrame;
+
+    public HomeUtenteGenerico(JFrame loginFrame) {
+        this.loginFrame = loginFrame;
+
+        setTitle("Home Utente Generico");
+        setContentPane(PanelHomeGenerico);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pack();
+        setSize(900, 550);
+        setLocationRelativeTo(loginFrame);
+
+        BottoneIndietro.addActionListener(e -> {
+            dispose();
+            if (loginFrame != null) {
+                loginFrame.setVisible(true);
+                loginFrame.toFront();
+            }
+        });
+    }
 
 /*
     public HomeUtenteGenerico(JFrame frameChiamante, Controller controller) {
