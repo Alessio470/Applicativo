@@ -8,9 +8,9 @@ public class ConnessioneDatabase {
     private static ConnessioneDatabase instance;
     private Connection connection;
 
-    private final String url = "jdbc:postgresql://localhost:5432/aeroporto";
+    private final String url = "jdbc:postgresql://localhost:5432/AeroportoOO";
     private final String user = "postgres";
-    private final String password = "password"; // cambia con la tua password
+    private final String password = "password"; // metti la tua
     private final String driver = "org.postgresql.Driver";
 
     private ConnessioneDatabase() throws SQLException {
@@ -18,7 +18,7 @@ public class ConnessioneDatabase {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException ex) {
-            System.out.println("Driver non trovato: " + ex.getMessage());
+            throw new SQLException("Driver non trovato: " + ex.getMessage());
         }
     }
 
