@@ -49,11 +49,9 @@ public class Login {
         ButtonRegistrati.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Registrazione non ancora implementata.");
-                // Se hai già la finestra:
-                // Registrazione reg = new Registrazione(frame);
-                // reg.setVisible(true);
-                // frame.setVisible(false);
+                Registrazione reg = new Registrazione(frame);
+                reg.setVisible(true);
+                frame.setVisible(false);
             }
         });
 
