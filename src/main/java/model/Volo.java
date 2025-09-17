@@ -1,11 +1,14 @@
 package model;
 
 import model.enums.StatoVolo;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Volo {
+    public static final String AEROPORTO_NAP = "NAP";
+
     private String codice;
     private String compagnia;
     private String aeroportoOrigine;
@@ -16,8 +19,7 @@ public class Volo {
     private Gate gate; // null se non ancora assegnato
     private List<Prenotazione> prenotazioni;
 
-    public Volo(String codice, String compagnia, String aeroportoOrigine, String aeroportoDestinazione,
-                LocalDateTime dataOra, int ritardoMinuti, StatoVolo stato, Gate gate) {
+    public Volo(String codice, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, LocalDateTime dataOra, int ritardoMinuti, StatoVolo stato, Gate gate) {
         this.codice = codice;
         this.compagnia = compagnia;
         this.aeroportoOrigine = aeroportoOrigine;

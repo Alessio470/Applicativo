@@ -37,6 +37,7 @@ public class Registrazione extends JFrame {
 
         ComboRuolo.addItem("AMMINISTRATORE");
         ComboRuolo.addItem("GENERICO");
+        ComboRuolo.setSelectedItem("GENERICO");
 
         setTitle("Registrazione");
         setContentPane(PanelRegistrazione);
@@ -47,7 +48,7 @@ public class Registrazione extends JFrame {
 
         // Inizializza DAO
         try {
-            Connection conn = database.ConnessioneDatabase.getInstance().getConnection();
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
             utenteDAO = new UtenteDAO(conn);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Errore connessione DB:\n" + ex.getMessage());
@@ -97,11 +98,14 @@ public class Registrazione extends JFrame {
                 return;
             }
 
-            // Registrazione utente con ruolo scelto
-            int id = utenteDAO.registraUtente(username, password, ruolo);
+            utenteDAO.registraUtente(username, password, ruolo);
 
-            JOptionPane.showMessageDialog(this,
-                    "Registrazione completata!\nID: " + id + "\nRuolo: " + ruolo);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Registrazione completata!\nUsername: " + username + "\nRuolo: " + ruolo,
+                    "OK",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
 
             // torna al login
             dispose();
