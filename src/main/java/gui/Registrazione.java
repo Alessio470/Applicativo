@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class Registrazione {
+public class Registrazione { //TODO HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
     private JPanel PanelRegistrazione;
     private JPanel PanelTitolo;
     private JPanel PanelCampi;
@@ -39,7 +39,7 @@ public class Registrazione {
     private Controller controller;
 
 
-    public static JFrame frame;
+    public static JFrame frame;//TODO PER LA ROBA DELL EXTEND HO MESSO STO FRAME
 
     public Registrazione(JFrame loginFrame, Controller controller) {
         this.loginFrame = loginFrame;
@@ -50,12 +50,25 @@ public class Registrazione {
         ComboRuolo.addItem("GENERICO");
         ComboRuolo.setSelectedItem("GENERICO");
 
-        frame.setTitle("Registrazione");
+        frame.setTitle("Registrazione"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
         frame.setContentPane(PanelRegistrazione);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setSize(900, 550);
         frame.setLocationRelativeTo(loginFrame);
+        frame.setVisible(true);
+
+        //TODO DA VEDERE MEGLIO QUESTA COSA PERCHÈ NON CAPISCO PERCHÈ NON VADA
+        /*
+        frame = new JFrame("Login");
+        frame.setContentPane(new Login().PanelLogin);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setSize(800, 400);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);*/
+
+
 
         // Inizializza DAO
 

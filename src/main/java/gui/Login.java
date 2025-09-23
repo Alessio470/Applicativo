@@ -52,7 +52,7 @@ public class Login {
                                                        @Override
                                                        public void actionPerformed (ActionEvent e){
                                                            Registrazione reg = new Registrazione(frame, controller);
-                                                           reg.setVisible(true);
+                                                           reg.setVisible(true); //TODO P-E-R-C-H-È?
                                                            frame.setVisible(false);
                                                        }
                                                    });
