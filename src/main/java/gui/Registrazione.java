@@ -65,58 +65,8 @@ public class Registrazione extends JFrame {
 
         // Registrati
         ButtonRegistrati.addActionListener(e -> onRegistrati());
-    }
+    }//Parentesi costruttore
 
-    private void onRegistrati() {
-        String username = FieldUsername.getText().trim();
-        String password = new String(FieldPassword1.getPassword());
-        String conferma = new String(FieldPassword2.getPassword());
-        String ruolo = ComboRuolo.getSelectedItem().toString(); // prende il ruolo dalla combo
 
-        // --- Validazioni base ---
-        if (username.isEmpty() || password.isEmpty() || conferma.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Compila tutti i campi.");
-            return;
-        }
-        if (!password.equals(conferma)) {
-            JOptionPane.showMessageDialog(this, "Le password non coincidono.");
-            return;
-        }
-        if (username.length() < 3) {
-            JOptionPane.showMessageDialog(this, "Username troppo corto (min 3).");
-            return;
-        }
-        if (password.length() < 4) {
-            JOptionPane.showMessageDialog(this, "Password troppo corta (min 4).");
-            return;
-        }
 
-        try {
-            // Controllo unicità username
-            if (utenteDAO.usernameExists(username)) {
-                JOptionPane.showMessageDialog(this, "Username già in uso.");
-                return;
-            }
-
-            utenteDAO.registraUtente(username, password, ruolo);
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Registrazione completata!\nUsername: " + username + "\nRuolo: " + ruolo,
-                    "OK",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-
-            // torna al login
-            dispose();
-            if (loginFrame != null) {
-                loginFrame.setVisible(true);
-                loginFrame.toFront();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Errore durante la registrazione:\n" + ex.getMessage());
-        }
-    }
-
-}
+}//Parentesi Finale

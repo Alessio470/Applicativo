@@ -1,18 +1,123 @@
 package controller;
 
+import gui.HomeUtenteGenerico;
+import gui.HomepageAmministratore;
 import model.*;
 import model.enums.StatoVolo;
 
-
+import DAO.UtenteDAO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import database.ConnessioneDatabase;
+import model.enums.*;
+import DAO.UtenteDAO;
+import database.ConnessioneDatabase;
+import model.Utente;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 /**
  * Controller centrale del sistema.
  */
 public class Controller {
+
+    private UtenteDAO utenteDAO;
+
+        public Controller() {
+        }
+
+
+    public void doLogin(String user, String pass, JFrame frame) {
+
+
+        try {
+            Connection conn = database.ConnessioneDatabase.getInstance().getConnection();
+            utenteDAO = new DAO.UtenteDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+
+        try {
+            Utente u = utenteDAO.login(user, pass);
+            if (u == null) {
+                JOptionPane.showMessageDialog(frame, "Credenziali non valide");
+                return;
+            }
+
+            if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
+                HomepageAmministratore admin = new HomepageAmministratore(frame);
+                admin.setLocationRelativeTo(frame);
+                admin.setVisible(true);
+                frame.setVisible(false);
+            } else {
+                HomeUtenteGenerico home = new HomeUtenteGenerico(frame);
+                home.setLocationRelativeTo(frame);
+                home.setVisible(true);
+                frame.setVisible(false);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Errore durante il login:\n" + ex.getMessage());
+        }
+    }
+
+
+    //DA FINIRE
+    private void onRegistrati(String username, String password, String password2,String ruolo, JFrame frame ) {
+        String username = FieldUsername.getText().trim();
+        String password = new String(FieldPassword1.getPassword());
+        String conferma = new String(FieldPassword2.getPassword());
+        String ruolo = ComboRuolo.getSelectedItem().toString(); // prende il ruolo dalla combo
+
+        // --- Validazioni base ---
+        if (username.isEmpty() || password.isEmpty() || conferma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Compila tutti i campi.");
+            return;
+        }
+        if (!password.equals(conferma)) {
+            JOptionPane.showMessageDialog(this, "Le password non coincidono.");
+            return;
+        }
+        if (username.length() < 3) {
+            JOptionPane.showMessageDialog(this, "Username troppo corto (min 3).");
+            return;
+        }
+        if (password.length() < 4) {
+            JOptionPane.showMessageDialog(this, "Password troppo corta (min 4).");
+            return;
+        }
+
+        try {
+            // Controllo unicità username
+            if (utenteDAO.usernameExists(username)) {
+                JOptionPane.showMessageDialog(this, "Username già in uso.");
+                return;
+            }
+
+            utenteDAO.registraUtente(username, password, ruolo);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Registrazione completata!\nUsername: " + username + "\nRuolo: " + ruolo,
+                    "OK",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // torna al login
+            dispose();
+            if (loginFrame != null) {
+                loginFrame.setVisible(true);
+                loginFrame.toFront();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Errore durante la registrazione:\n" + ex.getMessage());
+        }
+    }//Parentesi onRegistrati
+
 /*
     private ArrayList<Utente> utentiRegistratiRef;
     private ArrayList<Volo> voliRegistratiRef;
