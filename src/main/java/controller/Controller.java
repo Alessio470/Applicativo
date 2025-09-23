@@ -66,11 +66,8 @@ public class Controller {
 
 
     //DA FINIRE
-    private void onRegistrati(String username, String password, String password2,String ruolo, JFrame frame ) {
-        String username = FieldUsername.getText().trim();
-        String password = new String(FieldPassword1.getPassword());
-        String conferma = new String(FieldPassword2.getPassword());
-        String ruolo = ComboRuolo.getSelectedItem().toString(); // prende il ruolo dalla combo
+    public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
+
 
         // --- Validazioni base ---
         if (username.isEmpty() || password.isEmpty() || conferma.isEmpty()) {

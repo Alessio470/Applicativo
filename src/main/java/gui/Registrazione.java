@@ -1,6 +1,7 @@
 package gui;
 
 import DAO.UtenteDAO;
+import controller.Controller;
 import database.ConnessioneDatabase;
 
 import javax.swing.*;
@@ -32,8 +33,13 @@ public class Registrazione extends JFrame {
     private final JFrame loginFrame;
     private UtenteDAO utenteDAO;
 
-    public Registrazione(JFrame loginFrame) {
+    private Controller controller;
+
+
+    public Registrazione(JFrame loginFrame, Controller controller) {
         this.loginFrame = loginFrame;
+
+        this.controller = controller;
 
         ComboRuolo.addItem("AMMINISTRATORE");
         ComboRuolo.addItem("GENERICO");
@@ -64,7 +70,10 @@ public class Registrazione extends JFrame {
         });
 
         // Registrati
-        ButtonRegistrati.addActionListener(e -> onRegistrati());
+        ButtonRegistrati.addActionListener(e -> controller.onRegistrati(FieldUsername.getText().trim(),
+                                                                        new String(FieldPassword1.getPassword()),
+                                                                        new String(FieldPassword2.getPassword()),
+                                                                        ComboRuolo.getSelectedItem().toString() );
     }//Parentesi costruttore
 
 
