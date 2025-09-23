@@ -68,49 +68,51 @@ public class Controller {
     //DA FINIRE
     public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
 
+            //Try del dao
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            utenteDAO = new UtenteDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
 
         // --- Validazioni base ---
         if (username.isEmpty() || password.isEmpty() || conferma.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Compila tutti i campi.");
+            JOptionPane.showMessageDialog(frame, "Compila tutti i campi.");
             return;
         }
         if (!password.equals(conferma)) {
-            JOptionPane.showMessageDialog(this, "Le password non coincidono.");
+            JOptionPane.showMessageDialog(frame, "Le password non coincidono.");
             return;
         }
         if (username.length() < 3) {
-            JOptionPane.showMessageDialog(this, "Username troppo corto (min 3).");
+            JOptionPane.showMessageDialog(frame, "Username troppo corto (min 3).");
             return;
         }
         if (password.length() < 4) {
-            JOptionPane.showMessageDialog(this, "Password troppo corta (min 4).");
+            JOptionPane.showMessageDialog(frame, "Password troppo corta (min 4).");
             return;
         }
 
         try {
             // Controllo unicità username
             if (utenteDAO.usernameExists(username)) {
-                JOptionPane.showMessageDialog(this, "Username già in uso.");
+                JOptionPane.showMessageDialog(frame, "Username già in uso.");
                 return;
             }
 
             utenteDAO.registraUtente(username, password, ruolo);
 
             JOptionPane.showMessageDialog(
-                    this,
+                    frame,
                     "Registrazione completata!\nUsername: " + username + "\nRuolo: " + ruolo,
                     "OK",
                     JOptionPane.INFORMATION_MESSAGE
             );
 
-            // torna al login
-            dispose();
-            if (loginFrame != null) {
-                loginFrame.setVisible(true);
-                loginFrame.toFront();
-            }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(frame,
                     "Errore durante la registrazione:\n" + ex.getMessage());
         }
     }//Parentesi onRegistrati

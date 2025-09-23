@@ -5,9 +5,11 @@ import controller.Controller;
 import database.ConnessioneDatabase;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class Registrazione extends JFrame {
+public class Registrazione {
     private JPanel PanelRegistrazione;
     private JPanel PanelTitolo;
     private JPanel PanelCampi;
@@ -28,6 +30,7 @@ public class Registrazione extends JFrame {
     private JPasswordField FieldPassword2;   // conferma
     private JPanel PanelRuolo;
     private JLabel LabelRuolo;
+
     private JComboBox ComboRuolo;
 
     private final JFrame loginFrame;
@@ -35,6 +38,8 @@ public class Registrazione extends JFrame {
 
     private Controller controller;
 
+
+    public static JFrame frame;
 
     public Registrazione(JFrame loginFrame, Controller controller) {
         this.loginFrame = loginFrame;
@@ -45,37 +50,39 @@ public class Registrazione extends JFrame {
         ComboRuolo.addItem("GENERICO");
         ComboRuolo.setSelectedItem("GENERICO");
 
-        setTitle("Registrazione");
-        setContentPane(PanelRegistrazione);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setSize(900, 550);
-        setLocationRelativeTo(loginFrame);
+        frame.setTitle("Registrazione");
+        frame.setContentPane(PanelRegistrazione);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setSize(900, 550);
+        frame.setLocationRelativeTo(loginFrame);
 
         // Inizializza DAO
-        try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            utenteDAO = new UtenteDAO(conn);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Errore connessione DB:\n" + ex.getMessage());
-        }
 
-        // Indietro
-        ButtonIndietro.addActionListener(e -> {
-            dispose();
-            if (loginFrame != null) {
-                loginFrame.setLocationRelativeTo(null);
-                loginFrame.setVisible(true);
+
+
+        ButtonIndietro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                if (loginFrame != null) {
+                    loginFrame.setLocationRelativeTo(null);
+                    loginFrame.setVisible(true);
+                }
             }
         });
 
-        // Registrati
-        ButtonRegistrati.addActionListener(e -> controller.onRegistrati(FieldUsername.getText().trim(),
-                                                                        new String(FieldPassword1.getPassword()),
-                                                                        new String(FieldPassword2.getPassword()),
-                                                                        ComboRuolo.getSelectedItem().toString() );
+        ButtonRegistrati.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onRegistrati(FieldUsername.getText().trim(),new String(FieldPassword1.getPassword()), new String(FieldPassword2.getPassword()), ComboRuolo.getSelectedItem().toString(),frame );
+            }
+
+        });
+
     }//Parentesi costruttore
 
 
 
-}//Parentesi Finale
+
+    }//Parentesi Finale
