@@ -73,7 +73,7 @@ public class InserisciVolo {
 
 // Campo data formato dd/mm/aaaa
         try {
-            MaskFormatter dataMask = new MaskFormatter("##/##/####");
+            MaskFormatter dataMask = new MaskFormatter("dd/mm/yyyy");
             dataMask.setPlaceholderCharacter('_');
             formattedFieldDataVolo.setFormatterFactory(
                     new javax.swing.text.DefaultFormatterFactory(dataMask)
@@ -84,7 +84,7 @@ public class InserisciVolo {
 
 // Campo orario formato hh:mm
         try {
-            MaskFormatter oraMask = new MaskFormatter("##:##");
+            MaskFormatter oraMask = new MaskFormatter("hh:mm");
             oraMask.setPlaceholderCharacter('_');
             FormattedFieldOrario.setFormatterFactory(
                     new javax.swing.text.DefaultFormatterFactory(oraMask)
