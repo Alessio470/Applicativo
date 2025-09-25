@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.VoloDAO;
 import gui.HomeUtenteGenerico;
 import gui.HomepageAmministratore;
 import model.*;
@@ -9,7 +10,9 @@ import DAO.UtenteDAO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import database.ConnessioneDatabase;
 import model.enums.*;
@@ -21,6 +24,8 @@ import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZonedDateTime;
+
+import static sun.tools.jconsole.inspector.XDataViewer.dispose;
 
 /**
  * Controller centrale del sistema.
@@ -115,8 +120,12 @@ public class Controller {
                     "Errore durante la registrazione:\n" + ex.getMessage());
         }
     }//Parentesi onRegistrati
-/*
-    public AddVoli() {
+
+
+
+    public void AddVoli(String compagniaaerea, Date data, LocalTime orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
+
+        /*
         String codice = null;//Da generare
         String compagniaaerea = null; //ComboBox
         String data = null; //?
@@ -126,23 +135,35 @@ public class Controller {
         String aeroportoorigine;//?
         String aeroportodestinazione;//?
         String numeroGate;//ComboBox
+*/
 
-                if (codice.isEmpty() || compagniaaerea.isEmpty() || data.isEmpty() || orario.isEmpty()) {
-                    JOptionPane.showMessageDialog(AddVoli.this, "Compila tutti i campi obbligatori.");
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            utenteDAO = new VoloDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+
+
+                if (compagniaaerea.isEmpty() || data!=null || orario!=null) {
+                    JOptionPane.showMessageDialog(frame, "Compila tutti i campi obbligatori.");
                     return;
                 }
 
 
 
-                JOptionPane.showMessageDialog(AddVoli.this, "Volo inserito con successo.");
-                frameChiamante.setVisible(true);
-                dispose();
-                if (frameChiamante instanceof HomepageAmministratore) {
-                    ((HomepageAmministratore) frameChiamante).aggiornaTabella();
-                }
-            }
+                JOptionPane.showMessageDialog(frame, "Volo inserito con successo.");
+                frame.dispose();
+                prevframe.setVisible(true);
 
-*/
+
+
+
+            }//Parentesi Finale AddVoli
+
+
 
 /*
     private ArrayList<Utente> utentiRegistratiRef;

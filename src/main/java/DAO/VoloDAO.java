@@ -25,8 +25,11 @@ public class VoloDAO {
 
         // Inserimento Volo
         final String sql =
-                "INSERT INTO public.utente (username, password, ruoloutente) " +
-                        "VALUES (?, ?, ?) RETURNING ruoloutente";
+                "INSERT INTO volo(
+	      codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, 'numeroGate')"+
+VALUES (DA GENERARE,     ComboBox,         ?,         ?,             0,        1,          ?,                ?,                  ComboBox);";
+
+
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
