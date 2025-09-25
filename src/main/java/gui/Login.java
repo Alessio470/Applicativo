@@ -51,8 +51,7 @@ public class Login {
         ButtonRegistrati.addActionListener(new ActionListener() {
                                                        @Override
                                                        public void actionPerformed (ActionEvent e){
-                                                           Registrazione reg = new Registrazione(frame, controller);
-                                                           reg.setVisible(true); //TODO P-E-R-C-H-È?
+                                                           new Registrazione(frame, controller);
                                                            frame.setVisible(false);
                                                        }
                                                    });

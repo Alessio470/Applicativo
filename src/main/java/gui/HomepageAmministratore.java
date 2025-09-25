@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  * The type Homepage amministratore.
  */
 
-public class HomepageAmministratore extends JFrame {
+public class HomepageAmministratore  {
     private JLabel LabelTitolo;
     private JButton ButtonInserisciVolo;
     private JButton ButtonLogout;
@@ -45,30 +45,33 @@ public class HomepageAmministratore extends JFrame {
 
     private Controller controller;
 
-    public JFrame loginFrame;
+    private static JFrame frame;
+    public JFrame prevframe;
 
-    public HomepageAmministratore(JFrame loginFrame) {
-        this.loginFrame = loginFrame;
+    public HomepageAmministratore(JFrame prevframe, Controller controller) {
+        this.prevframe = prevframe;
 
-        setTitle("Home Utente Amministratore");
-        setContentPane(PanelHomepageAmministratore);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setSize(900, 550);
-        setLocationRelativeTo(loginFrame);
+        frame = new JFrame("Panel Amministratore");
+        frame.setTitle("Home Utente Amministratore"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
+        frame.setContentPane(PanelHomepageAmministratore);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setSize(900, 550);
+        frame.setLocationRelativeTo(prevframe);
+        frame.setVisible(true);
+
 
         ButtonLogout.addActionListener(e -> {
-            dispose();
-            if (loginFrame != null) {
-                loginFrame.setVisible(true);
-                loginFrame.toFront();
+            frame.dispose();
+            if (prevframe != null) {
+                prevframe.setVisible(true);
+                prevframe.toFront();
             }
         });
 
         ButtonInserisciVolo.addActionListener(e -> {
-            InserisciVolo inserisci = new InserisciVolo(this);
-            inserisci.setVisible(true);
-            setVisible(false);
+            InserisciVolo inserisci = new InserisciVolo(frame, controller);
+            frame.setVisible(false);
         });
     }
 

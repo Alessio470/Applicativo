@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class Registrazione { //TODO HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
+public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
     private JPanel PanelRegistrazione;
     private JPanel PanelTitolo;
     private JPanel PanelCampi;
@@ -33,41 +33,25 @@ public class Registrazione { //TODO HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TO
 
     private JComboBox ComboRuolo;
 
-    private final JFrame loginFrame;
-    private UtenteDAO utenteDAO;
-
-    private Controller controller;
 
 
-    public static JFrame frame;//TODO PER LA ROBA DELL EXTEND HO MESSO STO FRAME
 
-    public Registrazione(JFrame loginFrame, Controller controller) {
-        this.loginFrame = loginFrame;
+    private JFrame frame; //TODO PER LA ROBA DELL EXTEND HO MESSO STO FRAME
 
-        this.controller = controller;
+    public Registrazione(JFrame prevframe, Controller controller) {
 
         ComboRuolo.addItem("AMMINISTRATORE");
         ComboRuolo.addItem("GENERICO");
         ComboRuolo.setSelectedItem("GENERICO");
 
+        frame = new JFrame("Registrazione");
         frame.setTitle("Registrazione"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
         frame.setContentPane(PanelRegistrazione);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setSize(900, 550);
-        frame.setLocationRelativeTo(loginFrame);
+        frame.setLocationRelativeTo(prevframe);
         frame.setVisible(true);
-
-        //TODO DA VEDERE MEGLIO QUESTA COSA PERCHÈ NON CAPISCO PERCHÈ NON VADA
-        /*
-        frame = new JFrame("Login");
-        frame.setContentPane(new Login().PanelLogin);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(800, 400);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);*/
-
 
 
         // Inizializza DAO
@@ -78,9 +62,9 @@ public class Registrazione { //TODO HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TO
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                if (loginFrame != null) {
-                    loginFrame.setLocationRelativeTo(null);
-                    loginFrame.setVisible(true);
+                if (prevframe != null) {
+                    prevframe.setLocationRelativeTo(null);
+                    prevframe.setVisible(true);
                 }
             }
         });

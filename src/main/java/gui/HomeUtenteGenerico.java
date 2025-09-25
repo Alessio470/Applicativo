@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 
 
-public class HomeUtenteGenerico extends JFrame {
+public class HomeUtenteGenerico {
     private JPanel contentPane;
 
     private JPanel PanelHomeGenerico;
@@ -26,35 +26,40 @@ public class HomeUtenteGenerico extends JFrame {
     private JLabel LabelTitolo;
     private Controller controller;
 
-    public JFrame loginFrame;
+    public JFrame prevframe;
 
-    public HomeUtenteGenerico(JFrame loginFrame) {
-        this.loginFrame = loginFrame;
+    private static JFrame frame;
 
-        setTitle("Home Utente Generico");
-        setContentPane(PanelHomeGenerico);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setSize(900, 550);
-        setLocationRelativeTo(loginFrame);
+    public HomeUtenteGenerico(JFrame prevframe, Controller controller) {
+        this.prevframe = prevframe;
+
+        frame = new JFrame("Panel Utente Generico");
+        frame.setTitle("Home Utente Generico"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
+        frame.setContentPane(PanelHomeGenerico);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setSize(900, 550);
+        frame.setLocationRelativeTo(prevframe);
+        frame.setVisible(true);
+        
 
         ButtonLogout.addActionListener(e -> {
-            dispose();
-            if (loginFrame != null) {
-                loginFrame.setVisible(true);
-                loginFrame.toFront();
+            frame.dispose();
+            if (prevframe != null) {
+                prevframe.setVisible(true);
+                prevframe.toFront();
             }
         });
         ButtonAereaPersonale.addActionListener(e -> {
-            AreaPersonale area = new AreaPersonale(this); // "this" è HomeUtenteGenerico
+            AreaPersonale area = new AreaPersonale(frame); // "this" è HomeUtenteGenerico
             area.setVisible(true);
-            setVisible(false);
+            frame.setVisible(false);
         });
 
         ButtonEffettuaPrenotazione.addActionListener(e -> {
-            EffettuaPrenotazione prenotazione = new EffettuaPrenotazione(this);
+            EffettuaPrenotazione prenotazione = new EffettuaPrenotazione(frame);
             prenotazione.setVisible(true);
-            setVisible(false);
+            frame.setVisible(false);
         });
 
     }

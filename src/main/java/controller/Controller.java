@@ -18,6 +18,9 @@ import database.ConnessioneDatabase;
 import model.Utente;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 
 /**
  * Controller centrale del sistema.
@@ -34,8 +37,8 @@ public class Controller {
 
 
         try {
-            Connection conn = database.ConnessioneDatabase.getInstance().getConnection();
-            utenteDAO = new DAO.UtenteDAO(conn);
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            utenteDAO = new UtenteDAO(conn);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -49,14 +52,10 @@ public class Controller {
             }
 
             if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
-                HomepageAmministratore admin = new HomepageAmministratore(frame);
-                admin.setLocationRelativeTo(frame);
-                admin.setVisible(true);
+                new HomepageAmministratore(frame,this);
                 frame.setVisible(false);
             } else {
-                HomeUtenteGenerico home = new HomeUtenteGenerico(frame);
-                home.setLocationRelativeTo(frame);
-                home.setVisible(true);
+               new HomeUtenteGenerico(frame,this);
                 frame.setVisible(false);
             }
         } catch (Exception ex) {
@@ -116,6 +115,34 @@ public class Controller {
                     "Errore durante la registrazione:\n" + ex.getMessage());
         }
     }//Parentesi onRegistrati
+/*
+    public AddVoli() {
+        String codice = null;//Da generare
+        String compagniaaerea = null; //ComboBox
+        String data = null; //?
+        String orario = null;//?
+        int ritardo=0;//0
+        int statovolo=1;//1
+        String aeroportoorigine;//?
+        String aeroportodestinazione;//?
+        String numeroGate;//ComboBox
+
+                if (codice.isEmpty() || compagniaaerea.isEmpty() || data.isEmpty() || orario.isEmpty()) {
+                    JOptionPane.showMessageDialog(AddVoli.this, "Compila tutti i campi obbligatori.");
+                    return;
+                }
+
+
+
+                JOptionPane.showMessageDialog(AddVoli.this, "Volo inserito con successo.");
+                frameChiamante.setVisible(true);
+                dispose();
+                if (frameChiamante instanceof HomepageAmministratore) {
+                    ((HomepageAmministratore) frameChiamante).aggiornaTabella();
+                }
+            }
+
+*/
 
 /*
     private ArrayList<Utente> utentiRegistratiRef;
@@ -160,78 +187,12 @@ public class Controller {
         return "Nessun utente loggato";
     }
 
-    public UtenteGenerico getUtenteLoggato() { return utenteLoggato; }
-    public UtenteAmministratore getAdminLoggato() { return adminLoggato; }
 
-    // --- PRENOTAZIONI ---
-    public List<Prenotazione> getPrenotazioniUtenteLoggato() {
-        if (utenteLoggato != null) {
-            return utenteLoggato.getPrenotazioni();
-        }
-        return new ArrayList<>();
-    }
 
-    public void aggiungiPrenotazione(Prenotazione p) {
-        try {
-            prenotazioneDAO.inserisciPrenotazione(p);
-            if (utenteLoggato != null) utenteLoggato.prenotaVolo(p);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Errore inserimento prenotazione: " + e.getMessage());
-        }
-    }
 
-    public void eliminaPrenotazione(Prenotazione p) {
-        try {
-            prenotazioneDAO.eliminaPrenotazione(p.getId());
-            if (utenteLoggato != null) utenteLoggato.eliminaPrenotazione(p);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Errore eliminazione prenotazione: " + e.getMessage());
-        }
-    }
 
-    // --- VOLI ---
-    public void aggiungiVolo(Volo v) {
-        try {
-            voloDAO.inserisciVolo(v);
-            if (adminLoggato != null) adminLoggato.inserisciVolo(v);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Errore inserimento volo: " + e.getMessage());
-        }
-    }
 
-    public List<Volo> getVoli() {
-        try {
-            return voloDAO.leggiTuttiIVoli();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Errore lettura voli: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
 
-    public List<Volo> getVoliDisponibiliPerUtente() {
-        List<Volo> result = new ArrayList<>();
-        for (Volo v : voliRegistratiRef) {
-            if (v.getStato() == StatoVolo.PROGRAMMATO || v.getStato() == StatoVolo.IN_RITARDO) {
-                result.add(v);
-            }
-        }
-        return result;
-    }
-
-    public void aggiornaVolo(Volo volo) {
-        try {
-            voloDAO.aggiornaVolo(volo);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Errore aggiornamento volo: " + e.getMessage());
-        }
-    }
-
-    public void modificaGate(Volo volo, Integer numeroGate) {
-        if (adminLoggato != null) {
-            volo.setNumeroGate(numeroGate);
-            aggiornaVolo(volo);
-        }
-    }
 
     // --- TABLE MODEL PER SWING ---
     public DefaultTableModel getModelloTabellaVoli() {
