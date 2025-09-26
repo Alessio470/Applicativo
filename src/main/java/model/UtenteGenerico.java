@@ -29,7 +29,7 @@ public class UtenteGenerico extends Utente {
     public List<Prenotazione> getPrenotazioniPerVolo(Volo volo) {
         List<Prenotazione> result = new ArrayList<>();
         for (Prenotazione p : prenotazioni) {
-            if (p.getCodiceVolo().equals(volo.getCodice())) {
+            if (p.getCodiceVolo().equals(volo.getCodiceV())) {
                 result.add(p);
             }
         }

@@ -28,14 +28,14 @@ public class UtenteAmministratore extends Utente {
 
     public Volo cercaVolo(String codice) {
         for (Volo v : voliGestiti) {
-            if (v.getCodice().equals(codice)) {
+            if (v.getCodiceV().equals(codice)) {
                 return v;
             }
         }
         return null;
     }
 
-    public void modificaGate(Volo volo, Gate nuovoGate) {
+    public void modificaGate(Volo volo, String nuovoGate) {
         if (voliGestiti.contains(volo)) {
             volo.setNumeroGate(nuovoGate);
         }

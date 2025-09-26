@@ -32,7 +32,7 @@ public class Bagaglio {
         return "Bagaglio{" +
                 "codice='" + codice + '\'' +
                 ", passeggero=" + passeggero +
-                ", volo=" + (volo != null ? volo.getCodice() : "N/A") +
+                ", volo=" + (volo != null ? volo.getCodiceV() : "N/A") +
                 ", stato=" + stato +
                 '}';
     }

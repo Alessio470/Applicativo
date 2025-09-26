@@ -1,8 +1,8 @@
 package DAO;
 
+import model.Volo;
+
 import java.sql.*;
-import java.time.LocalTime;
-import java.util.Date;
 
 //TODO MODOFICARE registraVolo
 /*
@@ -20,25 +20,25 @@ public class VoloDAO {
         this.conn = conn;
     }
 
-    public int registraVolo(String codiceVolo, String compagniaaerea, String data, String orario, String aeroportoorigine, String aeroportodestinazione, String numerogate) throws SQLException {
+    public int registraVolo(Volo v) throws SQLException {
 
-        // Inserimento Volo
+        // Query inserimento Volo
         final String sql =
-                "INSERT INTO volo(codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, 'numeroGate')"+
-"VALUES (?,?,?,?,?,?,?,?,?);";
+                "INSERT INTO volo(codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, numeroGate) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?)";
 
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, codiceVolo); //codicevolo
-            ps.setString(2, compagniaaerea); // compagniaaerea
-            ps.setDate(3, java.sql.Date.valueOf(data)); //datavolo
-            ps.setTime(4, Time.valueOf(orario)); //orarioprevisto
-            ps.setInt(5, 0); //ritardo
-            ps.setInt(6, 1); //statovolo
-            ps.setString(7, aeroportoorigine); //aeroportoorigine
-            ps.setString(8, aeroportodestinazione); //aeroportodestinazione
-            ps.setString(9, numerogate); //'numeroGate'
+            ps.setString(1, v.getCodiceV()); //codicevolo
+            ps.setString(2, v.getCompagnia()); // compagniaaerea
+            ps.setDate(3, v.getDatasql()); //datavolo
+            ps.setTime(4, v.getOrarioSql()); //orarioprevisto
+            ps.setInt(5, v.getRitardoMinuti()); //ritardo
+            ps.setInt(6, v.getStatoToInt()); //statovolo
+            ps.setString(7, v.getAeroportoOrigine()); //aeroportoorigine
+            ps.setString(8, v.getAeroportoDestinazione()); //aeroportodestinazione
+            ps.setString(9, v.getGate()); //'numeroGate'
 
 
             try (ResultSet rs = ps.executeQuery()) {

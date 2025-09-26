@@ -4,28 +4,18 @@ package controller;
 import gui.HomeUtenteGenerico;
 import gui.HomepageAmministratore;
 
+import model.Volo;
 import model.enums.*;
 
 import DAO.UtenteDAO;
+
 import javax.swing.*;
 import java.sql.Connection;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import java.time.format.DateTimeParseException;
 
 import database.ConnessioneDatabase;
 
 import DAO.VoloDAO;
-import DAO.UtenteDAO;
-import database.ConnessioneDatabase;
 import model.Utente;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.ZonedDateTime;
 
 
 /**
@@ -33,14 +23,15 @@ import java.time.ZonedDateTime;
  */
 public class Controller {
 
-    private UtenteDAO utenteDAO;
-
         public Controller() {
         }
 
 
+
     public void doLogin(String user, String pass, JFrame frame) {
 
+
+        UtenteDAO utenteDAO=null;
 
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
@@ -51,7 +42,7 @@ public class Controller {
 
 
         try {
-            Utente u = utenteDAO.login(user, pass);
+            Utente u = utenteDAO.login(user, pass);//TODO controllare questo perchè forse da null
             if (u == null) {
                 JOptionPane.showMessageDialog(frame, "Credenziali non valide");
                 return;
@@ -72,6 +63,8 @@ public class Controller {
 
     //DA FINIRE
     public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
+
+            UtenteDAO utenteDAO=null;
 
             //Try del dao
         try {
@@ -120,48 +113,33 @@ public class Controller {
             JOptionPane.showMessageDialog(frame,
                     "Errore durante la registrazione:\n" + ex.getMessage());
         }
+
     }//Parentesi onRegistrati
 
 
 
     public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
+        String codiceVolo = "Test123";
 
-        VoloDAO voloDAO;
 
-        if (compagniaaerea.isEmpty() || data==null || orario==null) {
+
+        //String codice, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, Da
+        //dataOra, int ritardoMinuti, StatoVolo stato, Gate gate
+
+
+        if (compagniaaerea.isEmpty() || data == null || orario == null) {
             JOptionPane.showMessageDialog(frame, "Compila tutti i campi obbligatori.");
             return;
         }
 
-//Conversione stringa -> Date -> sqlDate
 
-        java.sql.Date dataSql;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            java.util.Date JavaDate = sdf.parse(data);
-            dataSql = new java.sql.Date(JavaDate.getTime());
-
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(frame, "Formato data non valido: " + data);
-            return;
-        }
-
-//Conversione stringa -> Ora -> sqlDate
-
-        java.sql.Time oraSql;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime localTime = LocalTime.parse(orario, formatter);
-            oraSql = java.sql.Time.valueOf(localTime);
-
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(null, "Formato ora non valido: " + orario);
-            return;
-        }
-
+        Volo volocreato = new Volo(codiceVolo, compagniaaerea, aeroportoorigine, aeroportodestinazione, data, orario, 0, StatoVolo.PROGRAMMATO, numerogate);
 
         //Connessione al db
+
+        VoloDAO voloDAO=null;
+
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
             voloDAO = new VoloDAO(conn);
@@ -170,17 +148,29 @@ public class Controller {
         }
 
 
+        try {
+
+            if (voloDAO != null) {
+                voloDAO.registraVolo(volocreato);
+            }else {
+                JOptionPane.showMessageDialog(frame, "Volo non valido.");
+                return;
+            }
+
+            JOptionPane.showMessageDialog(frame, "Volo inserito con successo.");
+            frame.dispose();
+            prevframe.setVisible(true);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame,
+                    "Errore durante l inserimento volo:\n" + ex.getMessage());
+        }
 
 
 
-                JOptionPane.showMessageDialog(frame, "Volo inserito con successo.");
-                frame.dispose();
-                prevframe.setVisible(true);
 
 
-
-
-            }//Parentesi Finale AddVoli
+    }//Parentesi Finale AddVoli
 
 /*
     private ArrayList<Utente> utentiRegistratiRef;

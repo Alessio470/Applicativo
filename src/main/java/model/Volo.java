@@ -2,89 +2,127 @@ package model;
 
 import model.enums.StatoVolo;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.*;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import java.util.Objects;
 
 public class Volo {
     public static final String AEROPORTO_NAP = "NAP";
 
-    private String codice;
+    private String codicevolo;
     private String compagnia;
     private String aeroportoOrigine;
     private String aeroportoDestinazione;
-    private LocalDateTime dataOra;
+    private String data;
+    private String orario;
     private int ritardoMinuti;
     private StatoVolo stato;
-    private Gate gate; // null se non ancora assegnato
-    private List<Prenotazione> prenotazioni;
+    private String gate; // null se non ancora assegnato
 
-    public Volo(String codice, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, LocalDateTime dataOra, int ritardoMinuti, StatoVolo stato, Gate gate) {
-        this.codice = codice;
+    public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, StatoVolo stato, String gate) {
+        this.codicevolo = codicev;
         this.compagnia = compagnia;
         this.aeroportoOrigine = aeroportoOrigine;
         this.aeroportoDestinazione = aeroportoDestinazione;
-        this.dataOra = dataOra;
+        this.data = data;
+        this.orario = orario;
         this.ritardoMinuti = ritardoMinuti;
         this.stato = stato;
         this.gate = gate;
-        this.prenotazioni = new ArrayList<>();
     }
 
     // --- Getter e Setter ---
-    public String getCodice() { return codice; }
+    public String getCodiceV() { return codicevolo; }
     public String getCompagnia() { return compagnia; }
     public String getAeroportoOrigine() { return aeroportoOrigine; }
     public String getAeroportoDestinazione() { return aeroportoDestinazione; }
-    public LocalDateTime getDataOra() { return dataOra; }
+    public String getDataStr() { return data; }
+    public String getOrarioStr() { return orario; }
     public int getRitardoMinuti() { return ritardoMinuti; }
     public StatoVolo getStato() { return stato; }
-    public Gate getGate() { return gate; }
-    public List<Prenotazione> getPrenotazioni() { return prenotazioni; }
+    public String getGate() { return gate; }
 
-    public void setCodice(String codice) { this.codice = codice; }
+    public void setCodice(String codice) { this.codicevolo = codice; }
     public void setCompagnia(String compagnia) { this.compagnia = compagnia; }
     public void setAeroportoOrigine(String aeroportoOrigine) { this.aeroportoOrigine = aeroportoOrigine; }
     public void setAeroportoDestinazione(String aeroportoDestinazione) { this.aeroportoDestinazione = aeroportoDestinazione; }
-    public void setDataOra(LocalDateTime dataOra) { this.dataOra = dataOra; }
+    public void setDataOra(String data) { this.data = data; }
+    public void setOrario(String orario) { this.orario = orario; }
     public void setRitardoMinuti(int ritardoMinuti) { this.ritardoMinuti = ritardoMinuti; }
     public void setStato(StatoVolo stato) { this.stato = stato; }
-    public void setGate(Gate gate) { this.gate = gate; }
+    public void setGate(String gate) { this.gate = gate; }
 
-    // --- Metodi utili ---
-    public void aggiungiPrenotazione(Prenotazione p) { prenotazioni.add(p); }
-    public void rimuoviPrenotazione(Prenotazione p) { prenotazioni.remove(p); }
-
-    public List<Prenotazione> getPrenotazioniConfermate() {
-        List<Prenotazione> confermate = new ArrayList<>();
-        for (Prenotazione p : prenotazioni) {
-            if (p.getStato() == model.enums.StatoPrenotazione.CONFERMATA) {
-                confermate.add(p);
-            }
-        }
-        return confermate;
-    }
 
     // Helper per distinguere arrivi e partenze
     public boolean isPartenzaDaNapoli() { return "Napoli".equalsIgnoreCase(aeroportoOrigine); }
     public boolean isArrivoANapoli() { return "Napoli".equalsIgnoreCase(aeroportoDestinazione); }
 
+    //Things
+
+    public LocalTime getOrarioLocalTime() {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            return LocalTime.parse(orario, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato ora non valido: " + orario);
+            return null; // segnala errore
+        }
+    }
+
+    public Time getOrarioSql() {
+        return Time.valueOf(Objects.requireNonNull(this.getOrarioLocalTime()));
+    }
+
+
+
+    public java.util.Date getDataDate() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            return sdf.parse(data);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato data non valido: " + data);
+            return null; // segnala errore
+        }
+    }
+
+
+    public java.sql.Date getDatasql() {
+        return new java.sql.Date(this.getDataDate().getTime());
+    }
+
+    public int getStatoToInt() {
+        return stato.ordinal();
+    }
+
+
+
+
+
     @Override
     public String toString() {
         return "Volo{" +
-                "codice='" + codice + '\'' +
-                ", compagnia='" + compagnia + '\'' +
-                ", da='" + aeroportoOrigine + '\'' +
-                ", a='" + aeroportoDestinazione + '\'' +
-                ", dataOra=" + dataOra +
-                ", ritardo=" + ritardoMinuti + " min" +
-                ", stato=" + stato +
-                ", gate=" + (gate != null ? gate.getNumero() : "-") +
-                ", prenotazioni=" + prenotazioni.size() +
+                "codice='" + this.codicevolo + '\'' +
+                ", compagnia='" + this.compagnia + '\'' +
+                ", da='" + this.aeroportoOrigine + '\'' +
+                ", a='" + this.aeroportoDestinazione + '\'' +
+                ", data=" + this.data +
+                ", orario=" + this.orario +
+                ", ritardo=" + this.ritardoMinuti + " min" +
+                ", stato=" + this.stato +
+                ", gate=" + this.gate +
                 '}';
     }
 
-    public void setNumeroGate(Gate nuovoGate) {
+    //TODO da modificare che invece di farlo localmente lo fa al db
+    public void setNumeroGate(String nuovoGate) {
         this.gate = nuovoGate;
     }
+
+
 }
