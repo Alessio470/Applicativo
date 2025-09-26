@@ -1,21 +1,23 @@
 package controller;
 
-import DAO.VoloDAO;
+
 import gui.HomeUtenteGenerico;
 import gui.HomepageAmministratore;
-import model.*;
-import model.enums.StatoVolo;
+
+import model.enums.*;
 
 import DAO.UtenteDAO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.time.format.DateTimeParseException;
+
 import database.ConnessioneDatabase;
-import model.enums.*;
+
+import DAO.VoloDAO;
 import DAO.UtenteDAO;
 import database.ConnessioneDatabase;
 import model.Utente;
@@ -25,7 +27,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZonedDateTime;
 
-import static sun.tools.jconsole.inspector.XDataViewer.dispose;
 
 /**
  * Controller centrale del sistema.
@@ -123,34 +124,52 @@ public class Controller {
 
 
 
-    public void AddVoli(String compagniaaerea, Date data, LocalTime orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
+    public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
-        /*
-        String codice = null;//Da generare
-        String compagniaaerea = null; //ComboBox
-        String data = null; //?
-        String orario = null;//?
-        int ritardo=0;//0
-        int statovolo=1;//1
-        String aeroportoorigine;//?
-        String aeroportodestinazione;//?
-        String numeroGate;//ComboBox
-*/
+
+        VoloDAO voloDAO;
+
+        if (compagniaaerea.isEmpty() || data==null || orario==null) {
+            JOptionPane.showMessageDialog(frame, "Compila tutti i campi obbligatori.");
+            return;
+        }
+
+//Conversione stringa -> Date -> sqlDate
+
+        java.sql.Date dataSql;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            java.util.Date JavaDate = sdf.parse(data);
+            dataSql = new java.sql.Date(JavaDate.getTime());
+
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(frame, "Formato data non valido: " + data);
+            return;
+        }
+
+//Conversione stringa -> Ora -> sqlDate
+
+        java.sql.Time oraSql;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime localTime = LocalTime.parse(orario, formatter);
+            oraSql = java.sql.Time.valueOf(localTime);
+
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato ora non valido: " + orario);
+            return;
+        }
+
 
         //Connessione al db
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            utenteDAO = new VoloDAO(conn);
+            voloDAO = new VoloDAO(conn);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
 
 
-
-                if (compagniaaerea.isEmpty() || data!=null || orario!=null) {
-                    JOptionPane.showMessageDialog(frame, "Compila tutti i campi obbligatori.");
-                    return;
-                }
 
 
 
@@ -162,8 +181,6 @@ public class Controller {
 
 
             }//Parentesi Finale AddVoli
-
-
 
 /*
     private ArrayList<Utente> utentiRegistratiRef;
