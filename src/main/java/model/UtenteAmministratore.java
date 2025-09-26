@@ -6,40 +6,14 @@ import java.util.List;
 
 public class UtenteAmministratore extends Utente {
 
-    private List<Volo> voliGestiti;
 
     public UtenteAmministratore(String username, String password) {
         super(username, password, RuoloUtente.AMMINISTRATORE);
-        this.voliGestiti = new ArrayList<>();
     }
 
-    // --- Metodi di gestione voli ---
-    public void inserisciVolo(Volo volo) {
-        voliGestiti.add(volo);
-    }
 
-    public void rimuoviVolo(Volo volo) {
-        voliGestiti.remove(volo);
-    }
-
-    public List<Volo> getVoliGestiti() {
-        return voliGestiti;
-    }
-
-    public Volo cercaVolo(String codice) {
-        for (Volo v : voliGestiti) {
-            if (v.getCodiceV().equals(codice)) {
-                return v;
-            }
-        }
-        return null;
-    }
-
-    public void modificaGate(Volo volo, String nuovoGate) {
-        if (voliGestiti.contains(volo)) {
-            volo.setNumeroGate(nuovoGate);
-        }
-    }
+//TODO
+    public void modificaGate() {  }
 
     @Override
     public String toString() {
