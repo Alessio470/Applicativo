@@ -15,8 +15,7 @@ public class Prenotazione {
     //numerobiglietto,username,codvolo,nomepasseggero,cognomepasseggero,numeroposto,statoprenotazione,codicefiscalepasseggero
 
 
-    public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,
-                         String posto, StatoPrenotazione stato, String codicefiscalepasseggero) {
+    public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero) {
 
         this.usernameUtente = usernameUtente;
         this.codiceVolo = codiceVolo;
