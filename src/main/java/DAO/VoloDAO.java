@@ -1,8 +1,11 @@
 package DAO;
 
 import model.Volo;
+import model.enums.StatoVolo;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //TODO MODOFICARE registraVolo
 /*
@@ -48,9 +51,33 @@ public class VoloDAO {
                 throw new SQLException("Insert volo fallita (RETURNING vuoto).");
             }
         }
-    }
+    }//Fine registraVolo
 
 
+    public List<Volo> getVoliPrenotabili() throws SQLException {
 
+        List<Volo> voli = new ArrayList<>();
 
-}
+        String query = "SELECT * FROM volo as v WHERE v.statovolo= 1"; // nome tabella nel db
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+
+        while (rs.next()) {
+            Volo v = new Volo(
+                    rs.getString("codicevolo"),
+                    rs.getString("compagnia"),
+                    rs.getString("aeroportoOrigine"),
+                    rs.getString("aeroportoDestinazione"),
+                    rs.getString("datavolo"),
+                    rs.getString("orarioprevisto"),
+                    rs.getInt("ritardo"),
+                    StatoVolo.valueOf(rs.getString("statovolo")),
+                    rs.getString("gate")
+            );
+            voli.add(v);
+        }
+        return voli;
+    }//Fine getVolidaNapoli
+
+}//Parentesi finale

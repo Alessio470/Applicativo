@@ -108,7 +108,7 @@ public class InserisciVolo {
         ButtonConferma.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            //controller.add //TODO L'inserimento da Controller dei voli
+            //controller.add //TODO Implementare il codice nell actionlistener
             }
         });
 

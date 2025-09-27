@@ -11,6 +11,9 @@ import DAO.UtenteDAO;
 
 import javax.swing.*;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import database.ConnessioneDatabase;
 
@@ -58,7 +61,7 @@ public class Controller {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Errore durante il login:\n" + ex.getMessage());
         }
-    }
+    }//Parentesi doLogin
 
 
     //DA FINIRE
@@ -171,6 +174,34 @@ public class Controller {
 
 
     }//Parentesi Finale AddVoli
+
+    // Restituisce solo i voli prenotabili
+    public List<Volo> getVoliPrenotabili() {
+
+        List<Volo> resultDB = new ArrayList<>();
+        VoloDAO voloDAO=null;
+
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            voloDAO = new VoloDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+
+        try {
+
+             resultDB = voloDAO.getVoliPrenotabili();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultDB;
+
+    }//Parentesi getVoliPrenotabilidaNapoli
 
 /*
     private ArrayList<Utente> utentiRegistratiRef;

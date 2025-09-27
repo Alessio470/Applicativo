@@ -1,16 +1,20 @@
 package gui;
 
 import controller.Controller;
-import model.*;
+import model.Volo;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
  * The type Effettua prenotazione.
  */
 
-public class EffettuaPrenotazione extends JFrame {
+public class EffettuaPrenotazione {
     private JPanel PanelEffettuaPrenotazione;
     private JTable tableVoli;
     private JTextField FieldNome; // Nome
@@ -42,25 +46,112 @@ public class EffettuaPrenotazione extends JFrame {
     private JPanel PanelButtonConfermaPrenotazione;
     private JPanel PanelButtonIndietro;
 
-    private final JFrame homeFrame;
+    private static JFrame frame;
 
-    public EffettuaPrenotazione(JFrame homeFrame) {
-        this.homeFrame = homeFrame;
+    public EffettuaPrenotazione(JFrame prevframe, Controller controller) {
 
-        setTitle("Effettua Prenotazione");
-        setContentPane(PanelEffettuaPrenotazione);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setSize(800, 600);
-        setLocationRelativeTo(homeFrame);
 
-        ButtonIndietro.addActionListener(e -> {
-            dispose();
-            if (homeFrame != null) {
-                homeFrame.setVisible(true);
-                homeFrame.toFront();
+        frame = new JFrame("Panel Effettua Prenotazione");
+        frame.setTitle("Effettua Prenotazione"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
+        frame.setContentPane(PanelEffettuaPrenotazione);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setSize(900, 550);
+        frame.setLocationRelativeTo(prevframe);
+        frame.setVisible(true);
+
+
+
+// Intestazioni colonne
+        String[] colonne = {"Codice Volo", "Compagnia", "Origine", "Destinazione", "Data", "Orario", "Ritardo", "Stato", "Gate"};
+
+// Dati fittizi
+       Object[][] dati = {
+    {"AZ123", "Alitalia", "Napoli", "Roma", "27/09/2025", "14:30", 0, "PROGRAMMATO", "A1"},
+    {"FR456", "Ryanair", "Napoli", "Milano", "27/09/2025", "16:00", 15, "IN_RITARDO", "B2"},
+    {"DL789", "Delta", "Napoli", "Parigi", "28/09/2025", "09:45", 0, "PROGRAMMATO", "C3"}
+};
+
+/*
+        //Mettiamo i dati nell array dei dati che andranno nella tabella
+        List<Volo> voli = controller.getVoliPrenotabili();//TODO IMPLEMENTARLA
+
+// Crea l'array dinamico delle dimensioni giuste
+        Object[][] dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
+
+        for (int i = 0; i < voli.size(); i++) {
+            Volo v = voli.get(i);
+            dati[i][0] = v.getCodiceV();
+            dati[i][1] = v.getCompagnia();
+            dati[i][2] = v.getAeroportoOrigine();
+            dati[i][3] = v.getAeroportoDestinazione();
+            dati[i][4] = v.getDataStr();
+            dati[i][5] = v.getOrarioStr();
+            dati[i][6] = v.getRitardoMinuti();
+            dati[i][7] = v.getStato().name();
+            dati[i][8] = v.getGate();
+        }*/
+
+
+// Creiamo il modello e lo impostiamo nella JTable
+        javax.swing.table.DefaultTableModel modello = new javax.swing.table.DefaultTableModel(dati, colonne);
+        TableVoli.setModel(modello);
+
+// Disabilitiamo modifiche dirette
+        TableVoli.setDefaultEditor(Object.class, null);
+
+// Centriamo tutte le celle
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < TableVoli.getColumnCount(); i++) {
+            TableVoli.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+
+
+        ButtonIndietro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                if (prevframe != null) {
+                    prevframe.setLocationRelativeTo(null);
+                    prevframe.setVisible(true);
+                }
             }
-        });
+        });//Roba buttonindietro actionlistener
+
+
+        //TODO ConfermaPrenotazione dopo aver implementato la tabella
+        ButtonConfermaPrenotazione.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });//Fine parentesi buttonConferma
+
+
+        TableVoli.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                // Ottieni l'indice della riga cliccata
+                int rowIndex = TableVoli.rowAtPoint(e.getPoint());
+                System.out.println("Riga cliccata: " + rowIndex);
+                //Semplicemente:
+                //Volo v = voli.get(rowIndex);
+
+                // Leggi tutti i valori della riga
+//                int colCount = TableVoli.getColumnCount();
+//                for (int i = 0; i < colCount; i++) {
+//                    Object value = TableVoli.getValueAt(rowIndex, i);
+//                    System.out.println(value);
+//                }
+
+            }
+        });//Fine parentesi mouselistener tablevoli
+
 
 
 /*
@@ -144,7 +235,10 @@ public class EffettuaPrenotazione extends JFrame {
         tableVoli.setModel(modello);
     }
 */
-    }
-}
+
+
+    }//parentesi GUI EffettuaPrenotazione
+
+}//parentesi Finale
 
 

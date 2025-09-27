@@ -26,12 +26,11 @@ public class HomeUtenteGenerico {
     private JLabel LabelTitolo;
     private Controller controller;
 
-    public JFrame prevframe;
 
     private static JFrame frame;
 
     public HomeUtenteGenerico(JFrame prevframe, Controller controller) {
-        this.prevframe = prevframe;
+
 
         frame = new JFrame("Panel Utente Generico");
         frame.setTitle("Home Utente Generico"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
@@ -57,8 +56,7 @@ public class HomeUtenteGenerico {
         });
 
         ButtonEffettuaPrenotazione.addActionListener(e -> {
-            EffettuaPrenotazione prenotazione = new EffettuaPrenotazione(frame);
-            prenotazione.setVisible(true);
+            new EffettuaPrenotazione(frame,controller);
             frame.setVisible(false);
         });
 
