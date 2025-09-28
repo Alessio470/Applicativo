@@ -44,8 +44,9 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.doLogin(FieldUsername.getText().trim(), new String(FieldPassword.getPassword()), frame);
+                frame.setVisible(false);
             }
-        });
+        });//Parentesi ButtonLogin
 
         //Listener "Registrati" (placeholder finché non implementi la GUI)
         ButtonRegistrati.addActionListener(new ActionListener() {

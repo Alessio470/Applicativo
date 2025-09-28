@@ -26,6 +26,7 @@ import model.Utente;
  */
 public class Controller {
 
+    private Utente u=null;
         public Controller() {
         }
 
@@ -45,22 +46,26 @@ public class Controller {
 
 
         try {
-            Utente u = utenteDAO.login(user, pass);//TODO controllare questo perchè forse da null
+             u = utenteDAO.login(user, pass);//TODO controllare questo perchè forse da null
             if (u == null) {
                 JOptionPane.showMessageDialog(frame, "Credenziali non valide");
                 return;
             }
 
             if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
-                new HomepageAmministratore(frame,this);
-                frame.setVisible(false);
-            } else {
-               new HomeUtenteGenerico(frame,this);
-                frame.setVisible(false);
+                new HomepageAmministratore(frame, this);
+            } else if (u.getRuolo()== RuoloUtente.GENERICO) {
+                new HomeUtenteGenerico(frame, this);
+            }else {
+                JOptionPane.showMessageDialog(frame, "Utente non valido");
             }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Errore durante il login:\n" + ex.getMessage());
         }
+
+        System.out.println("Loggato con -> Username: " + u.getUsername() + " | Password: " + u.getPassword());
+
     }//Parentesi doLogin
 
 

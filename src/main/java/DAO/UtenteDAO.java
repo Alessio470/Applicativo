@@ -41,25 +41,25 @@ public class UtenteDAO {
      * Autenticazione.
      * @return UtenteAmministratore / UtenteGenerico se le credenziali sono valide, altrimenti null.
      */
-    public Utente login(String username, String passwordPlain) throws SQLException {
-        final String sql =
-                "SELECT u.username, u.password, r.nomeruolo " +
-                        "FROM public.utente u " +
-                        "JOIN public.enumruoloutente r ON r.id = u.ruoloutente " +
-                        "WHERE u.username = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) return null;
+    public Utente login(String username, String password) throws SQLException {
+        String sql = "SELECT * FROM utente WHERE username = ? AND password = ?";
 
-                final String pwd = rs.getString("password");
-                if (pwd == null || !pwd.equals(passwordPlain)) return null;
-
-                final String ruoloNome = rs.getString("nomeruolo");
-                return buildUtente(username, pwd, ruoloNome);
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int ruolo = rs.getInt("ruoloutente");
+                if (ruolo==2) {
+                    return new UtenteAmministratore(rs.getString("username"), rs.getString("password"));
+                } else {
+                    return new UtenteGenerico(rs.getString("username"), rs.getString("password"));
+                }
             }
         }
+        return null; // login fallito
     }
+
 
     /**
      * Registrazione nuovo utente.

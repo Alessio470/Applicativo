@@ -5,12 +5,11 @@ import model.enums.RuoloUtente;
 public abstract class Utente {
     private String username;
     private String password;
-    private RuoloUtente ruolo;
+    private RuoloUtente ruolo=null;
 
-    public Utente(String username, String password, RuoloUtente ruolo) {
+    public Utente(String username, String password) {
         this.username = username;
         this.password = password;
-        this.ruolo = ruolo;
     }
 
     public String getUsername() { return username; }

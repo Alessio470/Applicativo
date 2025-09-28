@@ -1,14 +1,15 @@
 package model;
 
 import model.enums.RuoloUtente;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class UtenteAmministratore extends Utente {
 
 
     public UtenteAmministratore(String username, String password) {
-        super(username, password, RuoloUtente.AMMINISTRATORE);
+        super(username, password);
+
+        this.setRuolo(RuoloUtente.AMMINISTRATORE);
     }
 
 
