@@ -6,6 +6,8 @@ import gui.HomeUtenteGenerico;
 import gui.HomepageAmministratore;
 
 import model.Prenotazione;
+import model.UtenteAmministratore;
+import model.UtenteGenerico;
 import model.Volo;
 import model.enums.*;
 
@@ -34,9 +36,7 @@ public class Controller {
         }
 
 
-//TODO Castare ad oggetto
     public void doLogin(String user, String pass, JFrame frame) {
-
 
         UtenteDAO utenteDAO=null;
 
@@ -46,7 +46,6 @@ public class Controller {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
-
 
         try {
              u = utenteDAO.login(user, pass);//TODO controllare questo perchè forse da null
@@ -72,7 +71,6 @@ public class Controller {
     }//Parentesi doLogin
 
 
-    //DA FINIRE //TODO Castare ad Oggetto
     public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
 
             UtenteDAO utenteDAO=null;
@@ -104,14 +102,23 @@ public class Controller {
             return;
         }
 
+        //REGISTRAZIONE UTENTE
+        Utente utenteRegistrato = null;
+
+        if (ruolo.equals(RuoloUtente.GENERICO)) {
+            utenteRegistrato = new UtenteGenerico(username, password);
+        } else {
+            utenteRegistrato = new UtenteAmministratore(username, password);
+        }
+
         try {
             // Controllo unicità username
             if (utenteDAO.usernameExists(username)) {
                 JOptionPane.showMessageDialog(frame, "Username già in uso.");
                 return;
             }
-//TODO Castare ad Oggetto
-            utenteDAO.registraUtente(username, password, ruolo);
+
+            utenteDAO.registraUtente(utenteRegistrato);
 
             JOptionPane.showMessageDialog(
                     frame,
@@ -128,7 +135,6 @@ public class Controller {
     }//Parentesi onRegistrati
 
 
-//TODO Cast ad Oggetto
     public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
         String codiceVolo = "Test123";
@@ -177,9 +183,6 @@ public class Controller {
             JOptionPane.showMessageDialog(frame,
                     "Errore durante l inserimento volo:\n" + ex.getMessage());
         }
-
-
-
 
 
     }//Parentesi Finale AddVoli
