@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Volo {
-    public static final String AEROPORTO_NAP = "NAP";
 
     private String codicevolo;
     private String compagnia;
@@ -52,7 +51,7 @@ public class Volo {
     public void setCompagnia(String compagnia) { this.compagnia = compagnia; }
     public void setAeroportoOrigine(String aeroportoOrigine) { this.aeroportoOrigine = aeroportoOrigine; }
     public void setAeroportoDestinazione(String aeroportoDestinazione) { this.aeroportoDestinazione = aeroportoDestinazione; }
-    public void setDataOra(String data) { this.data = data; }
+    public void setData(String data) { this.data = data; }
     public void setOrario(String orario) { this.orario = orario; }
     public void setRitardoMinuti(int ritardoMinuti) { this.ritardoMinuti = ritardoMinuti; }
     public void setStato(StatoVolo stato) { this.stato = stato; }

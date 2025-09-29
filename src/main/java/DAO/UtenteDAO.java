@@ -66,6 +66,7 @@ public class UtenteDAO {
      * Ritorna l'ID del ruolo (enumruoloutente.id) assegnato all'utente inserito.
      * Lancia SQLException se ruolo inesistente o username duplicato.
      */
+    //TODO Cambiare ad oggetto
     public int registraUtente(String username, String passwordPlain, String ruoloNome) throws SQLException {
         // 1) Risolvi ID del ruolo (case-insensitive)
         final Integer ruoloId = resolveRuoloId(ruoloNome);

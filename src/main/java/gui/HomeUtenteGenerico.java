@@ -50,8 +50,7 @@ public class HomeUtenteGenerico {
             }
         });
         ButtonAereaPersonale.addActionListener(e -> {
-            AreaPersonale area = new AreaPersonale(frame); // "this" è HomeUtenteGenerico
-            area.setVisible(true);
+            AreaPersonale area = new AreaPersonale(frame,controller); // "this" è HomeUtenteGenerico
             frame.setVisible(false);
         });
 

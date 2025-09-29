@@ -27,11 +27,12 @@ import model.Utente;
 public class Controller {
 
     private Utente u=null;
+
         public Controller() {
         }
 
 
-
+//TODO Castare ad oggetto
     public void doLogin(String user, String pass, JFrame frame) {
 
 
@@ -58,7 +59,7 @@ public class Controller {
                 new HomeUtenteGenerico(frame, this);
             }else {
                 JOptionPane.showMessageDialog(frame, "Utente non valido");
-            }
+            }//TODO Controllare se è giusto
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Errore durante il login:\n" + ex.getMessage());
@@ -69,7 +70,7 @@ public class Controller {
     }//Parentesi doLogin
 
 
-    //DA FINIRE
+    //DA FINIRE //TODO Castare ad Oggetto
     public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
 
             UtenteDAO utenteDAO=null;
@@ -107,7 +108,7 @@ public class Controller {
                 JOptionPane.showMessageDialog(frame, "Username già in uso.");
                 return;
             }
-
+//TODO Castare ad Oggetto
             utenteDAO.registraUtente(username, password, ruolo);
 
             JOptionPane.showMessageDialog(
@@ -125,10 +126,11 @@ public class Controller {
     }//Parentesi onRegistrati
 
 
-
+//TODO Cast ad Oggetto
     public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
         String codiceVolo = "Test123";
+        //TODO Generazione del codice volo
 
 
 

@@ -1,8 +1,10 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 
-public class AreaPersonale extends JFrame {
+public class AreaPersonale {
     private JPanel PanelAeraPersonale;
     private JPanel PanelTitolo;
     private JPanel PanelRicercaRapida;
@@ -14,23 +16,27 @@ public class AreaPersonale extends JFrame {
     private JLabel LabelRicercaRapida;
     private JComboBox ComboRicerca;
 
-    private final JFrame homeFrame;
+    private JFrame frame;
 
-    public AreaPersonale(JFrame homeFrame) {
-        this.homeFrame = homeFrame;
+    public AreaPersonale(JFrame prevframe, Controller controller) {
 
-        setTitle("Area Personale");
-        setContentPane(PanelAeraPersonale);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setSize(800, 600);
-        setLocationRelativeTo(homeFrame);
+
+        frame = new JFrame("Panel Area Personale");
+        frame.setTitle("Area Personale"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
+        frame.setContentPane(PanelAeraPersonale);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setSize(900, 550);
+        frame.setLocationRelativeTo(prevframe);
+        frame.setVisible(true);
+
+
 
         ButtonIndietro.addActionListener(e -> {
-            dispose();
-            if (homeFrame != null) {
-                homeFrame.setVisible(true);
-                homeFrame.toFront();
+            frame.dispose();
+            if (prevframe != null) {
+                prevframe.setVisible(true);
+                prevframe.toFront();
             }
         });
     }

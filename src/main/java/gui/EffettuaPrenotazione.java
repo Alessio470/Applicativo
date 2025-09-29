@@ -66,13 +66,14 @@ public class EffettuaPrenotazione {
         String[] colonne = {"Codice Volo", "Compagnia", "Origine", "Destinazione", "Data", "Orario", "Ritardo", "Stato", "Gate"};
 
 // Dati fittizi
+        /*
        Object[][] dati = {
     {"AZ123", "Alitalia", "Napoli", "Roma", "27/09/2025", "14:30", 0, "PROGRAMMATO", "A1"},
     {"FR456", "Ryanair", "Napoli", "Milano", "27/09/2025", "16:00", 15, "IN_RITARDO", "B2"},
     {"DL789", "Delta", "Napoli", "Parigi", "28/09/2025", "09:45", 0, "PROGRAMMATO", "C3"}
-};
+};*/
 
-/*
+
         //Mettiamo i dati nell array dei dati che andranno nella tabella
         List<Volo> voli = controller.getVoliPrenotabili();//TODO IMPLEMENTARLA
 
@@ -90,7 +91,7 @@ public class EffettuaPrenotazione {
             dati[i][6] = v.getRitardoMinuti();
             dati[i][7] = v.getStato().name();
             dati[i][8] = v.getGate();
-        }*/
+        }
 
 
 // Creiamo il modello e lo impostiamo nella JTable

@@ -12,8 +12,6 @@ public class UtenteGenerico extends Utente {
     }
 
 
-
-
     @Override
     public String toString() {
         return "UtenteGenerico{" + getUsername() + "}";

@@ -72,6 +72,7 @@ public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
         ButtonRegistrati.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO Cambiare ad oggetto
                 controller.onRegistrati(FieldUsername.getText().trim(),new String(FieldPassword1.getPassword()), new String(FieldPassword2.getPassword()), ComboRuolo.getSelectedItem().toString(),frame );
             }
 
