@@ -158,7 +158,7 @@ public class EffettuaPrenotazione {
                 // Leggi tutti i valori della riga
 //                int colCount = TableVoli.getColumnCount();
 //                for (int i = 0; i < colCount; i++) {
-//                    Object value = TableVoli.getValueAt(rowIndex, i);
+//                    Object value = TableVoli.getValueAt(rowIndex, 0);
 //                    System.out.println(value);
 //                }
 

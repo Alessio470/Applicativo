@@ -236,7 +236,7 @@ public class Controller {
             return u.getUsername();
     }
 
-    public List<Volo> getVoliPrenotati() {
+    /*public List<Volo> getVoliPrenotati() {
         List<Prenotazione> resultDB = new ArrayList<>();
         VoloDAO voloDAO=null;
 
@@ -261,6 +261,8 @@ public class Controller {
         return resultDB;
 
     }//Fine parentesi getVoli
+
+     */
 
 
 

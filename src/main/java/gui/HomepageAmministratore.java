@@ -3,8 +3,8 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
 
 /**
  * The type Homepage amministratore.
@@ -28,9 +28,7 @@ public class HomepageAmministratore  {
     private JLabel LabelAeroporotoDestinazione;
     private JTextField FieldAeroportoDestinazione;
     private JLabel LabelDataVolo;
-    private JTextField FieldDataVolo;
     private JLabel LabelOrario;
-    private JTextField FieldOrario;
     private JLabel LabelStatoVolo;
     private JComboBox ComboStatoVolo;
     private JPanel PanelButtons;
@@ -42,6 +40,8 @@ public class HomepageAmministratore  {
     private JPanel PanelDataVolo;
     private JPanel PanelOrarioPrevisto;
     private JPanel PanelStatoVolo;
+    private JFormattedTextField formattedTextFieldData;
+    private JFormattedTextField formattedTextFieldOrario;
 
     private Controller controller;
 
@@ -60,6 +60,27 @@ public class HomepageAmministratore  {
         frame.setLocationRelativeTo(prevframe);
         frame.setVisible(true);
 
+        // Campo data formato dd/mm/aaaa
+        try {
+            MaskFormatter dataMask = new MaskFormatter("##/##/####");
+            dataMask.setPlaceholderCharacter('_');
+            formattedTextFieldData.setFormatterFactory(
+                    new javax.swing.text.DefaultFormatterFactory(dataMask)
+            );
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+// Campo orario formato hh:mm
+        try {
+            MaskFormatter oraMask = new MaskFormatter("##:##");
+            oraMask.setPlaceholderCharacter('_');
+            formattedTextFieldOrario.setFormatterFactory(
+                    new javax.swing.text.DefaultFormatterFactory(oraMask)
+            );
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
 
         ButtonLogout.addActionListener(e -> {
             frame.dispose();

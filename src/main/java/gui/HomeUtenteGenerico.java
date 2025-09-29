@@ -54,18 +54,18 @@ public class HomeUtenteGenerico {
 
 // Dati fittizi
 
-       /*Object[][] dati = {
+       Object[][] dati = {
     {"AZ123", "Alitalia", "Napoli", "Roma", "27/09/2025", "14:30", 0, "PROGRAMMATO", "A1"},
     {"FR456", "Ryanair", "Napoli", "Milano", "27/09/2025", "16:00", 15, "IN_RITARDO", "B2"},
     {"DL789", "Delta", "Napoli", "Parigi", "28/09/2025", "09:45", 0, "PROGRAMMATO", "C3"}
-};*/
+};
         //Mettiamo i dati nell array dei dati che andranno nella tabella
-        List<Prenotazione> voli = controller.getVoliPrenotati();
+        //List<Prenotazione> voli = controller.getVoliPrenotati();
 
 // Crea l'array dinamico delle dimensioni giuste
-        Object[][] dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
+      //  Object[][] dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
 //TODO DA FINIRE PERCHÈ NELLA COSA DEL DAO RESTITUISCE COSE A CASO E QUINDI BISOGNA SISTEMARE TUTTO
-        for (int i = 0; i < voli.size(); i++) {
+       /* for (int i = 0; i < voli.size(); i++) {
             Prenotazione v = voli.get(i);
             dati[i][0] = v.getCodiceV();
             dati[i][1] = v.getCompagnia();
@@ -76,7 +76,7 @@ public class HomeUtenteGenerico {
             dati[i][6] = v.getRitardoMinuti();
             dati[i][7] = v.getStato().name();
             dati[i][8] = v.getGate();
-        }
+        }*/
 
 
         // Creiamo il modello e lo impostiamo nella JTable
