@@ -1,6 +1,7 @@
 package model;
 
 import model.enums.StatoPrenotazione;
+import model.enums.StatoVolo;
 
 public class Prenotazione {
     private String usernameUtente;    // può essere null se prenotazione senza login
@@ -26,6 +27,19 @@ public class Prenotazione {
         this.stato = stato;
         this.codicefiscalepasseggero= codicefiscalepasseggero;
     }
+
+    public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, int stato, String codicefiscalepasseggero) {
+
+        this.usernameUtente = usernameUtente;
+        this.codiceVolo = codiceVolo;
+        this.nomePasseggero = nomePasseggero;
+        this.cognomePasseggero=cognomePasseggero;
+        this.numeroBiglietto = numeroBiglietto;
+        this.posto = posto;
+        this.stato = fromInt(stato);
+        this.codicefiscalepasseggero= codicefiscalepasseggero;
+    }
+
 
     // --- Getter ---
     public String getUsernameUtente() { return usernameUtente; }
@@ -55,6 +69,19 @@ public class Prenotazione {
     public boolean appartieneUtente(String username) {
         return usernameUtente != null && usernameUtente.equals(username);
     }
+
+    private StatoPrenotazione fromInt(int stato) {
+
+        return switch (stato) {
+            case 1 -> StatoPrenotazione.IN_ATTESA;
+            case 2 -> StatoPrenotazione.CONFERMATA;
+            case 3 -> StatoPrenotazione.CANCELLATA;
+
+            default -> throw new IllegalArgumentException("Codice stato volo sconosciuto: " + stato);
+        };
+
+    }
+
 
     @Override
     public String toString() {

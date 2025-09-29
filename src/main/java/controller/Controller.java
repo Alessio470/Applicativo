@@ -232,6 +232,36 @@ public class Controller {
 
         }
 
+    public String getUsernameUtente() {
+            return u.getUsername();
+    }
+
+    public List<Volo> getVoliPrenotati() {
+        List<Prenotazione> resultDB = new ArrayList<>();
+        VoloDAO voloDAO=null;
+
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            voloDAO = new VoloDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+
+        try {
+
+            resultDB = voloDAO.getVoli();
+//
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultDB;
+
+    }//Fine parentesi getVoli
+
 
 
 /*

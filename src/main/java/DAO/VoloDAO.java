@@ -1,5 +1,6 @@
 package DAO;
 
+import model.Prenotazione;
 import model.Volo;
 import model.enums.StatoVolo;
 
@@ -80,5 +81,31 @@ public class VoloDAO {
         }
         return voli;
     }//Fine getVolidaNapoli
+
+    public List<Volo> getVoli() throws SQLException {
+
+        List<Volo> voli = new ArrayList<>();
+
+        String query = "SELECT * FROM volo"; // nome tabella nel db
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()) {
+            Volo v = new Volo(
+                    rs.getString("codicevolo"),
+                    rs.getString("compagniaaerea"),
+                    rs.getString("aeroportoorigine"),
+                    rs.getString("aeroportodestinazione"),
+                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),//Data adesso è di tipo date //TODO inverire la data in formato gg/mm/aaaa (adesso è in formato aaaa-mm-gg)
+                    rs.getString("orarioprevisto").substring(0, 5),//Adesso è di tipo time //TODO usare il formato hh:mm (adesso è in formato hh:mm:ss)
+                    rs.getInt("ritardo"),
+                    rs.getInt("statovolo"),
+                    rs.getString("numeroGate")
+            );
+            voli.add(v);
+        }
+        return voli;
+
+    }//Fine getVoli
 
 }//Parentesi finale

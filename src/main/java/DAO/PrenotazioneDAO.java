@@ -3,10 +3,9 @@ package DAO;
 
 import model.Prenotazione;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrenotazioneDAO {
 
@@ -42,6 +41,31 @@ public class PrenotazioneDAO {
 
         }
     }//Parentesi InserisciPrenotazione
+
+    public List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException {
+
+        List<Prenotazione> prenotazioni = new ArrayList<>();
+
+        String query = "SELECT * FROM prenotazioni as v where v.username="+username; // nome tabella nel db
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()) {
+            Prenotazione p = new Prenotazione(
+                    rs.getString("numerobiglietto"),
+                    username,
+                    rs.getString("codvolo"),
+                    rs.getString("nomepasseggero"),
+                    rs.getString("cognomepasseggero"),
+                    rs.getString("numeroposto"),
+                    rs.getInt("statoprenotazione"),
+                    rs.getString("codicefiscalepasseggero")
+            );
+            prenotazioni.add(p);
+        }
+        return prenotazioni;
+
+    }//Fine getPrenotazioniUtente
 
 
 }
