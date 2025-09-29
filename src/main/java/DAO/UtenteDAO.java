@@ -66,12 +66,10 @@ public class UtenteDAO {
      * Ritorna l'ID del ruolo (enumruoloutente.id) assegnato all'utente inserito.
      * Lancia SQLException se ruolo inesistente o username duplicato.
      */
-    //TODO Cambiare ad oggetto
-    public int registraUtente(String username, String passwordPlain, String ruoloNome) throws SQLException {
+    public int registraUtente(Utente utenteRegistrato) throws SQLException {
         // 1) Risolvi ID del ruolo (case-insensitive)
-        final Integer ruoloId = resolveRuoloId(ruoloNome);
-        if (ruoloId == null) {
-            throw new SQLException("Ruolo non valido: " + ruoloNome + " (ammessi: AMMINISTRATORE, GENERICO)");
+        if (utenteRegistrato.getRuolo() == null) {
+            throw new SQLException("Ruolo non valido: " + utenteRegistrato.getRuolo().toString() + " (ammessi: AMMINISTRATORE, GENERICO)");
         }
 
         // 2) Inserisci l'utente
@@ -79,9 +77,9 @@ public class UtenteDAO {
                 "INSERT INTO public.utente (username, password, ruoloutente) " +
                         "VALUES (?, ?, ?) RETURNING ruoloutente";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username);
-            ps.setString(2, passwordPlain); // TODO: valuta hashing sicuro
-            ps.setInt(3, ruoloId);
+            ps.setString(1, utenteRegistrato.getUsername());
+            ps.setString(2, utenteRegistrato.getPassword()); // TODO: valuta hashing sicuro
+            ps.setInt(3, utenteRegistrato.getRuolo().ordinal());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1); // restituisce l'ID RUOLO
@@ -91,37 +89,4 @@ public class UtenteDAO {
         }
     }
 
-    // ===== Helpers =====
-
-    private Utente buildUtente(String username, String password, String ruoloNome) {
-        RuoloUtente ruolo = mapRuolo(ruoloNome);
-        if (ruolo == RuoloUtente.AMMINISTRATORE) {
-            return new UtenteAmministratore(username, password);
-        } else {
-            return new UtenteGenerico(username, password);
-        }
-    }
-
-    private RuoloUtente mapRuolo(String ruoloNome) {
-        if (ruoloNome == null) return RuoloUtente.GENERICO;
-        String r = ruoloNome.trim().toUpperCase();
-        if ("AMMINISTRATORE".equals(r)) return RuoloUtente.AMMINISTRATORE;
-        if ("GENERICO".equals(r)) return RuoloUtente.GENERICO;
-        // fallback robusto
-        for (RuoloUtente ru : RuoloUtente.values()) {
-            if (ru.name().equalsIgnoreCase(r)) return ru;
-        }
-        return RuoloUtente.GENERICO;
-    }
-
-    private Integer resolveRuoloId(String ruoloNome) throws SQLException {
-        final String sql = "SELECT id FROM public.enumruoloutente WHERE UPPER(nomeruolo) = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ruoloNome == null ? null : ruoloNome.trim().toUpperCase());
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return rs.getInt("id");
-                return null;
-            }
-        }
-    }
 }

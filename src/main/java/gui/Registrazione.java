@@ -36,7 +36,7 @@ public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
 
 
 
-    private JFrame frame; //TODO PER LA ROBA DELL EXTEND HO MESSO STO FRAME
+    private JFrame frame;
 
     public Registrazione(JFrame prevframe, Controller controller) {
 

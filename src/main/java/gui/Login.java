@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import model.Utente;
 
 import javax.swing.*;
 import javax.swing.*;
@@ -36,8 +37,6 @@ public class Login {
 
 
     public Login() {
-
-
         controller = new Controller();
 
         // Listener "Login" → autentica su PostgreSQL e apri la home corretta

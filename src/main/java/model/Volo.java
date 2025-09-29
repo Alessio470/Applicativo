@@ -2,14 +2,12 @@ package model;
 
 import model.enums.StatoVolo;
 
-import javax.swing.*;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.Objects;
 
 public class Volo {
@@ -69,7 +67,6 @@ public class Volo {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             return LocalTime.parse(orario, formatter);
         } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(null, "Formato ora non valido: " + orario);
             return null; // segnala errore
         }
     }
@@ -85,7 +82,6 @@ public class Volo {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             return sdf.parse(data);
         } catch (ParseException e) {
-            JOptionPane.showMessageDialog(null, "Formato data non valido: " + data);
             return null; // segnala errore
         }
     }
@@ -98,8 +94,6 @@ public class Volo {
     public int getStatoToInt() {
         return stato.ordinal();
     }
-
-
 
 
 
