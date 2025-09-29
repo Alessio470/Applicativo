@@ -206,7 +206,7 @@ public class Controller {
         try {
 
              resultDB = voloDAO.getVoliPrenotabili();
-
+//
         } catch (SQLException e) {
             e.printStackTrace();
         }
