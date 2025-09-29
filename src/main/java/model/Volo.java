@@ -24,6 +24,8 @@ public class Volo {
     private StatoVolo stato;
     private String gate; // null se non ancora assegnato
 
+
+
     public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, StatoVolo stato, String gate) {
         this.codicevolo = codicev;
         this.compagnia = compagnia;
@@ -35,6 +37,21 @@ public class Volo {
         this.stato = stato;
         this.gate = gate;
     }
+
+    public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, int stato, String gate) {
+        this.codicevolo = codicev;
+        this.compagnia = compagnia;
+        this.aeroportoOrigine = aeroportoOrigine;
+        this.aeroportoDestinazione = aeroportoDestinazione;
+        this.data = data;
+        this.orario = orario;
+        this.ritardoMinuti = ritardoMinuti;
+        this.stato = fromInt(stato);
+        this.gate = gate;
+    }
+
+
+
 
     // --- Getter e Setter ---
     public String getCodiceV() { return codicevolo; }
@@ -99,6 +116,16 @@ public class Volo {
         return stato.ordinal();
     }
 
+    public static StatoVolo fromInt(int codice) {
+        return switch (codice) {
+            case 1 -> StatoVolo.PROGRAMMATO;
+            case 2 -> StatoVolo.DECOLLATO;
+            case 3 -> StatoVolo.IN_RITARDO;
+            case 4 -> StatoVolo.ATTERRATO;
+            case 5 -> StatoVolo.CANCELLATO;
+            default -> throw new IllegalArgumentException("Codice stato volo sconosciuto: " + codice);
+        };
+    }
 
 
 

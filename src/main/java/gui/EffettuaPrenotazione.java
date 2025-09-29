@@ -75,7 +75,7 @@ public class EffettuaPrenotazione {
 
 
         //Mettiamo i dati nell array dei dati che andranno nella tabella
-        List<Volo> voli = controller.getVoliPrenotabili();//TODO IMPLEMENTARLA
+        List<Volo> voli = controller.getVoliPrenotabili();
 
 // Crea l'array dinamico delle dimensioni giuste
         Object[][] dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
@@ -131,6 +131,7 @@ public class EffettuaPrenotazione {
                 //TODO il dao che fa la insert in prenotazione, questa è la signature dell oggetto prenotazione:
                 //public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo,
                 // String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero)
+                //controller.effettuaPrenotazione();
 
                 frame.dispose();
                 if (prevframe != null) {

@@ -1,9 +1,11 @@
 package controller;
 
 
+import DAO.PrenotazioneDAO;
 import gui.HomeUtenteGenerico;
 import gui.HomepageAmministratore;
 
+import model.Prenotazione;
 import model.Volo;
 import model.enums.*;
 
@@ -209,6 +211,25 @@ public class Controller {
         return resultDB;
 
     }//Parentesi getVoliPrenotabilidaNapoli
+
+    public void effettuaPrenotazione(String codiceVolo,String nomePasseggero,String cognomePasseggero,String posto, String codicefiscalepasseggero) {
+        //String numeroBiglietto,String usernameUtente, String codiceVolo,
+        // String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero
+        //TODO Da generare il numero biglietto
+        //TODO String numeroBiglietto
+
+        //TODO usernameUtente lo si ricava dalla sessione attuale
+        //quindi u.getUsername
+
+        StatoPrenotazione stato= StatoPrenotazione.CONFERMATA;
+        PrenotazioneDAO prenotazioneDAO=null;
+
+        //Prenotazione prenotazione=new Prenotazione(generare,nomePasseggero,);
+
+
+        }
+
+
 
 /*
     private ArrayList<Utente> utentiRegistratiRef;

@@ -4,6 +4,8 @@ import model.Volo;
 import model.enums.StatoVolo;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,18 +64,17 @@ public class VoloDAO {
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
-
         while (rs.next()) {
             Volo v = new Volo(
                     rs.getString("codicevolo"),
-                    rs.getString("compagnia"),
-                    rs.getString("aeroportoOrigine"),
-                    rs.getString("aeroportoDestinazione"),
-                    rs.getString("datavolo"),
-                    rs.getString("orarioprevisto"),
+                    rs.getString("compagniaaerea"),
+                    rs.getString("aeroportoorigine"),
+                    rs.getString("aeroportodestinazione"),
+                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),//Data adesso è di tipo date //TODO inverire la data in formato gg/mm/aaaa (adesso è in formato aaaa-mm-gg)
+                    rs.getString("orarioprevisto").substring(0, 5),//Adesso è di tipo time //TODO usare il formato hh:mm (adesso è in formato hh:mm:ss)
                     rs.getInt("ritardo"),
-                    StatoVolo.valueOf(rs.getString("statovolo")),
-                    rs.getString("gate")
+                    rs.getInt("statovolo"),
+                    rs.getString("numeroGate")
             );
             voli.add(v);
         }
