@@ -17,19 +17,18 @@ public class PrenotazioneDAO {
 
     public int InserisciPrenotazione(Prenotazione prenotazione) throws SQLException {
 
-    final String sql = "INSERT INTO prenotazione(numerobiglietto, numeroposto, statoprenotazione, username, codvolo, nomepasseggero, cognomepasseggero, codicefiscalepasseggero)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    final String sql = "INSERT INTO prenotazione( numeroposto, statoprenotazione, username, codvolo, nomepasseggero, cognomepasseggero, codicefiscalepasseggero)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try(PreparedStatement ps = conn.prepareStatement(sql)){
 
-            ps.setString(1,prenotazione.getNumeroBiglietto());
-            ps.setString(2,prenotazione.getPosto());
-            ps.setInt(3, prenotazione.getStato().ordinal());
-            ps.setString(4,prenotazione.getUsernameUtente());
-            ps.setString(5,prenotazione.getCodiceVolo());
-            ps.setString(6,prenotazione.getNomePasseggero());
-            ps.setString(7,prenotazione.getCognomePasseggero());
-            ps.setString(8,prenotazione.getCodicefiscalepasseggero());
+            ps.setString(1,prenotazione.getPosto());
+            ps.setInt(2, prenotazione.getStato().ordinal());
+            ps.setString(3,prenotazione.getUsernameUtente());
+            ps.setString(4,prenotazione.getCodiceVolo());
+            ps.setString(5,prenotazione.getNomePasseggero());
+            ps.setString(6,prenotazione.getCognomePasseggero());
+            ps.setString(7,prenotazione.getCodicefiscalepasseggero());
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -42,6 +41,8 @@ public class PrenotazioneDAO {
         }
     }//Parentesi InserisciPrenotazione
 
+
+    //TODO se non erro da finire o almeno da controllare
     public List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException {
 
         List<Prenotazione> prenotazioni = new ArrayList<>();
