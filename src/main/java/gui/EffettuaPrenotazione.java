@@ -131,7 +131,17 @@ public class EffettuaPrenotazione {
                 //TODO il dao che fa la insert in prenotazione, questa è la signature dell oggetto prenotazione:
                 //public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo,
                 // String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero)
-                //controller.effettuaPrenotazione();
+
+                int selectedRow = TableVoli.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(frame, "Seleziona un volo.");
+                    return;
+                }
+
+// codice volo è nella colonna 0
+                // Codice volo è nella colonna 0
+                String codiceVolo = (String) TableVoli.getValueAt(selectedRow, 0);
+                controller.effettuaPrenotazione((String) TableVoli.getValueAt(selectedRow, 0),FieldNome.getText().trim(),FieldCognome.getText().trim(),FieldNumeroPosto.getText().trim(),FieldCodiceFiscale.getText().trim());
 
                 frame.dispose();
                 if (prevframe != null) {
@@ -142,15 +152,15 @@ public class EffettuaPrenotazione {
             }//parentesi action performed
         });//Fine parentesi buttonConferma
 
-
+/*
         TableVoli.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
                 // Ottieni l'indice della riga cliccata
-                int rowIndex = TableVoli.rowAtPoint(e.getPoint());
-                System.out.println("Riga cliccata: " + rowIndex);
+                //int rowIndex = TableVoli.rowAtPoint(e.getPoint());
+                //System.out.println("Riga cliccata: " + rowIndex);
 
                 //Semplicemente:
                 //Volo v = voli.get(rowIndex);
@@ -163,7 +173,7 @@ public class EffettuaPrenotazione {
 //                }
 
             }
-        });//Fine parentesi mouselistener tablevoli
+        });*///Fine parentesi mouselistener tablevoli
 
 
 

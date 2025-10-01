@@ -30,7 +30,7 @@ public class AreaPersonale {
         frame.setLocationRelativeTo(prevframe);
         frame.setVisible(true);
 
-
+//TODO il metodo che gestisce la tabella e tutto
 
         ButtonIndietro.addActionListener(e -> {
             frame.dispose();

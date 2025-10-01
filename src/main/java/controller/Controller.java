@@ -216,18 +216,35 @@ public class Controller {
     }//Parentesi getVoliPrenotabilidaNapoli
 
     public void effettuaPrenotazione(String codiceVolo,String nomePasseggero,String cognomePasseggero,String posto, String codicefiscalepasseggero) {
-        //String numeroBiglietto,String usernameUtente, String codiceVolo,
+
+            //String numeroBiglietto,String usernameUtente, String codiceVolo,
         // String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero
-        //TODO Da generare il numero biglietto
-        //TODO String numeroBiglietto
 
-        //TODO usernameUtente lo si ricava dalla sessione attuale
-        //quindi u.getUsername
 
-        StatoPrenotazione stato= StatoPrenotazione.CONFERMATA;
+        //NB, il biglietto verrà generato nel db con una sequenza, quindi lasciare null
+        //String numeroBiglietto = "AATest123";
+
+        int stato= StatoPrenotazione.CONFERMATA.ordinal()+1;
         PrenotazioneDAO prenotazioneDAO=null;
 
-        //Prenotazione prenotazione=new Prenotazione(generare,nomePasseggero,);
+        //Connessione al db
+
+        PrenotazioneDAO PrenotazioneDAO=null;
+
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            PrenotazioneDAO = new PrenotazioneDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+        Prenotazione prenotazione=new Prenotazione(null,this.getUsernameUtente(),codiceVolo,nomePasseggero,cognomePasseggero,posto,stato,codicefiscalepasseggero);
+
+        try{
+            PrenotazioneDAO.InserisciPrenotazione(prenotazione);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
 
         }
@@ -236,8 +253,8 @@ public class Controller {
             return u.getUsername();
     }
 
-    /*public List<Volo> getVoliPrenotati() {
-        List<Prenotazione> resultDB = new ArrayList<>();
+    public List<Volo> getVoli() {
+        List<Volo> resultDB = new ArrayList<>();
         VoloDAO voloDAO=null;
 
 
@@ -262,7 +279,7 @@ public class Controller {
 
     }//Fine parentesi getVoli
 
-     */
+
 
 
 
