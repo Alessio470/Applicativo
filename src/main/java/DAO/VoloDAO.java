@@ -1,9 +1,11 @@
 package DAO;
 
+import database.ConnessioneDatabase;
 import model.Prenotazione;
 import model.Volo;
 import model.enums.StatoVolo;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -107,5 +109,53 @@ public class VoloDAO {
         return voli;
 
     }//Fine getVoli
+
+    public static DefaultTableModel getTableModelVoliDaPerNapoli() {
+        String[] colonne = {
+                "Codice volo", "Compagnia", "Origine", "Destinazione",
+                "Data", "Orario", "Ritardo (min)", "Stato", "Gate"
+        };
+
+        DefaultTableModel model = new DefaultTableModel(colonne, 0) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        };
+
+        final String sql =
+                "SELECT codicevolo, compagniaaerea, aeroportoorigine, aeroportodestinazione, " +
+                        "       datavolo, orarioprevisto, ritardo, statovolo, \"numeroGate\" " +
+                        "FROM   volo " +
+                        "WHERE  UPPER(aeroportoorigine) IN ('NAPOLI','NAP','NA') " +
+                        "   OR  UPPER(aeroportodestinazione) IN ('NAPOLI','NAP','NA') " +
+                        "ORDER BY datavolo, orarioprevisto";
+
+        try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement ps = cn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String codice   = rs.getString("codicevolo");
+                String comp     = rs.getString("compagniaaerea");
+                String orig     = rs.getString("aeroportoorigine");
+                String dest     = rs.getString("aeroportodestinazione");
+
+                // Date/Time: mostriamo "yyyy-MM-dd" e "HH:mm"
+                Date data       = rs.getDate("datavolo");
+                Time orario     = rs.getTime("orarioprevisto");
+                String dataStr  = (data   != null) ? data.toString() : "";
+                String oraStr   = (orario != null) ? orario.toString().substring(0,5) : "";
+
+                Integer ritardo = (Integer) rs.getObject("ritardo");        // può essere null
+                Object statoObj = rs.getObject("statovolo");                 // int o text
+                String statoStr = (statoObj == null) ? "" : String.valueOf(statoObj);
+                String gate     = rs.getString("numeroGate");
+
+                model.addRow(new Object[]{ codice, comp, orig, dest, dataStr, oraStr, ritardo, statoStr, gate });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            model.addRow(new Object[]{ "ERRORE DB: " + ex.getMessage(), "", "", "", "", "", "", "", ""});
+        }
+        return model;
+    }
 
 }//Parentesi finale
