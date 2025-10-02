@@ -2,14 +2,15 @@ package gui;
 
 import controller.Controller;
 import database.ConnessioneDatabase;
+import model.enums.StatoVolo;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -46,6 +47,8 @@ public class HomepageAmministratore  {
     private JPanel PanelStatoVolo;
     private JFormattedTextField formattedTextFieldData;   // dd/MM/yyyy
     private JFormattedTextField formattedTextFieldOrario; // HH:mm
+    private JTextField FieldRitardo;
+    private JLabel LabelRitardo;
 
     private Controller controller;
 
@@ -84,14 +87,13 @@ public class HomepageAmministratore  {
             );
         } catch (Exception ignored) {}
 
-        // Stato volo: etichette leggibili (mappate a int in UPDATE)
-        if (ComboStatoVolo.getItemCount() == 0) {
-            ComboStatoVolo.addItem("programmato");
-            ComboStatoVolo.addItem("decollato");
-            ComboStatoVolo.addItem("in_ritardo");
-            ComboStatoVolo.addItem("atterrato");
-            ComboStatoVolo.addItem("cancellato");
-        }
+
+        ComboStatoVolo.addItem(StatoVolo.PROGRAMMATO.toString());
+        ComboStatoVolo.addItem(StatoVolo.DECOLLATO.toString());
+        ComboStatoVolo.addItem(StatoVolo.IN_RITARDO.toString());
+        ComboStatoVolo.addItem(StatoVolo.ATTERRATO.toString());
+        ComboStatoVolo.addItem(StatoVolo.CANCELLATO.toString());
+
 
         // Tabella
         TabellaVoli.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -115,23 +117,32 @@ public class HomepageAmministratore  {
             frame.setVisible(false);
         });
 
-        ButtonConfermaModifica.addActionListener(e -> confermaModifica());
+        ButtonConfermaModifica.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int r = TabellaVoli.getSelectedRow();
+                if (r < 0) {
+                    JOptionPane.showMessageDialog(frame, "Seleziona prima una riga della tabella.",
+                            "Nessuna riga selezionata", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
-        frame.setVisible(true);
-    }
+                controller.confermaModifica(TabellaVoli.getValueAt(TabellaVoli.getSelectedRow(), 0).toString(), FieldCompagniaAerea.getText(), FieldAeroportoOrigine.getText(), FieldAeroportoDestinazione.getText(), formattedTextFieldData.getText(), formattedTextFieldOrario.getText(), Integer.parseInt(FieldRitardo.getText()), ComboStatoVolo.getSelectedItem().toString());
+            }
+        });//Parentesi ButtonConfermaModifica
+    } //Fine parentesi homepageAmministratore
 
     /**
      * Popola la JTable con i voli che hanno Napoli (Capodichino) come origine o destinazione.
      * Usa ILIKE perché nel DB i nomi sono frasi tipo "Aeroporto di Napoli Capodichino".
      */
     private void caricaVoliDaPerNapoli() {
-        String[] colonne = {
-                "Codice volo", "Compagnia", "Origine", "Destinazione",
-                "Data", "Orario", "Stato", "Ritardo (min)", "Gate"
-        };
+        String[] colonne = {"Codice Volo", "Compagnia", "Origine", "Destinazione", "Data", "Orario", "Ritardo", "Stato", "Gate"};
+
         DefaultTableModel model = new DefaultTableModel(colonne, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
         };
+
 
         final String sql =
                 "SELECT codicevolo, compagniaaerea, aeroportoorigine, aeroportodestinazione, " +
@@ -213,85 +224,6 @@ public class HomepageAmministratore  {
         return v == null ? "" : v.toString();
     }
 
-    /**
-     * UPDATE della riga selezionata con i valori dei campi.
-     * Aggiorna: compagnia, origine, destinazione, data, orario, statovolo (INT).
-     */
-    private void confermaModifica() {
-        int r = TabellaVoli.getSelectedRow();
-        if (r < 0) {
-            JOptionPane.showMessageDialog(frame, "Seleziona prima una riga della tabella.",
-                    "Nessuna riga selezionata", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        String codiceVolo = valueAt(r, 0);
-
-        String compagnia  = FieldCompagniaAerea.getText().trim();
-        String origine    = FieldAeroportoOrigine.getText().trim();
-        String destinaz   = FieldAeroportoDestinazione.getText().trim();
-
-        String dataStr    = formattedTextFieldData.getText().trim();   // dd/MM/yyyy
-        String oraStr     = formattedTextFieldOrario.getText().trim(); // HH:mm
-        String statoLbl   = (String) ComboStatoVolo.getSelectedItem();
-
-        if (compagnia.isEmpty() || origine.isEmpty() || destinaz.isEmpty()
-                || dataStr.contains("_") || oraStr.contains("_")) {
-            JOptionPane.showMessageDialog(frame,
-                    "Compila tutti i campi (data dd/MM/yyyy, orario HH:mm).",
-                    "Campi mancanti", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            LocalDate d = LocalDate.parse(dataStr, DF);
-            LocalTime t = LocalTime.parse(oraStr, TF);
-
-            // Mappa etichetta -> int per DB
-            int s = switch (statoLbl) {
-                case "programmato" -> 1;
-                case "decollato"   -> 2;
-                case "in_ritardo"  -> 3;
-                case "atterrato"   -> 4;
-                case "cancellato"  -> 5;
-                default -> 1;
-            };
-
-            final String sql =
-                    "UPDATE volo " +
-                            "SET compagniaaerea=?, aeroportoorigine=?, aeroportodestinazione=?, " +
-                            "    datavolo=?, orarioprevisto=?, statovolo=? " +
-                            "WHERE codicevolo=?";
-
-            try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-                 PreparedStatement ps = cn.prepareStatement(sql)) {
-
-                ps.setString(1, compagnia);
-                ps.setString(2, origine);
-                ps.setString(3, destinaz);
-                ps.setDate(4, Date.valueOf(d));
-                ps.setTime(5, Time.valueOf(t));
-                ps.setInt(6, s);
-                ps.setString(7, codiceVolo);
-
-                int n = ps.executeUpdate();
-                if (n == 1) {
-                    JOptionPane.showMessageDialog(frame, "Volo aggiornato correttamente.");
-                    caricaVoliDaPerNapoli();        // refresh tabella
-                    riselezionaPerCodice(codiceVolo);
-                } else {
-                    JOptionPane.showMessageDialog(frame,
-                            "Nessuna riga aggiornata (codice non trovato?).",
-                            "Aggiornamento", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(frame,
-                    "Errore durante l'aggiornamento:\n" + ex.getMessage(),
-                    "Errore DB", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     private void riselezionaPerCodice(String codice) {
         for (int i = 0; i < TabellaVoli.getRowCount(); i++) {

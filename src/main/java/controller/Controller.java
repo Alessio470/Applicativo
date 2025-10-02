@@ -14,8 +14,7 @@ import model.enums.*;
 import DAO.UtenteDAO;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -278,6 +277,66 @@ public class Controller {
         return resultDB;
 
     }//Fine parentesi getVoli
+
+    public void confermaModifica(String codiceVolo, String compagnia, String origine, String destinaz, String dataStr, String oraStr, int ritardo, String statoVolo) {
+        /*String codiceVolo = valueAt(r, 0);
+
+        String compagnia  = FieldCompagniaAerea.getText().trim();
+        String origine    = FieldAeroportoOrigine.getText().trim();
+        String destinaz   = FieldAeroportoDestinazione.getText().trim();
+
+        String dataStr    = formattedTextFieldData.getText().trim();   // dd/MM/yyyy
+        String oraStr     = formattedTextFieldOrario.getText().trim(); // HH:mm
+        String statovolo   = (String) ComboStatoVolo.getSelectedItem();
+
+         */
+
+        Volo volo = new Volo(codiceVolo, compagnia, origine, destinaz, dataStr, oraStr, ritardo, statoVolo);
+
+        if (compagnia.isEmpty() || origine.isEmpty() || destinaz.isEmpty()
+                || dataStr.contains("_") || oraStr.contains("_")) {
+            JOptionPane.showMessageDialog(frame,
+                    "Compila tutti i campi (data dd/MM/yyyy, orario HH:mm).",
+                    "Campi mancanti", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            final String sql =
+                    "UPDATE volo " +
+                            "SET compagniaaerea=?, aeroportoorigine=?, aeroportodestinazione=?, " +
+                            "    datavolo=?, orarioprevisto=?, statovolo=? " +
+                            "WHERE codicevolo=?";
+
+            try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
+                 PreparedStatement ps = cn.prepareStatement(sql)) {
+
+                ps.setString(1, compagnia);
+                ps.setString(2, origine);
+                ps.setString(3, destinaz);
+                ps.setDate(4, Date.valueOf(d));
+                ps.setTime(5, Time.valueOf(t));
+                ps.setInt(6, s);
+                ps.setString(7, codiceVolo);
+
+                int n = ps.executeUpdate();
+                if (n == 1) {
+                    JOptionPane.showMessageDialog(frame, "Volo aggiornato correttamente.");
+                    caricaVoliDaPerNapoli();        // refresh tabella
+                    riselezionaPerCodice(codiceVolo);
+                } else {
+                    JOptionPane.showMessageDialog(frame,
+                            "Nessuna riga aggiornata (codice non trovato?).",
+                            "Aggiornamento", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(frame,
+                    "Errore durante l'aggiornamento:\n" + ex.getMessage(),
+                    "Errore DB", JOptionPane.ERROR_MESSAGE);
+        }
+    }//Fine parentesi confermaModifica
 
 
 

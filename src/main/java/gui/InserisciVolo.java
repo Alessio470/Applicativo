@@ -23,11 +23,9 @@ public class InserisciVolo {
     private JPanel PanelInserisciVolo;
     private JPanel PanelCampiInserimento;
 
-    // (non sono necessari a livello logico, ma li dichiaro per soddisfare le binding del .form se presenti)
-    private JPanel PanelNomeCompagnia;
     private JPanel PanelDataVolo;
     private JPanel PanelOrarioPrevisto;
-    private JPanel PanelStato;
+    private JPanel PanelRitardo;
     private JPanel PanelAeroportoOrigine;
     private JPanel PanelAeroportoDestinazione;
     private JPanel PanelButtons;
@@ -37,16 +35,14 @@ public class InserisciVolo {
 
     // --- Componenti di input (devono coincidere con le Binding del .form) ---
     private JLabel LabelTitolo;
-    private JLabel LabelNomeCompagnia;
     private JLabel LabelDataVolo;
     private JLabel LabelOrarioPrevisto;
-    private JLabel LabelNGate;
+    private JLabel LabelRitardo;
     private JLabel LabelOrario;
     private JLabel LabelAeroportoOrigine;
     private JLabel LabelAeroportoDestinazione;
-    private JComboBox ComboStatiVolo;
     private JFormattedTextField FormattedFieldOrario;
-    private JFormattedTextField formattedFieldDataVolo;
+    private JFormattedTextField FormattedFieldDataVolo;
 
 
     private JComboBox<String> ComboCompagniaAerea;   // editabile
@@ -57,25 +53,34 @@ public class InserisciVolo {
     private JComboBox<String> ComboNumeroGate;       // valori da tabella gate
     private JButton ButtonConferma;
     private JButton ButtonIndietro;
+    private JLabel LabelCompagnia;
+    private JTextField FieldCompagnia;
+    private JPanel PanelCompagnia;
+    private JTextField FieldRitardo;
+    private JPanel PanelStato;
+    private JLabel LabelStato;
+    private JTextField FieldStato;
+    private JPanel PanelGate;
+    private JLabel LabelGate;
+    private JTextField FieldGate;
 
     // --- Supporto finestra/contesto ---
-    private final Controller controller;
-    private final JFrame prevFrame;   // HomepageAmministratore che ha aperto questa finestra
     private final JFrame frame;
 
     private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/uuuu");
     private static final DateTimeFormatter TF = DateTimeFormatter.ofPattern("HH:mm");
 
     public InserisciVolo(JFrame prevFrame, Controller controller) {
-        this.prevFrame  = prevFrame;
-        this.controller = controller;
 
         // usa il ROOT panel bindato nel .form
-        frame = new JFrame("Inserisci Volo");
+        frame = new JFrame("Frame Inserisci Volo");
+        frame.setTitle("Inserisci Volo"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
         frame.setContentPane(PanelInserisciVolo);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
         frame.setSize(850, 520);
         frame.setLocationRelativeTo(prevFrame);
+        frame.setVisible(true);
 
         initMasks();
         initCombos();
@@ -201,43 +206,5 @@ public class InserisciVolo {
         }
     }
 
-    private static String getComboText(JComboBox<String> combo) {
-        Object ed = combo.isEditable() ? combo.getEditor().getItem() : combo.getSelectedItem();
-        return ed == null ? "" : ed.toString();
-    }
 
-    /** Genera codice tipo IA101, IA102... in base alla compagnia. */
-    private String generaCodiceVolo(String compagnia) throws SQLException {
-        String pref = compagnia.replaceAll("[^A-Za-z]", "").toUpperCase();
-        pref = (pref.length() >= 2) ? pref.substring(0, 2) : (pref + "X").substring(0, 2);
-
-        int next = 1;
-        final String sqlCount = "SELECT COUNT(*) FROM volo WHERE compagniaaerea = ?";
-        try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-             PreparedStatement ps = cn.prepareStatement(sqlCount)) {
-            ps.setString(1, compagnia);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) next = rs.getInt(1) + 1;
-            }
-        }
-
-        String candidate;
-        while (true) {
-            candidate = pref + String.format("%03d", next);
-            if (!esisteCodice(candidate)) break;
-            next++;
-        }
-        return candidate;
-    }
-
-    private boolean esisteCodice(String codice) throws SQLException {
-        final String sql = "SELECT 1 FROM volo WHERE codicevolo = ? LIMIT 1";
-        try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-             PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, codice);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
-            }
-        }
-    }
 }
