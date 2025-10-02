@@ -8,7 +8,7 @@ public class ConnessioneDatabase {
     private static ConnessioneDatabase instance;
     private Connection connection;
 
-    private final String url = "jdbc:postgresql://localhost:5432/db_aeroporto";
+    private final String url = "jdbc:postgresql://localhost:5433/db_aeroporto";
     private final String user = "postgres";
     private final String password = "password"; // metti la tua
     private final String driver = "org.postgresql.Driver";

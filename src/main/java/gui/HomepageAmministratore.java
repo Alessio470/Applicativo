@@ -1,17 +1,16 @@
 package gui;
 
 import controller.Controller;
-import database.ConnessioneDatabase;
+import model.Volo;
 import model.enums.StatoVolo;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
-import java.time.format.DateTimeFormatter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 
 
 public class HomepageAmministratore  {
@@ -49,25 +48,27 @@ public class HomepageAmministratore  {
     private JFormattedTextField formattedTextFieldOrario; // HH:mm
     private JTextField FieldRitardo;
     private JLabel LabelRitardo;
-
-    private Controller controller;
+    private JComboBox comboGate;
+    private JLabel LabelGate;
+    private JPanel PanelGate;
 
     private static JFrame frame;
-    public JFrame prevframe;
 
-    private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-    private static final DateTimeFormatter TF = DateTimeFormatter.ofPattern("HH:mm");
+
+
 
     public HomepageAmministratore(JFrame prevframe, Controller controller) {
-        this.prevframe = prevframe;
-        this.controller = controller;
 
         // Inizializza frame
-        frame = new JFrame("Home Utente Amministratore");
+        frame = new JFrame("Frame Home Utente Amministratore");
+
+        frame.setTitle("Home Utente Amministratore"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
         frame.setContentPane(PanelHomepageAmministratore);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
         frame.setSize(1000, 600);
         frame.setLocationRelativeTo(prevframe);
+        frame.setVisible(true);
 
         // Mask data: dd/MM/yyyy
         try {
@@ -88,34 +89,45 @@ public class HomepageAmministratore  {
         } catch (Exception ignored) {}
 
 
-        ComboStatoVolo.addItem(StatoVolo.PROGRAMMATO.toString());
-        ComboStatoVolo.addItem(StatoVolo.DECOLLATO.toString());
-        ComboStatoVolo.addItem(StatoVolo.IN_RITARDO.toString());
-        ComboStatoVolo.addItem(StatoVolo.ATTERRATO.toString());
-        ComboStatoVolo.addItem(StatoVolo.CANCELLATO.toString());
+//AddItems ComboStatoVolo
+        for(StatoVolo stato : StatoVolo.values()) {
+            ComboStatoVolo.addItem(stato.toString());
+        }
 
+//AddItems ComboStatoVolo
+
+        //AddItems ComboGates
+        for(String s : controller.getGates()){
+            comboGate.addItem(s);
+        }
+        //AddItems ComboGates
 
         // Tabella
         TabellaVoli.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TabellaVoli.setFillsViewportHeight(true);
 
-        // Carica dati e collega selezione
-        caricaVoliDaPerNapoli();
-        collegaSelezioneRiga();
+        this.aggiornaTabella(controller);
 
         // Pulsanti
-        ButtonLogout.addActionListener(e -> {
-            frame.dispose();
-            if (prevframe != null) {
-                prevframe.setVisible(true);
-                prevframe.toFront();
+        ButtonLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                if (prevframe != null) {
+                    prevframe.setLocationRelativeTo(null);
+                    prevframe.setVisible(true);
+                }
             }
-        });
+        });//Roba buttonindietro actionlistener
 
-        ButtonInserisciVolo.addActionListener(e -> {
-            InserisciVolo inserisci = new InserisciVolo(frame, controller);
-            frame.setVisible(false);
-        });
+        ButtonInserisciVolo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new InserisciVolo(frame, controller);
+                frame.setVisible(false);
+            }
+
+        });//Roba ButtonInserisciVolo actionlistener
 
         ButtonConfermaModifica.addActionListener(new ActionListener() {
             @Override
@@ -127,111 +139,80 @@ public class HomepageAmministratore  {
                     return;
                 }
 
-                controller.confermaModifica(TabellaVoli.getValueAt(TabellaVoli.getSelectedRow(), 0).toString(), FieldCompagniaAerea.getText(), FieldAeroportoOrigine.getText(), FieldAeroportoDestinazione.getText(), formattedTextFieldData.getText(), formattedTextFieldOrario.getText(), Integer.parseInt(FieldRitardo.getText()), ComboStatoVolo.getSelectedItem().toString());
+                try {
+                    controller.confermaModifica(TabellaVoli.getValueAt(TabellaVoli.getSelectedRow(), 0).toString(), FieldCompagniaAerea.getText(), FieldAeroportoOrigine.getText(), FieldAeroportoDestinazione.getText(), formattedTextFieldData.getText(), formattedTextFieldOrario.getText(), Integer.parseInt(FieldRitardo.getText()), ComboStatoVolo.getSelectedItem().toString(),comboGate.getSelectedItem().toString());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "Errore.","Errore", JOptionPane.WARNING_MESSAGE);
+                    throw new RuntimeException(ex);
+                }
+                aggiornaTabella(controller);
             }
         });//Parentesi ButtonConfermaModifica
+
+        TabellaVoli.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int r=TabellaVoli.getSelectedRow();
+                if(r>0){
+                    FieldCompagniaAerea.setText(TabellaVoli.getValueAt(r, 1).toString());
+                    FieldAeroportoOrigine.setText(TabellaVoli.getValueAt(r, 2).toString());
+                    FieldAeroportoDestinazione.setText(TabellaVoli.getValueAt(r, 3).toString());
+                    formattedTextFieldData.setText(TabellaVoli.getValueAt(r, 4).toString());
+                    formattedTextFieldOrario.setText(TabellaVoli.getValueAt(r, 5).toString());
+                    FieldRitardo.setText(TabellaVoli.getValueAt(r, 6).toString());              // ✅ colonna 6 = ritardo
+                    ComboStatoVolo.setSelectedItem(TabellaVoli.getValueAt(r, 7).toString());    // ✅ colonna 7 = stato
+// se vuoi anche il gate in un campo:
+                    //Field.setText(TabellaVoli.getValueAt(r, 8).toString());                 // ✅ colonna 8 = gate
+
+                }
+
+            }
+        });//Fine parentesi TabellaVoli MouseListener
+
     } //Fine parentesi homepageAmministratore
 
-    /**
-     * Popola la JTable con i voli che hanno Napoli (Capodichino) come origine o destinazione.
-     * Usa ILIKE perché nel DB i nomi sono frasi tipo "Aeroporto di Napoli Capodichino".
-     */
-    private void caricaVoliDaPerNapoli() {
+    private void aggiornaTabella(Controller controller) {
+
+        //Mettiamo i dati nell array dei dati che andranno nella tabella
+        List<Volo> voli = controller.getVoliDaPerNapoli();
         String[] colonne = {"Codice Volo", "Compagnia", "Origine", "Destinazione", "Data", "Orario", "Ritardo", "Stato", "Gate"};
 
-        DefaultTableModel model = new DefaultTableModel(colonne, 0) {
-            @Override public boolean isCellEditable(int r, int c) { return false; }
-        };
+        Object[][] dati = null;
 
 
-        final String sql =
-                "SELECT codicevolo, compagniaaerea, aeroportoorigine, aeroportodestinazione, " +
-                        "       datavolo, orarioprevisto, statovolo, ritardo, \"numeroGate\" " +
-                        "FROM volo " +
-                        "WHERE aeroportoorigine ILIKE '%Napoli%' " +
-                        "   OR aeroportodestinazione ILIKE '%Napoli%' " +
-                        "ORDER BY datavolo, orarioprevisto, codicevolo";
+// Crea l'array dinamico delle dimensioni giuste
+        dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
 
-        try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-             PreparedStatement ps = cn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                String cod    = rs.getString("codicevolo");
-                String comp   = rs.getString("compagniaaerea");
-                String orig   = rs.getString("aeroportoorigine");
-                String dest   = rs.getString("aeroportodestinazione");
-
-                Date data     = rs.getDate("datavolo");
-                Time orario   = rs.getTime("orarioprevisto");
-                String dataS  = (data != null)   ? data.toLocalDate().format(DF) : "";
-                String oraS   = (orario != null) ? orario.toLocalTime().format(TF) : "";
-
-                // statovolo è INTEGER -> mappo a etichetta leggibile
-                int statoI = rs.getInt("statovolo");
-                String statoS = rs.wasNull() ? "" : switch (statoI) {
-                    case 1 -> "programmato";
-                    case 2 -> "decollato";
-                    case 3 -> "in_ritardo";
-                    case 4 -> "atterrato";
-                    case 5 -> "cancellato";
-                    default -> "sconosciuto(" + statoI + ")";
-                };
-
-                Integer ritardo = (Integer) rs.getObject("ritardo");
-                String gate     = rs.getString("numeroGate");
-
-                model.addRow(new Object[]{cod, comp, orig, dest, dataS, oraS, statoS, ritardo, gate});
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            model.addRow(new Object[]{"ERRORE DB: " + ex.getMessage(), "", "", "", "", "", "", "", ""});
+        for (int i = 0; i < voli.size(); i++) {
+            Volo v = voli.get(i);
+            dati[i][0] = v.getCodiceV();
+            dati[i][1] = v.getCompagnia();
+            dati[i][2] = v.getAeroportoOrigine();
+            dati[i][3] = v.getAeroportoDestinazione();
+            dati[i][4] = v.getDataStr();
+            dati[i][5] = v.getOrarioStr();
+            dati[i][6] = v.getRitardoMinuti();
+            dati[i][7] = v.getStato().name();
+            dati[i][8] = v.getGate();
         }
 
-        TabellaVoli.setModel(model);
-        TabellaVoli.getColumnModel().getColumn(0).setPreferredWidth(110);
-        TabellaVoli.getColumnModel().getColumn(1).setPreferredWidth(150);
-        TabellaVoli.getColumnModel().getColumn(2).setPreferredWidth(220);
-        TabellaVoli.getColumnModel().getColumn(3).setPreferredWidth(240);
-        TabellaVoli.getColumnModel().getColumn(4).setPreferredWidth(90);
-        TabellaVoli.getColumnModel().getColumn(5).setPreferredWidth(80);
-        TabellaVoli.getColumnModel().getColumn(6).setPreferredWidth(110);
-        TabellaVoli.getColumnModel().getColumn(7).setPreferredWidth(110);
-        TabellaVoli.getColumnModel().getColumn(8).setPreferredWidth(70);
+// Creiamo il modello e lo impostiamo nella JTable
+        javax.swing.table.DefaultTableModel modello = new javax.swing.table.DefaultTableModel(dati, colonne);
+        TabellaVoli.setModel(modello);
+
+// Disabilitiamo modifiche dirette
         TabellaVoli.setDefaultEditor(Object.class, null);
-    }
 
-    /**
-     * Quando selezioni una riga, popola i campi in basso.
-     */
-    private void collegaSelezioneRiga() {
-        TabellaVoli.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            if (e.getValueIsAdjusting()) return;
-            int r = TabellaVoli.getSelectedRow();
-            if (r < 0) return;
+// Centriamo tutte le celle
 
-            FieldCompagniaAerea.setText(valueAt(r, 1));
-            FieldAeroportoOrigine.setText(valueAt(r, 2));
-            FieldAeroportoDestinazione.setText(valueAt(r, 3));
-            formattedTextFieldData.setText(valueAt(r, 4));     // dd/MM/yyyy
-            formattedTextFieldOrario.setText(valueAt(r, 5));   // HH:mm
-            ComboStatoVolo.setSelectedItem(valueAt(r, 6));
-        });
-    }
-
-    private String valueAt(int row, int col) {
-        Object v = TabellaVoli.getValueAt(row, col);
-        return v == null ? "" : v.toString();
-    }
-
-
-    private void riselezionaPerCodice(String codice) {
-        for (int i = 0; i < TabellaVoli.getRowCount(); i++) {
-            if (codice.equals(String.valueOf(TabellaVoli.getValueAt(i, 0)))) {
-                TabellaVoli.setRowSelectionInterval(i, i);
-                TabellaVoli.scrollRectToVisible(TabellaVoli.getCellRect(i, 0, true));
-                break;
-            }
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < TabellaVoli.getColumnCount(); i++) {
+            TabellaVoli.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+
     }
-}
+
+
+}//Parentesi Finale

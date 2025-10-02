@@ -47,7 +47,7 @@ public class PrenotazioneDAO {
 
         List<Prenotazione> prenotazioni = new ArrayList<>();
 
-        String query = "SELECT * FROM prenotazioni as v where v.username="+username; // nome tabella nel db
+        final String query = "SELECT * FROM prenotazioni as v where v.username="+username; // nome tabella nel db
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);

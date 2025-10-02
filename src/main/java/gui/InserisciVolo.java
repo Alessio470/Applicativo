@@ -94,10 +94,12 @@ public class InserisciVolo {
             }
         });
 
-        ButtonConferma.addActionListener(e -> onConferma());
+        //ButtonConferma.addActionListener(e -> onConferma());
 
         frame.setVisible(true);
     }
+
+
 
     // --- Inizializzazioni ---
 
@@ -140,7 +142,7 @@ public class InserisciVolo {
     }
 
     // --- Azioni ---
-
+/*
     private void onConferma() {
         String compagnia = getComboText(ComboCompagniaAerea).trim();
         String origine   = FieldAeroportoOrigine.getText().trim();
@@ -204,7 +206,7 @@ public class InserisciVolo {
                     "Errore durante l'inserimento:\n" + ex.getMessage(),
                     "Errore DB", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }*/
 
 
 }

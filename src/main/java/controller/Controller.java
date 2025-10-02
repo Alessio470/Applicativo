@@ -1,6 +1,7 @@
 package controller;
 
 
+import DAO.GateDAO;
 import DAO.PrenotazioneDAO;
 import gui.HomeUtenteGenerico;
 import gui.HomepageAmministratore;
@@ -14,7 +15,9 @@ import model.enums.*;
 import DAO.UtenteDAO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -278,7 +281,7 @@ public class Controller {
 
     }//Fine parentesi getVoli
 
-    public void confermaModifica(String codiceVolo, String compagnia, String origine, String destinaz, String dataStr, String oraStr, int ritardo, String statoVolo) {
+    public void confermaModifica(String codiceVolo, String compagnia, String origine, String destinaz, String dataStr, String oraStr, int ritardo, String statoVolo,String gate) throws Exception {
         /*String codiceVolo = valueAt(r, 0);
 
         String compagnia  = FieldCompagniaAerea.getText().trim();
@@ -290,56 +293,94 @@ public class Controller {
         String statovolo   = (String) ComboStatoVolo.getSelectedItem();
 
          */
+        StatoVolo statoVoloConvertito = StatoVolo.valueOf(statoVolo.toUpperCase());
 
-        Volo volo = new Volo(codiceVolo, compagnia, origine, destinaz, dataStr, oraStr, ritardo, statoVolo);
 
-        if (compagnia.isEmpty() || origine.isEmpty() || destinaz.isEmpty()
-                || dataStr.contains("_") || oraStr.contains("_")) {
-            JOptionPane.showMessageDialog(frame,
-                    "Compila tutti i campi (data dd/MM/yyyy, orario HH:mm).",
-                    "Campi mancanti", JOptionPane.ERROR_MESSAGE);
+
+
+        if (compagnia.isEmpty() || origine.isEmpty() || destinaz.isEmpty() || dataStr.contains("_") || oraStr.contains("_")){
+            JOptionPane.showMessageDialog(null, "Errore: Compila tutti i campi!");
             return;
         }
 
+
+        Volo v= new Volo(codiceVolo,compagnia,origine,destinaz,dataStr,oraStr,ritardo,statoVoloConvertito,gate);
+
+        VoloDAO voloDAO=null;
+
+
+        //Connessione al db
         try {
-            final String sql =
-                    "UPDATE volo " +
-                            "SET compagniaaerea=?, aeroportoorigine=?, aeroportodestinazione=?, " +
-                            "    datavolo=?, orarioprevisto=?, statovolo=? " +
-                            "WHERE codicevolo=?";
-
-            try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-                 PreparedStatement ps = cn.prepareStatement(sql)) {
-
-                ps.setString(1, compagnia);
-                ps.setString(2, origine);
-                ps.setString(3, destinaz);
-                ps.setDate(4, Date.valueOf(d));
-                ps.setTime(5, Time.valueOf(t));
-                ps.setInt(6, s);
-                ps.setString(7, codiceVolo);
-
-                int n = ps.executeUpdate();
-                if (n == 1) {
-                    JOptionPane.showMessageDialog(frame, "Volo aggiornato correttamente.");
-                    caricaVoliDaPerNapoli();        // refresh tabella
-                    riselezionaPerCodice(codiceVolo);
-                } else {
-                    JOptionPane.showMessageDialog(frame,
-                            "Nessuna riga aggiornata (codice non trovato?).",
-                            "Aggiornamento", JOptionPane.WARNING_MESSAGE);
-                }
-            }
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            voloDAO = new VoloDAO(conn);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(frame,
-                    "Errore durante l'aggiornamento:\n" + ex.getMessage(),
-                    "Errore DB", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
+
+        if (voloDAO != null) {
+            voloDAO.updateVolo(v);
+        }
+
+
     }//Fine parentesi confermaModifica
 
 
+    public List<Volo> getVoliDaPerNapoli() {
 
+       DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+       DateTimeFormatter TF = DateTimeFormatter.ofPattern("HH:mm");
+       VoloDAO voloDAO=null;
+
+
+        List<Volo> resultDB = new ArrayList<>();
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            voloDAO = new VoloDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+        try {
+
+            resultDB = voloDAO.getVoliDaPerNapoli();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultDB;
+//DAO
+
+
+
+    }//Fine parentesi getVoliDaPerNapoli
+
+    public List<String> getGates() {
+
+            GateDAO gateDAO =null;
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            gateDAO = new GateDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+        List<String> resultDB= null;
+        try {
+
+            resultDB = gateDAO.getGates();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultDB;
+
+    }//Fine Parentesi getGates
 
 
 /*
