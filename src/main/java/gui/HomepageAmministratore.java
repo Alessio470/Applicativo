@@ -58,6 +58,8 @@ public class HomepageAmministratore  {
 
     public HomepageAmministratore(JFrame prevframe, Controller controller) {
 
+
+
         // Inizializza frame
         frame = new JFrame("Frame Home Utente Amministratore");
         this.controller = controller;
@@ -106,7 +108,11 @@ public class HomepageAmministratore  {
         TabellaVoli.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TabellaVoli.setFillsViewportHeight(true);
 
+
+
         this.aggiornaTabella(controller);
+
+        TabellaVoli.setAutoCreateRowSorter(true);
 
         // Pulsanti
         ButtonLogout.addActionListener(new ActionListener() {

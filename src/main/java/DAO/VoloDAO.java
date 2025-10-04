@@ -112,7 +112,7 @@ public class VoloDAO {
         List<Volo> resultDB = new ArrayList<>();
 
         final String sql =
-                "SELECT * FROM volo ORDER BY datavolo, orarioprevisto,substring(codicevolo from 3)::int;";
+                "SELECT * FROM volo ORDER BY substring(codicevolo from 3)::int;";
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(sql);
