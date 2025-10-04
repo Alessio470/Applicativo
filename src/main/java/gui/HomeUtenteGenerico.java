@@ -82,6 +82,10 @@ public class HomeUtenteGenerico {
         javax.swing.table.DefaultTableModel modello = new javax.swing.table.DefaultTableModel(dati, colonne);
         TableVoli.setModel(modello);
 
+        //tabella in ordine
+        TableVoli.setAutoCreateRowSorter(true);
+
+
 // Disabilitiamo modifiche dirette
         TableVoli.setDefaultEditor(Object.class, null);
 

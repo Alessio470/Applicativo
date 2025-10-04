@@ -98,6 +98,10 @@ public class EffettuaPrenotazione {
         javax.swing.table.DefaultTableModel modello = new javax.swing.table.DefaultTableModel(dati, colonne);
         TableVoli.setModel(modello);
 
+        //Tabella in ordine
+        TableVoli.setAutoCreateRowSorter(true);
+
+
 // Disabilitiamo modifiche dirette
         TableVoli.setDefaultEditor(Object.class, null);
 
