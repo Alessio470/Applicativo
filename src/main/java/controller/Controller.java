@@ -281,49 +281,26 @@ public class Controller {
 
     }//Fine parentesi getVoli
 
-    public void confermaModifica(String codiceVolo, String compagnia, String origine, String destinaz, String dataStr, String oraStr, int ritardo, String statoVolo,String gate) throws Exception {
-        /*String codiceVolo = valueAt(r, 0);
+    public void confermaModifica(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String dataDDMMYYYY, String orarioHHmm, int ritardoMinuti, String statoVolo, String gate) {
 
-        String compagnia  = FieldCompagniaAerea.getText().trim();
-        String origine    = FieldAeroportoOrigine.getText().trim();
-        String destinaz   = FieldAeroportoDestinazione.getText().trim();
+        Volo voloAggiornato = new Volo(codiceVolo, compagnia, aeroportoOrigine, aeroportoDestinazione, dataDDMMYYYY, orarioHHmm, ritardoMinuti, model.enums.StatoVolo.valueOf(statoVolo.toUpperCase()), (gate == null || gate.isBlank()) ? null : gate.trim());
 
-        String dataStr    = formattedTextFieldData.getText().trim();   // dd/MM/yyyy
-        String oraStr     = formattedTextFieldOrario.getText().trim(); // HH:mm
-        String statovolo   = (String) ComboStatoVolo.getSelectedItem();
-
-         */
-        StatoVolo statoVoloConvertito = StatoVolo.valueOf(statoVolo.toUpperCase());
-
-
-
-
-        if (compagnia.isEmpty() || origine.isEmpty() || destinaz.isEmpty() || dataStr.contains("_") || oraStr.contains("_")){
-            JOptionPane.showMessageDialog(null, "Errore: Compila tutti i campi!");
-            return;
-        }
-
-
-        Volo v= new Volo(codiceVolo,compagnia,origine,destinaz,dataStr,oraStr,ritardo,statoVoloConvertito,gate);
-
-        VoloDAO voloDAO=null;
-
-
-        //Connessione al db
+        //Istanzia il DAO con connessione
+        VoloDAO voloDAO;
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
             voloDAO = new VoloDAO(conn);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+            throw new RuntimeException("Errore connessione DB: " + ex.getMessage(), ex);
         }
 
-        if (voloDAO != null) {
-            voloDAO.updateVolo(v);
+        //update
+        try {
+            voloDAO.updateVolo(voloAggiornato);
+        } catch (Exception ex) {
+            throw new RuntimeException("Errore durante l'aggiornamento del volo: " + ex.getMessage(), ex);
         }
-
-
-    }//Fine parentesi confermaModifica
-
+    }
 
     public List<Volo> getVoliDaPerNapoli() {
 

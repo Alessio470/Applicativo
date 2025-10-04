@@ -33,7 +33,7 @@ public class VoloDAO {
 
         // Query inserimento Volo
         final String sql =
-                "INSERT INTO volo(codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, numeroGate) " +
+                "INSERT INTO volo(codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, \"numeroGate\") " +
                         "VALUES (?,?,?,?,?,?,?,?,?)";
 
 
@@ -44,18 +44,13 @@ public class VoloDAO {
             ps.setDate(3, v.getDatasql()); //datavolo
             ps.setTime(4, v.getOrarioSql()); //orarioprevisto
             ps.setInt(5, v.getRitardoMinuti()); //ritardo
-            ps.setInt(6, v.getStatoToInt()); //statovolo
+            ps.setInt(6, v.getStatoToInt() + 1); //statovolo
             ps.setString(7, v.getAeroportoOrigine()); //aeroportoorigine
             ps.setString(8, v.getAeroportoDestinazione()); //aeroportodestinazione
             ps.setString(9, v.getGate()); //'numeroGate'
 
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-                throw new SQLException("Insert volo fallita (RETURNING vuoto).");
-            }
+            return ps.executeUpdate();
         }
     }//Fine registraVolo
 
@@ -147,7 +142,7 @@ return resultDB;
             final String sql =
                     "UPDATE volo " +
                             "SET compagniaaerea=?, aeroportoorigine=?, aeroportodestinazione=?, " +
-                            "    datavolo=?, orarioprevisto=?, statovolo=?,numeroGate=?, ritardo=?" + //TODO FIXARE STA ROBA DI NUMEROGATE
+                            "    datavolo=?, orarioprevisto=?, statovolo=?, \"numeroGate\"=?, ritardo=? " +
                             "WHERE codicevolo=?";
 
             try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
@@ -158,10 +153,10 @@ return resultDB;
                 ps.setString(3, v.getAeroportoDestinazione());
                 ps.setDate(4, v.getDatasql());
                 ps.setTime(5, v.getOrarioSql());
-                ps.setInt(6, v.getStatoToInt()+1);
-                ps.setString(7, v.getCodiceV());
-                ps.setString(8,v.getGate());
-                ps.setInt(9,v.getRitardoMinuti());
+                ps.setInt(6, v.getStatoToInt() + 1);
+                ps.setString(7, v.getGate());
+                ps.setInt(8, v.getRitardoMinuti());
+                ps.setString(9, v.getCodiceV());
 
                 ps.executeUpdate();
 

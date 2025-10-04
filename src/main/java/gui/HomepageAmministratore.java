@@ -54,9 +54,6 @@ public class HomepageAmministratore  {
 
     private static JFrame frame;
 
-
-
-
     public HomepageAmministratore(JFrame prevframe, Controller controller) {
 
         // Inizializza frame
@@ -154,7 +151,7 @@ public class HomepageAmministratore  {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 int r=TabellaVoli.getSelectedRow();
-                if(r>0){
+                if(r>=0){
                     FieldCompagniaAerea.setText(TabellaVoli.getValueAt(r, 1).toString());
                     FieldAeroportoOrigine.setText(TabellaVoli.getValueAt(r, 2).toString());
                     FieldAeroportoDestinazione.setText(TabellaVoli.getValueAt(r, 3).toString());
@@ -162,8 +159,8 @@ public class HomepageAmministratore  {
                     formattedTextFieldOrario.setText(TabellaVoli.getValueAt(r, 5).toString());
                     FieldRitardo.setText(TabellaVoli.getValueAt(r, 6).toString());              // ✅ colonna 6 = ritardo
                     ComboStatoVolo.setSelectedItem(TabellaVoli.getValueAt(r, 7).toString());    // ✅ colonna 7 = stato
-// se vuoi anche il gate in un campo:
-                    //Field.setText(TabellaVoli.getValueAt(r, 8).toString());                 // ✅ colonna 8 = gate
+                    Object gate = TabellaVoli.getValueAt(r, 8);
+                    if (gate != null) comboGate.setSelectedItem(gate.toString());
 
                 }
 
@@ -178,11 +175,8 @@ public class HomepageAmministratore  {
         List<Volo> voli = controller.getVoliDaPerNapoli();
         String[] colonne = {"Codice Volo", "Compagnia", "Origine", "Destinazione", "Data", "Orario", "Ritardo", "Stato", "Gate"};
 
-        Object[][] dati = null;
-
-
-// Crea l'array dinamico delle dimensioni giuste
-        dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
+        // Crea l'array dinamico delle dimensioni giuste
+        Object[][] dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
 
         for (int i = 0; i < voli.size(); i++) {
             Volo v = voli.get(i);
@@ -211,6 +205,8 @@ public class HomepageAmministratore  {
         for (int i = 0; i < TabellaVoli.getColumnCount(); i++) {
             TabellaVoli.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+
+
 
     }
 
