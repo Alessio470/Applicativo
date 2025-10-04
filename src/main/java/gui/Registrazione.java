@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
+/**
+ * The type Registrazione.
+ */
 public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
     private JPanel PanelRegistrazione;
     private JPanel PanelTitolo;
@@ -38,6 +41,12 @@ public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
 
     private JFrame frame;
 
+    /**
+     * Instantiates a new Registrazione.
+     *
+     * @param prevframe  the prevframe
+     * @param controller the controller
+     */
     public Registrazione(JFrame prevframe, Controller controller) {
 
         ComboRuolo.addItem("AMMINISTRATORE");

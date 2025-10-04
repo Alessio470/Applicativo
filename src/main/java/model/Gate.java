@@ -1,12 +1,25 @@
 package model;
 
+/**
+ * The type Gate.
+ */
 public class Gate {
     private final String numero;
 
+    /**
+     * Instantiates a new Gate.
+     *
+     * @param numero the numero
+     */
     public Gate(String numero) {
         this.numero = numero;
     }
 
+    /**
+     * Gets numero.
+     *
+     * @return the numero
+     */
     public String getNumero() { return numero; }
 
     /**

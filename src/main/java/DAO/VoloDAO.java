@@ -21,14 +21,29 @@ VALUES (DA GENERARE,     ComboBox,         ?,         ?,             0,        1
 
  */
 
+/**
+ * The type Volo dao.
+ */
 public class VoloDAO {
 
     private final Connection conn;
 
+    /**
+     * Instantiates a new Volo dao.
+     *
+     * @param conn the conn
+     */
     public VoloDAO(Connection conn) {
         this.conn = conn;
     }
 
+    /**
+     * Registra volo int.
+     *
+     * @param v the v
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     public int registraVolo(Volo v) throws SQLException {
 
         // Query inserimento Volo
@@ -55,6 +70,12 @@ public class VoloDAO {
     }//Fine registraVolo
 
 
+    /**
+     * Gets voli prenotabili.
+     *
+     * @return the voli prenotabili
+     * @throws SQLException the sql exception
+     */
     public List<Volo> getVoliPrenotabili() throws SQLException {
 
         List<Volo> voli = new ArrayList<>();
@@ -80,6 +101,12 @@ public class VoloDAO {
         return voli;
     }//Fine getVolidaNapoli
 
+    /**
+     * Gets voli.
+     *
+     * @return the voli
+     * @throws SQLException the sql exception
+     */
     public List<Volo> getVoli() throws SQLException {
 
         List<Volo> voli = new ArrayList<>();
@@ -106,6 +133,12 @@ public class VoloDAO {
 
     }//Fine getVoli
 
+    /**
+     * Gets voli da per napoli.
+     *
+     * @return the voli da per napoli
+     * @throws SQLException the sql exception
+     */
     public List<Volo> getVoliDaPerNapoli() throws SQLException {
 
 
@@ -136,6 +169,12 @@ public class VoloDAO {
 return resultDB;
     }//Parentesi finale getVoliDaPerNapoli
 
+    /**
+     * Update volo.
+     *
+     * @param v the v
+     * @throws SQLException the sql exception
+     */
     public void updateVolo(Volo v) throws SQLException {
 
         try {

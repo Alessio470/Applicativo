@@ -9,11 +9,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+
 /**
  * The type Home utente generico.
  */
-
-
 public class HomeUtenteGenerico {
     private JPanel contentPane;
 
@@ -35,6 +34,12 @@ public class HomeUtenteGenerico {
 
     private static JFrame frame;
 
+    /**
+     * Instantiates a new Home utente generico.
+     *
+     * @param prevframe  the prevframe
+     * @param controller the controller
+     */
     public HomeUtenteGenerico(JFrame prevframe, Controller controller) {
 
 

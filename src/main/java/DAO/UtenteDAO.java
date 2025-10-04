@@ -13,20 +13,31 @@ import java.sql.SQLException;
 /**
  * DAO per la tabella public.utente (PostgreSQL).
  * Schema:
- *   utente(username TEXT PK, password TEXT NOT NULL, ruoloutente INTEGER NOT NULL REFERENCES enumruoloutente(id))
- *   enumruoloutente(id INTEGER PK, nomeruolo TEXT)
- *
+ * utente(username TEXT PK, password TEXT NOT NULL, ruoloutente INTEGER NOT NULL REFERENCES enumruoloutente(id))
+ * enumruoloutente(id INTEGER PK, nomeruolo TEXT)
+ * <p>
  * Nota: nel DB NON esiste una colonna "id" in utente.
  * Per compatibilità con la GUI di Registrazione, registraUtente(...) restituisce l'ID del RUOLO associato.
  */
 public class UtenteDAO {
     private final Connection conn;
 
+    /**
+     * Instantiates a new Utente dao.
+     *
+     * @param conn the conn
+     */
     public UtenteDAO(Connection conn) {
         this.conn = conn;
     }
 
-    /** true se esiste già uno username uguale. */
+    /**
+     * true se esiste già uno username uguale.  @param username the username
+     *
+     * @param username the username
+     * @return the boolean
+     * @throws SQLException the sql exception
+     */
     public boolean usernameExists(String username) throws SQLException {
         final String sql = "SELECT 1 FROM public.utente WHERE username = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -39,7 +50,11 @@ public class UtenteDAO {
 
     /**
      * Autenticazione.
+     *
+     * @param username the username
+     * @param password the password
      * @return UtenteAmministratore / UtenteGenerico se le credenziali sono valide, altrimenti null.
+     * @throws SQLException the sql exception
      */
     public Utente login(String username, String password) throws SQLException {
         String sql = "SELECT * FROM utente WHERE username = ? AND password = ?";
@@ -65,6 +80,10 @@ public class UtenteDAO {
      * Registrazione nuovo utente.
      * Ritorna l'ID del ruolo (enumruoloutente.id) assegnato all'utente inserito.
      * Lancia SQLException se ruolo inesistente o username duplicato.
+     *
+     * @param utenteRegistrato the utente registrato
+     * @return the int
+     * @throws SQLException the sql exception
      */
     public int registraUtente(Utente utenteRegistrato) throws SQLException {
         // 1) Risolvi ID del ruolo (case-insensitive)

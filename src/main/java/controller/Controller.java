@@ -34,10 +34,20 @@ public class Controller {
 
     private Utente u=null;
 
-        public Controller() {
+    /**
+     * Instantiates a new Controller.
+     */
+    public Controller() {
         }
 
 
+    /**
+     * Do login.
+     *
+     * @param user  the user
+     * @param pass  the pass
+     * @param frame the frame
+     */
     public void doLogin(String user, String pass, JFrame frame) {
 
         UtenteDAO utenteDAO=null;
@@ -73,6 +83,15 @@ public class Controller {
     }//Parentesi doLogin
 
 
+    /**
+     * On registrati.
+     *
+     * @param username the username
+     * @param password the password
+     * @param conferma the conferma
+     * @param ruolo    the ruolo
+     * @param frame    the frame
+     */
     public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
 
             UtenteDAO utenteDAO=null;
@@ -130,6 +149,18 @@ public class Controller {
 
     }//Parentesi onRegistrati
 
+    /**
+     * Add voli.
+     *
+     * @param compagniaaerea        the compagniaaerea
+     * @param data                  the data
+     * @param orario                the orario
+     * @param aeroportoorigine      the aeroportoorigine
+     * @param aeroportodestinazione the aeroportodestinazione
+     * @param numerogate            the numerogate
+     * @param frame                 the frame
+     * @param prevframe             the prevframe
+     */
     public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
         String codiceVolo = "Test123";
@@ -182,6 +213,18 @@ public class Controller {
 
     }//Parentesi Finale AddVoli
 
+    /**
+     * Add voli con stato.
+     *
+     * @param compagniaaerea        the compagniaaerea
+     * @param data                  the data
+     * @param orario                the orario
+     * @param aeroportoorigine      the aeroportoorigine
+     * @param aeroportodestinazione the aeroportodestinazione
+     * @param numerogate            the numerogate
+     * @param ritardoMinuti         the ritardo minuti
+     * @param statoVoloStr          the stato volo str
+     */
     public void AddVoliConStato(String compagniaaerea, String data, String orario, String aeroportoorigine, String aeroportodestinazione, String numerogate, int ritardoMinuti, String statoVoloStr) {
 
         // Validazioni base
@@ -222,7 +265,12 @@ public class Controller {
         }
     }
 
-    // Restituisce solo i voli prenotabili
+    /**
+     * Gets voli prenotabili.
+     *
+     * @return the voli prenotabili
+     */
+// Restituisce solo i voli prenotabili
     public List<Volo> getVoliPrenotabili() {
 
         List<Volo> resultDB = new ArrayList<>();
@@ -246,6 +294,15 @@ public class Controller {
 
     }//Parentesi getVoliPrenotabilidaNapoli
 
+    /**
+     * Effettua prenotazione.
+     *
+     * @param codiceVolo              the codice volo
+     * @param nomePasseggero          the nome passeggero
+     * @param cognomePasseggero       the cognome passeggero
+     * @param posto                   the posto
+     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     */
     public void effettuaPrenotazione(String codiceVolo,String nomePasseggero,String cognomePasseggero,String posto, String codicefiscalepasseggero) {
 
             //String numeroBiglietto,String usernameUtente, String codiceVolo,
@@ -280,10 +337,20 @@ public class Controller {
 
         }
 
+    /**
+     * Gets username utente.
+     *
+     * @return the username utente
+     */
     public String getUsernameUtente() {
             return u.getUsername();
     }
 
+    /**
+     * Gets voli.
+     *
+     * @return the voli
+     */
     public List<Volo> getVoli() {
         List<Volo> resultDB = new ArrayList<>();
         VoloDAO voloDAO=null;
@@ -310,6 +377,19 @@ public class Controller {
 
     }//Fine parentesi getVoli
 
+    /**
+     * Conferma modifica.
+     *
+     * @param codiceVolo            the codice volo
+     * @param compagnia             the compagnia
+     * @param aeroportoOrigine      the aeroporto origine
+     * @param aeroportoDestinazione the aeroporto destinazione
+     * @param dataDDMMYYYY          the data ddmmyyyy
+     * @param orarioHHmm            the orario h hmm
+     * @param ritardoMinuti         the ritardo minuti
+     * @param statoVolo             the stato volo
+     * @param gate                  the gate
+     */
     public void confermaModifica(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String dataDDMMYYYY, String orarioHHmm, int ritardoMinuti, String statoVolo, String gate) {
 
         Volo voloAggiornato = new Volo(codiceVolo, compagnia, aeroportoOrigine, aeroportoDestinazione, dataDDMMYYYY, orarioHHmm, ritardoMinuti, model.enums.StatoVolo.valueOf(statoVolo.toUpperCase()), (gate == null || gate.isBlank()) ? null : gate.trim());
@@ -331,6 +411,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Gets voli da per napoli.
+     *
+     * @return the voli da per napoli
+     */
     public List<Volo> getVoliDaPerNapoli() {
 
        DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/uuuu");
@@ -363,6 +448,11 @@ public class Controller {
 
     }//Fine parentesi getVoliDaPerNapoli
 
+    /**
+     * Gets gates.
+     *
+     * @return the gates
+     */
     public List<String> getGates() {
 
             GateDAO gateDAO =null;

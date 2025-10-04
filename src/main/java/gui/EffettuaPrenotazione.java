@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * The type Effettua prenotazione.
  */
-
 public class EffettuaPrenotazione {
     private JPanel PanelEffettuaPrenotazione;
     private JTable tableVoli;
@@ -48,6 +47,12 @@ public class EffettuaPrenotazione {
 
     private static JFrame frame;
 
+    /**
+     * Instantiates a new Effettua prenotazione.
+     *
+     * @param prevframe  the prevframe
+     * @param controller the controller
+     */
     public EffettuaPrenotazione(JFrame prevframe, Controller controller) {
 
 

@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
+/**
+ * The type Volo.
+ */
 public class Volo {
 
     private String codicevolo;
@@ -23,7 +26,19 @@ public class Volo {
     private String gate; // null se non ancora assegnato
 
 
-
+    /**
+     * Instantiates a new Volo.
+     *
+     * @param codicev               the codicev
+     * @param compagnia             the compagnia
+     * @param aeroportoOrigine      the aeroporto origine
+     * @param aeroportoDestinazione the aeroporto destinazione
+     * @param data                  the data
+     * @param orario                the orario
+     * @param ritardoMinuti         the ritardo minuti
+     * @param stato                 the stato
+     * @param gate                  the gate
+     */
     public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, StatoVolo stato, String gate) {
         this.codicevolo = codicev;
         this.compagnia = compagnia;
@@ -36,6 +51,19 @@ public class Volo {
         this.gate = gate;
     }
 
+    /**
+     * Instantiates a new Volo.
+     *
+     * @param codicev               the codicev
+     * @param compagnia             the compagnia
+     * @param aeroportoOrigine      the aeroporto origine
+     * @param aeroportoDestinazione the aeroporto destinazione
+     * @param data                  the data
+     * @param orario                the orario
+     * @param ritardoMinuti         the ritardo minuti
+     * @param stato                 the stato
+     * @param gate                  the gate
+     */
     public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, int stato, String gate) {
         this.codicevolo = codicev;
         this.compagnia = compagnia;
@@ -49,36 +77,156 @@ public class Volo {
     }
 
 
-
-
-    // --- Getter e Setter ---
+    /**
+     * Gets codice v.
+     *
+     * @return the codice v
+     */
+// --- Getter e Setter ---
     public String getCodiceV() { return codicevolo; }
+
+    /**
+     * Gets compagnia.
+     *
+     * @return the compagnia
+     */
     public String getCompagnia() { return compagnia; }
+
+    /**
+     * Gets aeroporto origine.
+     *
+     * @return the aeroporto origine
+     */
     public String getAeroportoOrigine() { return aeroportoOrigine; }
+
+    /**
+     * Gets aeroporto destinazione.
+     *
+     * @return the aeroporto destinazione
+     */
     public String getAeroportoDestinazione() { return aeroportoDestinazione; }
+
+    /**
+     * Gets data str.
+     *
+     * @return the data str
+     */
     public String getDataStr() { return data; }
+
+    /**
+     * Gets orario str.
+     *
+     * @return the orario str
+     */
     public String getOrarioStr() { return orario; }
+
+    /**
+     * Gets ritardo minuti.
+     *
+     * @return the ritardo minuti
+     */
     public int getRitardoMinuti() { return ritardoMinuti; }
+
+    /**
+     * Gets stato.
+     *
+     * @return the stato
+     */
     public StatoVolo getStato() { return stato; }
+
+    /**
+     * Gets gate.
+     *
+     * @return the gate
+     */
     public String getGate() { return gate; }
 
+    /**
+     * Sets codice.
+     *
+     * @param codice the codice
+     */
     public void setCodice(String codice) { this.codicevolo = codice; }
+
+    /**
+     * Sets compagnia.
+     *
+     * @param compagnia the compagnia
+     */
     public void setCompagnia(String compagnia) { this.compagnia = compagnia; }
+
+    /**
+     * Sets aeroporto origine.
+     *
+     * @param aeroportoOrigine the aeroporto origine
+     */
     public void setAeroportoOrigine(String aeroportoOrigine) { this.aeroportoOrigine = aeroportoOrigine; }
+
+    /**
+     * Sets aeroporto destinazione.
+     *
+     * @param aeroportoDestinazione the aeroporto destinazione
+     */
     public void setAeroportoDestinazione(String aeroportoDestinazione) { this.aeroportoDestinazione = aeroportoDestinazione; }
+
+    /**
+     * Sets data.
+     *
+     * @param data the data
+     */
     public void setData(String data) { this.data = data; }
+
+    /**
+     * Sets orario.
+     *
+     * @param orario the orario
+     */
     public void setOrario(String orario) { this.orario = orario; }
+
+    /**
+     * Sets ritardo minuti.
+     *
+     * @param ritardoMinuti the ritardo minuti
+     */
     public void setRitardoMinuti(int ritardoMinuti) { this.ritardoMinuti = ritardoMinuti; }
+
+    /**
+     * Sets stato.
+     *
+     * @param stato the stato
+     */
     public void setStato(StatoVolo stato) { this.stato = stato; }
+
+    /**
+     * Sets gate.
+     *
+     * @param gate the gate
+     */
     public void setGate(String gate) { this.gate = gate; }
 
 
-    // Helper per distinguere arrivi e partenze
+    /**
+     * Is partenza da napoli boolean.
+     *
+     * @return the boolean
+     */
+// Helper per distinguere arrivi e partenze
     public boolean isPartenzaDaNapoli() { return "Napoli".equalsIgnoreCase(aeroportoOrigine); }
+
+    /**
+     * Is arrivo a napoli boolean.
+     *
+     * @return the boolean
+     */
     public boolean isArrivoANapoli() { return "Napoli".equalsIgnoreCase(aeroportoDestinazione); }
 
     //Things
 
+    /**
+     * Gets orario local time.
+     *
+     * @return the orario local time
+     */
     public LocalTime getOrarioLocalTime() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -88,12 +236,21 @@ public class Volo {
         }
     }
 
+    /**
+     * Gets orario sql.
+     *
+     * @return the orario sql
+     */
     public Time getOrarioSql() {
         return Time.valueOf(Objects.requireNonNull(this.getOrarioLocalTime()));
     }
 
 
-
+    /**
+     * Gets data date.
+     *
+     * @return the data date
+     */
     public java.util.Date getDataDate() {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -104,14 +261,31 @@ public class Volo {
     }
 
 
+    /**
+     * Gets datasql.
+     *
+     * @return the datasql
+     *
+     */
     public java.sql.Date getDatasql() {
         return new java.sql.Date(this.getDataDate().getTime());
     }
 
+    /**
+     * Gets stato to int.
+     *
+     * @return the stato to int
+     */
     public int getStatoToInt() {
         return stato.ordinal();
     }
 
+    /**
+     * From int stato volo.
+     *
+     * @param codice the codice
+     * @return the stato volo
+     */
     public static StatoVolo fromInt(int codice) {
         return switch (codice) {
             case 1 -> StatoVolo.PROGRAMMATO;
@@ -139,7 +313,12 @@ public class Volo {
                 '}';
     }
 
-    //TODO da modificare che invece di farlo localmente lo fa al db
+    /**
+     * Sets numero gate.
+     *
+     * @param nuovoGate the nuovo gate
+     */
+//TODO da modificare che invece di farlo localmente lo fa al db
     public void setNumeroGate(String nuovoGate) {
         this.gate = nuovoGate;
     }

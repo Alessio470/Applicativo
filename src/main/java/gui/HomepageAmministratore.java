@@ -13,6 +13,9 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 
+/**
+ * The type Homepage amministratore.
+ */
 public class HomepageAmministratore  {
     private JLabel LabelTitolo;
     private JButton ButtonInserisciVolo;
@@ -56,6 +59,12 @@ public class HomepageAmministratore  {
     private static JFrame frame;
     private final Controller controller;
 
+    /**
+     * Instantiates a new Homepage amministratore.
+     *
+     * @param prevframe  the prevframe
+     * @param controller the controller
+     */
     public HomepageAmministratore(JFrame prevframe, Controller controller) {
 
 

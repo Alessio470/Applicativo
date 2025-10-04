@@ -3,6 +3,9 @@ package model;
 import model.enums.StatoPrenotazione;
 import model.enums.StatoVolo;
 
+/**
+ * The type Prenotazione.
+ */
 public class Prenotazione {
     private String usernameUtente;    // può essere null se prenotazione senza login
     private String codiceVolo;        // riferimento al codice del volo
@@ -16,6 +19,18 @@ public class Prenotazione {
     //numerobiglietto,username,codvolo,nomepasseggero,cognomepasseggero,numeroposto,statoprenotazione,codicefiscalepasseggero
 
 
+    /**
+     * Instantiates a new Prenotazione.
+     *
+     * @param numeroBiglietto         the numero biglietto
+     * @param usernameUtente          the username utente
+     * @param codiceVolo              the codice volo
+     * @param nomePasseggero          the nome passeggero
+     * @param cognomePasseggero       the cognome passeggero
+     * @param posto                   the posto
+     * @param stato                   the stato
+     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     */
     public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero) {
 
         this.usernameUtente = usernameUtente;
@@ -28,6 +43,18 @@ public class Prenotazione {
         this.codicefiscalepasseggero= codicefiscalepasseggero;
     }
 
+    /**
+     * Instantiates a new Prenotazione.
+     *
+     * @param numeroBiglietto         the numero biglietto
+     * @param usernameUtente          the username utente
+     * @param codiceVolo              the codice volo
+     * @param nomePasseggero          the nome passeggero
+     * @param cognomePasseggero       the cognome passeggero
+     * @param posto                   the posto
+     * @param stato                   the stato
+     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     */
     public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, int stato, String codicefiscalepasseggero) {
 
         this.usernameUtente = usernameUtente;
@@ -41,31 +68,136 @@ public class Prenotazione {
     }
 
 
-    // --- Getter ---
+    /**
+     * Gets username utente.
+     *
+     * @return the username utente
+     */
+// --- Getter ---
     public String getUsernameUtente() { return usernameUtente; }
+
+    /**
+     * Gets codice volo.
+     *
+     * @return the codice volo
+     */
     public String getCodiceVolo() { return codiceVolo; }
+
+    /**
+     * Gets nome passeggero.
+     *
+     * @return the nome passeggero
+     */
     public String getNomePasseggero() { return nomePasseggero; }
+
+    /**
+     * Gets cognome passeggero.
+     *
+     * @return the cognome passeggero
+     */
     public String getCognomePasseggero() { return cognomePasseggero; }
+
+    /**
+     * Gets codicefiscalepasseggero.
+     *
+     * @return the codicefiscalepasseggero
+     */
     public String getCodicefiscalepasseggero() { return codicefiscalepasseggero; }
+
+    /**
+     * Gets numero biglietto.
+     *
+     * @return the numero biglietto
+     */
     public String getNumeroBiglietto() { return numeroBiglietto; }
+
+    /**
+     * Gets posto.
+     *
+     * @return the posto
+     */
     public String getPosto() { return posto; }
+
+    /**
+     * Gets stato.
+     *
+     * @return the stato
+     */
     public StatoPrenotazione getStato() { return stato; }
 
-    // --- Setter ---
+    /**
+     * Sets username utente.
+     *
+     * @param usernameUtente the username utente
+     */
+// --- Setter ---
     public void setUsernameUtente(String usernameUtente) { this.usernameUtente = usernameUtente; }
+
+    /**
+     * Sets codice volo.
+     *
+     * @param codiceVolo the codice volo
+     */
     public void setCodiceVolo(String codiceVolo) { this.codiceVolo = codiceVolo; }
+
+    /**
+     * Sets nome passeggero.
+     *
+     * @param nomePasseggero the nome passeggero
+     */
     public void setNomePasseggero(String nomePasseggero) { this.nomePasseggero = nomePasseggero; }
+
+    /**
+     * Sets cognome passeggero.
+     *
+     * @param cognomePasseggero the cognome passeggero
+     */
     public void setCognomePasseggero(String cognomePasseggero) { this.cognomePasseggero = cognomePasseggero; }
+
+    /**
+     * Sets codicefiscalepasseggero.
+     *
+     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     */
     public void setCodicefiscalepasseggero(String codicefiscalepasseggero) { this.codicefiscalepasseggero = codicefiscalepasseggero; }
+
+    /**
+     * Sets numero biglietto.
+     *
+     * @param numeroBiglietto the numero biglietto
+     */
     public void setNumeroBiglietto(String numeroBiglietto) { this.numeroBiglietto = numeroBiglietto; }
+
+    /**
+     * Sets posto.
+     *
+     * @param posto the posto
+     */
     public void setPosto(String posto) { this.posto = posto; }
+
+    /**
+     * Sets stato.
+     *
+     * @param stato the stato
+     */
     public void setStato(StatoPrenotazione stato) { this.stato = stato; }
 
-    // --- Metodi utili ---
+    /**
+     * Is confermata boolean.
+     *
+     * @return the boolean
+     */
+// --- Metodi utili ---
     public boolean isConfermata() {
         return stato == StatoPrenotazione.CONFERMATA;
     }
 
+    /**
+     * Appartiene utente boolean.
+     *
+     * @param username the username
+     * @return the boolean
+     */
     public boolean appartieneUtente(String username) {
         return usernameUtente != null && usernameUtente.equals(username);
     }

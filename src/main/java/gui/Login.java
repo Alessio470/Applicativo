@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 
+/**
+ * The type Login.
+ */
 public class Login {
     private JPanel PanelLogin;
     private JPanel PanelTitolo;
@@ -31,11 +34,17 @@ public class Login {
     private JButton ButtonRegistrati;
     private JButton ButtonLogin;
 
+    /**
+     * The constant frame.
+     */
     public static JFrame frame;
 
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Login.
+     */
     public Login() {
         controller = new Controller();
 
@@ -59,6 +68,11 @@ public class Login {
 
     }//Parentesi Login
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         frame = new JFrame("Login");
         frame.setContentPane(new Login().PanelLogin);

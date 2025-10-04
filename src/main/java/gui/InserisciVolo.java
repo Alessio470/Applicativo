@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * The type Inserisci volo.
+ */
 public class InserisciVolo {
 
     // ----- Pannelli/label dal .form -----
@@ -57,6 +60,13 @@ public class InserisciVolo {
     private final JFrame frame;
     private final HomepageAmministratore home;
 
+    /**
+     * Instantiates a new Inserisci volo.
+     *
+     * @param prevFrame  the prev frame
+     * @param controller the controller
+     * @param home       the home
+     */
     public InserisciVolo(JFrame prevFrame, Controller controller, HomepageAmministratore home) {
         frame = new JFrame("Frame Inserisci Volo");
         frame.setTitle("Inserisci Volo");

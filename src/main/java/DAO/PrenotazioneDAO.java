@@ -7,14 +7,28 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Prenotazione dao.
+ */
 public class PrenotazioneDAO {
 
     private final Connection conn;
 
+    /**
+     * Instantiates a new Prenotazione dao.
+     *
+     * @param conn the conn
+     */
     public PrenotazioneDAO( Connection conn ) { this.conn=conn; }
 
 
-
+    /**
+     * Inserisci prenotazione int.
+     *
+     * @param prenotazione the prenotazione
+     * @return the int
+     * @throws SQLException the sql exception
+     */
     public int InserisciPrenotazione(Prenotazione prenotazione) throws SQLException {
 
     final String sql = "INSERT INTO prenotazione( numeroposto, statoprenotazione, username, codvolo, nomepasseggero, cognomepasseggero, codicefiscalepasseggero)" +
@@ -42,7 +56,14 @@ public class PrenotazioneDAO {
     }//Parentesi InserisciPrenotazione
 
 
-    //TODO se non erro da finire o almeno da controllare
+    /**
+     * Gets prenotazioni utente.
+     *
+     * @param username the username
+     * @return the prenotazioni utente
+     * @throws SQLException the sql exception
+     */
+//TODO se non erro da finire o almeno da controllare
     public List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException {
 
         List<Prenotazione> prenotazioni = new ArrayList<>();

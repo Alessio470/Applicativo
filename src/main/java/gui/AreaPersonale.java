@@ -4,6 +4,9 @@ import controller.Controller;
 
 import javax.swing.*;
 
+/**
+ * The type Area personale.
+ */
 public class AreaPersonale {
     private JPanel PanelAeraPersonale;
     private JPanel PanelTitolo;
@@ -18,6 +21,12 @@ public class AreaPersonale {
 
     private JFrame frame;
 
+    /**
+     * Instantiates a new Area personale.
+     *
+     * @param prevframe  the prevframe
+     * @param controller the controller
+     */
     public AreaPersonale(JFrame prevframe, Controller controller) {
 
 
