@@ -112,7 +112,7 @@ public class VoloDAO {
         List<Volo> resultDB = new ArrayList<>();
 
         final String sql =
-                "SELECT v.* FROM volo AS v WHERE v.aeroportoorigine LIKE '%Napoli%'  OR v.aeroportodestinazione LIKE '%Napoli%' ORDER BY v.datavolo, v.orarioprevisto, v.codicevolo";
+                "SELECT * FROM volo ORDER BY datavolo, orarioprevisto,substring(codicevolo from 3)::int;";
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(sql);

@@ -14,7 +14,6 @@ import java.util.List;
 
 
 public class HomepageAmministratore  {
-
     private JLabel LabelTitolo;
     private JButton ButtonInserisciVolo;
     private JButton ButtonLogout;
@@ -52,6 +51,7 @@ public class HomepageAmministratore  {
     private JLabel LabelGate;
     private JPanel PanelGate;
     private JButton ButtonAggiorna;
+    private JPanel PanelRitardo;
 
     private static JFrame frame;
     private final Controller controller;
@@ -163,7 +163,6 @@ public class HomepageAmministratore  {
                     ComboStatoVolo.setSelectedItem(TabellaVoli.getValueAt(r, 7).toString());
                     Object gate = TabellaVoli.getValueAt(r, 8);
                     if (gate != null) comboGate.setSelectedItem(gate.toString());
-
                 }
 
             }
@@ -217,10 +216,6 @@ public class HomepageAmministratore  {
         for (int i = 0; i < TabellaVoli.getColumnCount(); i++) {
             TabellaVoli.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
-
-
-
     }
-
 
 }//Parentesi Finale

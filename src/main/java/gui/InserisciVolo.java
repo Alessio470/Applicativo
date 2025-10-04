@@ -5,6 +5,8 @@ import model.enums.StatoVolo;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class InserisciVolo {
@@ -64,6 +66,8 @@ public class InserisciVolo {
         frame.setSize(850, 520);
         frame.setLocationRelativeTo(prevFrame);
         this.home = home;
+        frame.setVisible(true);
+
 
         initMasks();
         initStatoCombo();
@@ -71,18 +75,30 @@ public class InserisciVolo {
         initDefaults();
 
         // Indietro
-        ButtonIndietro.addActionListener(e -> {
-            frame.dispose();
-            if (prevFrame != null) {
-                prevFrame.setVisible(true);
-                prevFrame.toFront();
+
+
+        ButtonConferma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onConferma(controller, prevFrame);
+                frame.dispose();
+                if(prevFrame != null) {
+                    prevFrame.setLocationRelativeTo(null);
+                    prevFrame.setVisible(true);
+                }
             }
         });
 
-        // Conferma
-        ButtonConferma.addActionListener(e -> onConferma(controller, prevFrame));
-
-        frame.setVisible(true);
+        ButtonIndietro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                if (prevFrame != null) {
+                    prevFrame.setVisible(true);
+                    prevFrame.toFront();
+                }
+            }
+        });
     }
 
     // ---------------- Init ----------------
@@ -126,9 +142,7 @@ public class InserisciVolo {
             }
             if (ComboGate.getItemCount() > 0) ComboGate.setSelectedIndex(0);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame,
-                    "Errore nel caricamento dei gate:\n" + ex.getMessage(),
-                    "Errore DB", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Errore nel caricamento dei gate:\n" + ex.getMessage(), "Errore DB", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -150,9 +164,7 @@ public class InserisciVolo {
 
         String gate = ComboGate.getSelectedItem() != null ? ComboGate.getSelectedItem().toString() : null;
 
-        String statoStr = ComboStatoVolo.getSelectedItem() != null
-                ? ComboStatoVolo.getSelectedItem().toString()
-                : "PROGRAMMATO";
+        String statoStr = ComboStatoVolo.getSelectedItem() != null ? ComboStatoVolo.getSelectedItem().toString() : "PROGRAMMATO";
 
         // ritardo (se vuoto o non numerico -> 0)
         int ritardo = 0;
@@ -165,35 +177,23 @@ public class InserisciVolo {
         if (compagnia.isEmpty() || origine.isEmpty() || dest.isEmpty()
                 || dataStr.contains("_") || oraStr.contains("_")
                 || gate == null || gate.isBlank()) {
-            JOptionPane.showMessageDialog(frame,
-                    "Compila tutti i campi.\n- Data: dd/MM/yyyy\n- Orario: HH:mm\n- Gate: seleziona un valore",
-                    "Campi mancanti", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Compila tutti i campi.\n- Data: dd/MM/yyyy\n- Orario: HH:mm\n- Gate: seleziona un valore", "Campi mancanti", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (origine.equalsIgnoreCase(dest)) {
-            JOptionPane.showMessageDialog(frame,
-                    "Origine e destinazione devono essere diverse.",
-                    "Dati non validi", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Origine e destinazione devono essere diverse.", "Dati non validi", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
             // Inserisce passando anche stato e ritardo
-            controller.AddVoliConStato(
-                    compagnia, dataStr, oraStr,
-                    origine, dest, gate,
-                    ritardo, statoStr,
-                    frame, prevFrame
-            );
+            controller.AddVoliConStato(compagnia, dataStr, oraStr, origine, dest, gate, ritardo, statoStr);
+            JOptionPane.showMessageDialog(frame, "Volo inserito con successo.");
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(frame,
-                    "Errore durante l'inserimento:\n" + ex.getMessage(),
-                    "Errore", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Errore durante l'inserimento:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    // --------------- Utilità ---------------
 
     private String safe(JTextField f) {
         return (f == null || f.getText() == null) ? "" : f.getText().trim();
