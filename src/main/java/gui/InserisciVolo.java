@@ -1,28 +1,17 @@
 package gui;
 
 import controller.Controller;
-import database.ConnessioneDatabase;
+import model.enums.StatoVolo;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
-import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-/**
- * Finestra "Inserisci Volo": inserisce una riga nella tabella 'volo'.
- * Tabella volo:
- *  codicevolo TEXT PK, compagniaaerea TEXT, datavolo DATE, orarioprevisto TIME,
- *  ritardo INTEGER, statovolo INTEGER, aeroportoorigine TEXT, aeroportodestinazione TEXT, "numeroGate" TEXT
- */
 public class InserisciVolo {
 
-    // --- Componenti del form (rispetta i nomi che vedi nello screenshot) ---
-    // --- Pannelli BINDATI come nel .form ---
+    // ----- Pannelli/label dal .form -----
     private JPanel PanelInserisciVolo;
     private JPanel PanelCampiInserimento;
-
     private JPanel PanelDataVolo;
     private JPanel PanelOrarioPrevisto;
     private JPanel PanelRitardo;
@@ -32,8 +21,10 @@ public class InserisciVolo {
     private JPanel PanelButtonConferma;
     private JPanel PanelButtonIndietro;
     private JPanel PanelTitolo;
+    private JPanel PanelCompagnia;
+    private JPanel PanelStato;
+    private JPanel PanelGate;
 
-    // --- Componenti di input (devono coincidere con le Binding del .form) ---
     private JLabel LabelTitolo;
     private JLabel LabelDataVolo;
     private JLabel LabelOrarioPrevisto;
@@ -41,51 +32,45 @@ public class InserisciVolo {
     private JLabel LabelOrario;
     private JLabel LabelAeroportoOrigine;
     private JLabel LabelAeroportoDestinazione;
-    private JFormattedTextField FormattedFieldOrario;
-    private JFormattedTextField FormattedFieldDataVolo;
+    private JLabel LabelCompagnia;
+    private JLabel LabelStato;
+    private JLabel LabelGate;
 
-
-    private JComboBox<String> ComboCompagniaAerea;   // editabile
+    // ----- Campi di input (come da tua form) -----
+    private JTextField FieldCompagnia;
     private JTextField FieldAeroportoOrigine;
     private JTextField FieldAeroportoDestinazione;
-    private JFormattedTextField FieldData;           // dd/MM/yyyy
-    private JFormattedTextField FieldOrario;         // HH:mm
-    private JComboBox<String> ComboNumeroGate;       // valori da tabella gate
+
+    private JFormattedTextField formattedTextFieldDataVolo;
+    private JFormattedTextField formattedTextFieldOrario;
+
+    private JTextField FieldRitardo;
+    private JComboBox<String> ComboStatoVolo;
+    private JComboBox<String> ComboGate;
+
     private JButton ButtonConferma;
     private JButton ButtonIndietro;
-    private JLabel LabelCompagnia;
-    private JTextField FieldCompagnia;
-    private JPanel PanelCompagnia;
-    private JTextField FieldRitardo;
-    private JPanel PanelStato;
-    private JLabel LabelStato;
-    private JTextField FieldStato;
-    private JPanel PanelGate;
-    private JLabel LabelGate;
-    private JTextField FieldGate;
 
-    // --- Supporto finestra/contesto ---
+    // ----- Finestra -----
     private final JFrame frame;
+    private final HomepageAmministratore home;
 
-    private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-    private static final DateTimeFormatter TF = DateTimeFormatter.ofPattern("HH:mm");
-
-    public InserisciVolo(JFrame prevFrame, Controller controller) {
-
-        // usa il ROOT panel bindato nel .form
+    public InserisciVolo(JFrame prevFrame, Controller controller, HomepageAmministratore home) {
         frame = new JFrame("Frame Inserisci Volo");
-        frame.setTitle("Inserisci Volo"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
+        frame.setTitle("Inserisci Volo");
         frame.setContentPane(PanelInserisciVolo);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setSize(850, 520);
         frame.setLocationRelativeTo(prevFrame);
-        frame.setVisible(true);
+        this.home = home;
 
         initMasks();
-        initCombos();
+        initStatoCombo();
+        initGateCombo(controller);
+        initDefaults();
 
-        // Pulsanti
+        // Indietro
         ButtonIndietro.addActionListener(e -> {
             frame.dispose();
             if (prevFrame != null) {
@@ -94,71 +79,98 @@ public class InserisciVolo {
             }
         });
 
-        //ButtonConferma.addActionListener(e -> onConferma());
+        // Conferma
+        ButtonConferma.addActionListener(e -> onConferma(controller, prevFrame));
 
         frame.setVisible(true);
     }
 
-
-
-    // --- Inizializzazioni ---
+    // ---------------- Init ----------------
 
     private void initMasks() {
         try {
             MaskFormatter dataMask = new MaskFormatter("##/##/####");
             dataMask.setPlaceholderCharacter('_');
-            FieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(dataMask));
+            formattedTextFieldDataVolo.setFormatterFactory(
+                    new javax.swing.text.DefaultFormatterFactory(dataMask)
+            );
+            formattedTextFieldDataVolo.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
         } catch (Exception ignored) {}
 
         try {
             MaskFormatter oraMask = new MaskFormatter("##:##");
             oraMask.setPlaceholderCharacter('_');
-            FieldOrario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(oraMask));
+            formattedTextFieldOrario.setFormatterFactory(
+                    new javax.swing.text.DefaultFormatterFactory(oraMask)
+            );
+            formattedTextFieldOrario.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
         } catch (Exception ignored) {}
     }
 
-    private void initCombos() {
-        // Compagnia: prendo distinct e rendo la combo editabile
-        ComboCompagniaAerea.setEditable(true);
-        try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-             Statement st = cn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT DISTINCT compagniaaerea FROM volo ORDER BY 1")) {
-            while (rs.next()) ComboCompagniaAerea.addItem(rs.getString(1));
-        } catch (SQLException ex) {
-            System.err.println("Warn: non riesco a caricare le compagnie: " + ex.getMessage());
+    private void initStatoCombo() {
+        ComboStatoVolo.removeAllItems();
+        for (StatoVolo s : StatoVolo.values()) {
+            ComboStatoVolo.addItem(s.name()); //PROGRAMMATO, DECOLLATO, IN_RITARDO, ATTERRATO, CANCELLATO
         }
+        if (ComboStatoVolo.getItemCount() > 0) {
+            ComboStatoVolo.setSelectedItem("PROGRAMMATO");
+        }
+    }
 
-        // Gate: dalla tabella gate ("numeroGate")
-        ComboNumeroGate.removeAllItems();
-        try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-             Statement st = cn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT \"numeroGate\" FROM gate ORDER BY 1")) {
-            while (rs.next()) ComboNumeroGate.addItem(rs.getString(1));
-        } catch (SQLException ex) {
+    private void initGateCombo(Controller controller) {
+        ComboGate.removeAllItems();
+        try {
+            List<String> gates = controller.getGates(); //[G1, G2, G3, G4, G5]
+            if (gates != null) {
+                for (String g : gates) ComboGate.addItem(g);
+            }
+            if (ComboGate.getItemCount() > 0) ComboGate.setSelectedIndex(0);
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame,
                     "Errore nel caricamento dei gate:\n" + ex.getMessage(),
                     "Errore DB", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // --- Azioni ---
-/*
-    private void onConferma() {
-        String compagnia = getComboText(ComboCompagniaAerea).trim();
-        String origine   = FieldAeroportoOrigine.getText().trim();
-        String destinaz  = FieldAeroportoDestinazione.getText().trim();
-        String dataStr   = FieldData.getText().trim();
-        String oraStr    = FieldOrario.getText().trim();
-        String gate      = (String) ComboNumeroGate.getSelectedItem();
+    private void initDefaults() {
+        FieldRitardo.setText("0"); // valore iniziale visibile
+        FieldRitardo.setEditable(true);
+        FieldRitardo.setEnabled(true);
+    }
 
-        if (compagnia.isEmpty() || origine.isEmpty() || destinaz.isEmpty()
-                || dataStr.contains("_") || oraStr.contains("_") || gate == null || gate.isEmpty()) {
+    // --------------- Azione conferma ---------------
+
+    private void onConferma(Controller controller, JFrame prevFrame) {
+        String compagnia = safe(FieldCompagnia);
+        String origine   = safe(FieldAeroportoOrigine);
+        String dest      = safe(FieldAeroportoDestinazione);
+
+        String dataStr = formattedTextFieldDataVolo.getText().trim(); // dd/MM/yyyy
+        String oraStr  = formattedTextFieldOrario.getText().trim();   // HH:mm
+
+        String gate = ComboGate.getSelectedItem() != null ? ComboGate.getSelectedItem().toString() : null;
+
+        String statoStr = ComboStatoVolo.getSelectedItem() != null
+                ? ComboStatoVolo.getSelectedItem().toString()
+                : "PROGRAMMATO";
+
+        // ritardo (se vuoto o non numerico -> 0)
+        int ritardo = 0;
+        String rit = FieldRitardo.getText() == null ? "" : FieldRitardo.getText().trim().replace("_", "");
+        if (!rit.isEmpty()) {
+            try { ritardo = Integer.parseInt(rit); } catch (NumberFormatException ignored) {}
+        }
+
+        // Validazioni essenziali
+        if (compagnia.isEmpty() || origine.isEmpty() || dest.isEmpty()
+                || dataStr.contains("_") || oraStr.contains("_")
+                || gate == null || gate.isBlank()) {
             JOptionPane.showMessageDialog(frame,
-                    "Compila tutti i campi.\n- Data dd/MM/yyyy\n- Orario HH:mm",
+                    "Compila tutti i campi.\n- Data: dd/MM/yyyy\n- Orario: HH:mm\n- Gate: seleziona un valore",
                     "Campi mancanti", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (origine.equalsIgnoreCase(destinaz)) {
+        if (origine.equalsIgnoreCase(dest)) {
             JOptionPane.showMessageDialog(frame,
                     "Origine e destinazione devono essere diverse.",
                     "Dati non validi", JOptionPane.WARNING_MESSAGE);
@@ -166,47 +178,24 @@ public class InserisciVolo {
         }
 
         try {
-            LocalDate data  = LocalDate.parse(dataStr, DF);
-            LocalTime ora   = LocalTime.parse(oraStr, TF);
-
-            String codiceVolo = generaCodiceVolo(compagnia);
-
-            final String sql =
-                    "INSERT INTO volo (codicevolo, compagniaaerea, datavolo, orarioprevisto, " +
-                            "                   ritardo, statovolo, aeroportoorigine, aeroportodestinazione, \"numeroGate\") " +
-                            "VALUES (?, ?, ?, ?, 0, 1, ?, ?, ?)";
-
-            try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-                 PreparedStatement ps = cn.prepareStatement(sql)) {
-
-                ps.setString(1, codiceVolo);
-                ps.setString(2, compagnia);
-                ps.setDate(3, Date.valueOf(data));
-                ps.setTime(4, Time.valueOf(ora));
-                ps.setString(5, origine);
-                ps.setString(6, destinaz);
-                ps.setString(7, gate);
-
-                ps.executeUpdate();
-            }
-
-            JOptionPane.showMessageDialog(frame,
-                    "Volo inserito con successo.\nCodice: " + codiceVolo,
-                    "OK", JOptionPane.INFORMATION_MESSAGE);
-
-            if (prevFrame != null) {
-                prevFrame.setVisible(true);
-                prevFrame.toFront();
-            }
-            frame.dispose();
-
+            // Inserisce passando anche stato e ritardo
+            controller.AddVoliConStato(
+                    compagnia, dataStr, oraStr,
+                    origine, dest, gate,
+                    ritardo, statoStr,
+                    frame, prevFrame
+            );
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(frame,
                     "Errore durante l'inserimento:\n" + ex.getMessage(),
-                    "Errore DB", JOptionPane.ERROR_MESSAGE);
+                    "Errore", JOptionPane.ERROR_MESSAGE);
         }
-    }*/
+    }
 
+    // --------------- Utilità ---------------
 
+    private String safe(JTextField f) {
+        return (f == null || f.getText() == null) ? "" : f.getText().trim();
+    }
 }

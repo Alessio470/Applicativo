@@ -122,72 +122,65 @@ public class Controller {
 
             utenteDAO.registraUtente(utenteRegistrato);
 
-            JOptionPane.showMessageDialog(
-                    frame,
-                    "Registrazione completata!\nUsername: " + username + "\nRuolo: " + ruolo,
-                    "OK",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            JOptionPane.showMessageDialog(frame, "Registrazione completata!\nUsername: " + username + "\nRuolo: " + ruolo, "OK", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame,
-                    "Errore durante la registrazione:\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(frame, "Errore durante la registrazione:\n" + ex.getMessage());
         }
 
     }//Parentesi onRegistrati
 
 
-    public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
+    public void AddVoliConStato(String compagniaaerea, String data, String orario, String aeroportoorigine, String aeroportodestinazione, String numerogate, int ritardoMinuti, String statoVoloStr, JFrame frame, JFrame prevframe) {
 
-        String codiceVolo = "Test123";
-        //TODO Generazione del codice volo
-
-
-
-        //String codice, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, Da
-        //dataOra, int ritardoMinuti, StatoVolo stato, Gate gate
-
-
-        if (compagniaaerea.isEmpty() || data == null || orario == null) {
+        // Validazioni base
+        if (compagniaaerea == null || compagniaaerea.isBlank() || data == null || data.isBlank() || orario == null || orario.isBlank() || aeroportoorigine == null || aeroportoorigine.isBlank() || aeroportodestinazione == null || aeroportodestinazione.isBlank() || numerogate == null || numerogate.isBlank()) {
             JOptionPane.showMessageDialog(frame, "Compila tutti i campi obbligatori.");
             return;
         }
+        if (aeroportoorigine.equalsIgnoreCase(aeroportodestinazione)) {
+            JOptionPane.showMessageDialog(frame, "Origine e destinazione devono essere diverse.");
+            return;
+        }
 
+        // Genera/assegna il codice volo
+        String codiceVolo = generaCodiceVolo();
 
-        Volo volocreato = new Volo(codiceVolo, compagniaaerea, aeroportoorigine, aeroportodestinazione, data, orario, 0, StatoVolo.PROGRAMMATO, numerogate);
+        // Stato enum dalla stringa della combo
+        StatoVolo statoEnum;
+        try {
+            statoEnum = StatoVolo.valueOf(statoVoloStr.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            statoEnum = StatoVolo.PROGRAMMATO;
+        }
 
-        //Connessione al db
+        //Crea l'oggetto Volo
+        Volo volo = new Volo(codiceVolo, compagniaaerea, aeroportoorigine, aeroportodestinazione, data, orario, ritardoMinuti, statoEnum, numerogate);
 
-        VoloDAO voloDAO=null;
-
+        // DAO
+        VoloDAO voloDAO = null;
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
             voloDAO = new VoloDAO(conn);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(frame, "Errore connessione DB:\n" + ex.getMessage());
+            return;
         }
 
-
+        // Insert
         try {
-
-            if (voloDAO != null) {
-                voloDAO.registraVolo(volocreato);
-            }else {
-                JOptionPane.showMessageDialog(frame, "Volo non valido.");
-                return;
-            }
-
+            voloDAO.registraVolo(volo);
             JOptionPane.showMessageDialog(frame, "Volo inserito con successo.");
             frame.dispose();
-            prevframe.setVisible(true);
-
+            if (prevframe != null) {
+                prevframe.setVisible(true);
+                prevframe.toFront();
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame,
-                    "Errore durante l inserimento volo:\n" + ex.getMessage());
+                    "Errore durante l'inserimento volo:\n" + ex.getMessage());
         }
-
-
-    }//Parentesi Finale AddVoli
+    }
 
     // Restituisce solo i voli prenotabili
     public List<Volo> getVoliPrenotabili() {
@@ -195,7 +188,6 @@ public class Controller {
         List<Volo> resultDB = new ArrayList<>();
         VoloDAO voloDAO=null;
 
-
         //Connessione al db
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
@@ -204,11 +196,8 @@ public class Controller {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
 
-
         try {
-
              resultDB = voloDAO.getVoliPrenotabili();
-//
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -358,6 +347,14 @@ public class Controller {
         return resultDB;
 
     }//Fine Parentesi getGates
+
+    private String generaCodiceVolo() {
+        // es: V250410-8371 (V + yyMMdd + "-" + 4 cifre random)
+        String data = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyMMdd"));
+        int rnd = (int)(Math.random() * 10_000);
+        return "V" + data + "-" + String.format("%04d", rnd);
+    }
+
 
 
 /*

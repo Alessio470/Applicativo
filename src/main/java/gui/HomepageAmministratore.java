@@ -51,13 +51,16 @@ public class HomepageAmministratore  {
     private JComboBox comboGate;
     private JLabel LabelGate;
     private JPanel PanelGate;
+    private JButton ButtonAggiorna;
 
     private static JFrame frame;
+    private final Controller controller;
 
     public HomepageAmministratore(JFrame prevframe, Controller controller) {
 
         // Inizializza frame
         frame = new JFrame("Frame Home Utente Amministratore");
+        this.controller = controller;
 
         frame.setTitle("Home Utente Amministratore"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
         frame.setContentPane(PanelHomepageAmministratore);
@@ -120,7 +123,7 @@ public class HomepageAmministratore  {
         ButtonInserisciVolo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new InserisciVolo(frame, controller);
+                new InserisciVolo(frame, controller, HomepageAmministratore.this);
                 frame.setVisible(false);
             }
 
@@ -131,8 +134,7 @@ public class HomepageAmministratore  {
             public void actionPerformed(ActionEvent e) {
                 int r = TabellaVoli.getSelectedRow();
                 if (r < 0) {
-                    JOptionPane.showMessageDialog(frame, "Seleziona prima una riga della tabella.",
-                            "Nessuna riga selezionata", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Seleziona prima una riga della tabella.", "Nessuna riga selezionata", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -157,8 +159,8 @@ public class HomepageAmministratore  {
                     FieldAeroportoDestinazione.setText(TabellaVoli.getValueAt(r, 3).toString());
                     formattedTextFieldData.setText(TabellaVoli.getValueAt(r, 4).toString());
                     formattedTextFieldOrario.setText(TabellaVoli.getValueAt(r, 5).toString());
-                    FieldRitardo.setText(TabellaVoli.getValueAt(r, 6).toString());              // ✅ colonna 6 = ritardo
-                    ComboStatoVolo.setSelectedItem(TabellaVoli.getValueAt(r, 7).toString());    // ✅ colonna 7 = stato
+                    FieldRitardo.setText(TabellaVoli.getValueAt(r, 6).toString());
+                    ComboStatoVolo.setSelectedItem(TabellaVoli.getValueAt(r, 7).toString());
                     Object gate = TabellaVoli.getValueAt(r, 8);
                     if (gate != null) comboGate.setSelectedItem(gate.toString());
 
@@ -167,6 +169,16 @@ public class HomepageAmministratore  {
             }
         });//Fine parentesi TabellaVoli MouseListener
 
+        ButtonAggiorna.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int prevRow = TabellaVoli.getSelectedRow(); // opzionale: prova a mantenere la selezione
+                aggiornaTabella(controller);
+                if (prevRow >= 0 && prevRow < TabellaVoli.getRowCount()) {
+                    TabellaVoli.setRowSelectionInterval(prevRow, prevRow);
+                }
+            }
+        });
     } //Fine parentesi homepageAmministratore
 
     private void aggiornaTabella(Controller controller) {

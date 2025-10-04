@@ -50,12 +50,12 @@ public class Login {
 
         //Listener "Registrati" (placeholder finché non implementi la GUI)
         ButtonRegistrati.addActionListener(new ActionListener() {
-                                                       @Override
-                                                       public void actionPerformed (ActionEvent e){
-                                                           new Registrazione(frame, controller);
-                                                           frame.setVisible(false);
-                                                       }
-                                                   });
+            @Override
+            public void actionPerformed (ActionEvent e){
+                new Registrazione(frame, controller);
+                frame.setVisible(false);
+            }
+        });
 
     }//Parentesi Login
 
