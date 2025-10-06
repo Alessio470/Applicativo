@@ -143,7 +143,7 @@ public class AreaPersonale {
                         // Apri la finestra ViewInfoVolo passando il volo selezionato
                         new ViewInfoVolo(frame, voloSelezionato);
 
-                        // Nascondi l'area personale se vuoi
+                        // Nascondi l'area personale
                         frame.setVisible(false);
                     }
 
@@ -152,7 +152,29 @@ public class AreaPersonale {
 
 
             }
-        });//Fine parentesi ActionListener buttonViewVolo
+        });//Fine parentesi ActionListener ButtonViewVolo
+
+        TablePrenotazioni.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) { // doppio click
+                    int row = TablePrenotazioni.rowAtPoint(evt.getPoint()); // riga effettivamente cliccata
+                    if (row != -1) { // se la riga è valida
+                        int modelRow = TablePrenotazioni.convertRowIndexToModel(row);
+                        DefaultTableModel modello = (DefaultTableModel) TablePrenotazioni.getModel();
+                        Object obj = modello.getValueAt(modelRow, 7); // colonna nascosta "Oggetto"
+
+                        if (obj instanceof Volo) { // controlla che ci sia effettivamente un volo
+                            Volo voloSelezionato = (Volo) obj;
+                            new ViewInfoVolo(frame, voloSelezionato); // apre finestra modale
+                        } else {
+                            JOptionPane.showMessageDialog(frame, "Questa prenotazione non ha un volo associato!");
+                        }
+                    }
+                }
+            }
+        });//Fine parentesi Mouselistener TablePrenotazioni per ViewVolo
+
 
     }//Fine parentesi AereaPersonale
 }//Fine Parentesi Finale

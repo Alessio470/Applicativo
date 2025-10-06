@@ -40,6 +40,7 @@ public class Controller {
     public Controller() {
         }
 
+    public void doLogoutUser() { u=null; }
 
     /**
      * Do login.
@@ -496,6 +497,7 @@ public class Controller {
         return resultDB;
 
     }//Fine Parentesi getPrenotazioniUtente
+
 
 
 /*

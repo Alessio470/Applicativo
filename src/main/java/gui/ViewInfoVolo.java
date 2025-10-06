@@ -60,7 +60,7 @@ public class ViewInfoVolo {
         frame.setContentPane(PanelViewInfoVolo);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
-        frame.setSize(900, 550);
+        frame.setSize(400, 450);
         frame.setLocationRelativeTo(prevframe);
         frame.setVisible(true);
 

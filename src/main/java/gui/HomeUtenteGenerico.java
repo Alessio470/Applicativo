@@ -5,6 +5,8 @@ import model.Prenotazione;
 import model.Volo;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -103,22 +105,39 @@ public class HomeUtenteGenerico {
         }
 
 
-        ButtonLogout.addActionListener(e -> {
-            frame.dispose();
-            if (prevframe != null) {
-                prevframe.setVisible(true);
-                prevframe.toFront();
+        ButtonLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e){
+                frame.dispose();
+                controller.doLogoutUser();
+                if (prevframe != null) {
+                    prevframe.setVisible(true);
+                    prevframe.toFront();
+                }
             }
         });
-        ButtonAereaPersonale.addActionListener(e -> {
-            AreaPersonale area = new AreaPersonale(frame,controller); // "this" è HomeUtenteGenerico
-            frame.setVisible(false);
+
+        ButtonAereaPersonale.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e){
+                AreaPersonale area = new AreaPersonale(frame,controller); // "this" è HomeUtenteGenerico
+                frame.setVisible(false);
+            }
         });
 
+
         ButtonEffettuaPrenotazione.addActionListener(e -> {
-            new EffettuaPrenotazione(frame,controller);
-            frame.setVisible(false);
+
         });
+
+        ButtonEffettuaPrenotazione.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e){
+                new EffettuaPrenotazione(frame,controller);
+                frame.setVisible(false);
+            }
+        });
+
 
         TableVoli.addMouseListener(new MouseAdapter() {
             @Override

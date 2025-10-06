@@ -108,7 +108,7 @@ public class HomepageAmministratore  {
 //AddItems ComboStatoVolo
 
         //AddItems ComboGates
-        for(String s : controller.getGates()){
+        for(String s : controller.getGates()) {
             comboGate.addItem(s);
         }
         //AddItems ComboGates
@@ -127,7 +127,9 @@ public class HomepageAmministratore  {
         ButtonLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 frame.dispose();
+                controller.doLogoutUser();
                 if (prevframe != null) {
                     prevframe.setLocationRelativeTo(null);
                     prevframe.setVisible(true);
@@ -179,7 +181,6 @@ public class HomepageAmministratore  {
                     Object gate = TabellaVoli.getValueAt(r, 8);
                     if (gate != null) comboGate.setSelectedItem(gate.toString());
                 }
-
             }
         });//Fine parentesi TabellaVoli MouseListener
 
@@ -193,6 +194,7 @@ public class HomepageAmministratore  {
                 }
             }
         });
+
     } //Fine parentesi homepageAmministratore
 
     private void aggiornaTabella(Controller controller) {
