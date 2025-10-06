@@ -2,8 +2,12 @@ package DAO;
 
 
 import model.Prenotazione;
+import model.Volo;
+import model.enums.StatoVolo;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,12 +67,11 @@ public class PrenotazioneDAO {
      * @return the prenotazioni utente
      * @throws SQLException the sql exception
      */
-//TODO se non erro da finire o almeno da controllare
     public List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException {
 
         List<Prenotazione> prenotazioni = new ArrayList<>();
 
-        final String query = "SELECT * FROM prenotazioni as v where v.username="+username; // nome tabella nel db
+        final String query = "SELECT v.*, p.* FROM prenotazione as p join volo as v on p.codvolo=v.codicevolo WHERE p.username='"+username+"'";
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -83,8 +86,22 @@ public class PrenotazioneDAO {
                     rs.getInt("statoprenotazione"),
                     rs.getString("codicefiscalepasseggero")
             );
+
+            p.setVoloassociato(new Volo(
+                    rs.getString("codvolo"),
+                    rs.getString("compagniaaerea"),
+                    rs.getString("aeroportoorigine"),
+                    rs.getString("aeroportodestinazione"),
+                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),//Data adesso è di tipo date //TODO inverire la data in formato gg/mm/aaaa (adesso è in formato aaaa-mm-gg)
+                    rs.getString("orarioprevisto").substring(0, 5),//Adesso è di tipo time
+                    rs.getInt("ritardo"),
+                    rs.getInt("statovolo"),
+                    rs.getString("numeroGate")
+            ));
+
             prenotazioni.add(p);
         }
+
         return prenotazioni;
 
     }//Fine getPrenotazioniUtente

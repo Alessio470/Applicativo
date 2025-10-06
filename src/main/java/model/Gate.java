@@ -29,11 +29,6 @@ public class Gate {
      */
 
 
-    /**
-     * Libera questo gate e scollega il volo (se presente) in modo consistente.
-     */
-
-
     @Override
     public String toString() {
         return "Gate{" +

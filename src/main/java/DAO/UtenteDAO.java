@@ -11,13 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * DAO per la tabella public.utente (PostgreSQL).
- * Schema:
- * utente(username TEXT PK, password TEXT NOT NULL, ruoloutente INTEGER NOT NULL REFERENCES enumruoloutente(id))
- * enumruoloutente(id INTEGER PK, nomeruolo TEXT)
- * <p>
- * Nota: nel DB NON esiste una colonna "id" in utente.
- * Per compatibilità con la GUI di Registrazione, registraUtente(...) restituisce l'ID del RUOLO associato.
+ * The type Utente dao.
  */
 public class UtenteDAO {
     private final Connection conn;
@@ -32,7 +26,7 @@ public class UtenteDAO {
     }
 
     /**
-     * true se esiste già uno username uguale.  @param username the username
+     * Username exists boolean.
      *
      * @param username the username
      * @return the boolean
@@ -49,11 +43,11 @@ public class UtenteDAO {
     }
 
     /**
-     * Autenticazione.
+     * Login utente.
      *
      * @param username the username
      * @param password the password
-     * @return UtenteAmministratore / UtenteGenerico se le credenziali sono valide, altrimenti null.
+     * @return the utente
      * @throws SQLException the sql exception
      */
     public Utente login(String username, String password) throws SQLException {
@@ -77,9 +71,7 @@ public class UtenteDAO {
 
 
     /**
-     * Registrazione nuovo utente.
-     * Ritorna l'ID del ruolo (enumruoloutente.id) assegnato all'utente inserito.
-     * Lancia SQLException se ruolo inesistente o username duplicato.
+     * Registra utente int.
      *
      * @param utenteRegistrato the utente registrato
      * @return the int

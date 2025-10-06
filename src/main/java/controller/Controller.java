@@ -28,7 +28,7 @@ import model.Utente;
 
 
 /**
- * Controller centrale del sistema.
+ * The type Controller.
  */
 public class Controller {
 
@@ -72,7 +72,7 @@ public class Controller {
                 new HomeUtenteGenerico(frame, this);
             }else {
                 JOptionPane.showMessageDialog(frame, "Utente non valido");
-            }//TODO Controllare se è giusto
+            }
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Errore durante il login:\n" + ex.getMessage());
@@ -149,19 +149,7 @@ public class Controller {
 
     }//Parentesi onRegistrati
 
-    /**
-     * Add voli.
-     *
-     * @param compagniaaerea        the compagniaaerea
-     * @param data                  the data
-     * @param orario                the orario
-     * @param aeroportoorigine      the aeroportoorigine
-     * @param aeroportodestinazione the aeroportodestinazione
-     * @param numerogate            the numerogate
-     * @param frame                 the frame
-     * @param prevframe             the prevframe
-     */
-    public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
+    /*   public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
         String codiceVolo = "Test123";
         //TODO Generazione del codice volo
@@ -212,9 +200,10 @@ public class Controller {
 
 
     }//Parentesi Finale AddVoli
+*/
 
     /**
-     * Add voli con stato.
+     * Add voli.
      *
      * @param compagniaaerea        the compagniaaerea
      * @param data                  the data
@@ -477,6 +466,36 @@ public class Controller {
         return resultDB;
 
     }//Fine Parentesi getGates
+
+    /**
+     * Gets prenotazioni utente.
+     *
+     * @return the prenotazioni utente
+     */
+    public List<Prenotazione> getPrenotazioniUtente() {
+
+        PrenotazioneDAO prenotazioneDAO=null;
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            prenotazioneDAO = new PrenotazioneDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+        List<Prenotazione> resultDB= null;
+        try {
+
+            resultDB = prenotazioneDAO.getPrenotazioniUtente(this.getUsernameUtente());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultDB;
+
+    }//Fine Parentesi getPrenotazioniUtente
 
 
 /*

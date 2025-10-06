@@ -18,6 +18,8 @@ public class Prenotazione {
 
     //numerobiglietto,username,codvolo,nomepasseggero,cognomepasseggero,numeroposto,statoprenotazione,codicefiscalepasseggero
 
+    private Volo voloassociato;
+
 
     /**
      * Instantiates a new Prenotazione.
@@ -126,6 +128,15 @@ public class Prenotazione {
     public StatoPrenotazione getStato() { return stato; }
 
     /**
+     * Gets voloassociato.
+     *
+     * @return the voloassociato
+     */
+    public Volo getVoloassociato() {
+        return voloassociato;
+    }
+
+    /**
      * Sets username utente.
      *
      * @param usernameUtente the username utente
@@ -183,6 +194,14 @@ public class Prenotazione {
     public void setStato(StatoPrenotazione stato) { this.stato = stato; }
 
     /**
+     * Sets voloassociato.
+     *
+     * @param voloassociato the voloassociato
+     */
+    public void setVoloassociato(Volo voloassociato) { this.voloassociato = voloassociato; }
+
+
+    /**
      * Is confermata boolean.
      *
      * @return the boolean
@@ -201,6 +220,7 @@ public class Prenotazione {
     public boolean appartieneUtente(String username) {
         return usernameUtente != null && usernameUtente.equals(username);
     }
+
 
     private StatoPrenotazione fromInt(int stato) {
 

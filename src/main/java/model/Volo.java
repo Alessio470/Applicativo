@@ -265,7 +265,6 @@ public class Volo {
      * Gets datasql.
      *
      * @return the datasql
-     *
      */
     public java.sql.Date getDatasql() {
         return new java.sql.Date(this.getDataDate().getTime());

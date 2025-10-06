@@ -231,6 +231,6 @@ public class HomepageAmministratore  {
         for (int i = 0; i < TabellaVoli.getColumnCount(); i++) {
             TabellaVoli.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
-    }
+    }//Fine parentesi aggiornaTabella
 
 }//Parentesi Finale
