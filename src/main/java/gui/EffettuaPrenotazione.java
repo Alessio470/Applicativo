@@ -149,7 +149,7 @@ public class EffettuaPrenotazione {
                 // Codice volo è nella colonna 0
                 String codiceVolo = (String) TableVoli.getValueAt(selectedRow, 0);
                 controller.effettuaPrenotazione((String) TableVoli.getValueAt(selectedRow, 0),FieldNome.getText().trim(),FieldCognome.getText().trim(),FieldNumeroPosto.getText().trim(),FieldCodiceFiscale.getText().trim());
-
+                //TODO controllare perchè effettua prenotazione non funziona e da Nessun risultato è stato restituito dalla query.
                 frame.dispose();
                 if (prevframe != null) {
                     prevframe.setLocationRelativeTo(null);
