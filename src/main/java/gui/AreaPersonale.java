@@ -54,7 +54,6 @@ public class AreaPersonale {
         TablePrenotazioni.setAutoCreateRowSorter(true);
 
 
-//TODO il metodo che gestisce la tabella e tutto
         // Tabella
         TablePrenotazioni.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablePrenotazioni.setFillsViewportHeight(true);

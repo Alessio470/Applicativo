@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO MODOFICARE registraVolo
 /*
 INSERT INTO volo(
 	      codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, "numeroGate")
@@ -90,8 +89,8 @@ public class VoloDAO {
                     rs.getString("compagniaaerea"),
                     rs.getString("aeroportoorigine"),
                     rs.getString("aeroportodestinazione"),
-                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),//Data adesso è di tipo date //TODO inverire la data in formato gg/mm/aaaa (adesso è in formato aaaa-mm-gg)
-                    rs.getString("orarioprevisto").substring(0, 5),//Adesso è di tipo time //TODO usare il formato hh:mm (adesso è in formato hh:mm:ss)
+                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    rs.getString("orarioprevisto").substring(0, 5),
                     rs.getInt("ritardo"),
                     rs.getInt("statovolo"),
                     rs.getString("numeroGate")
@@ -121,7 +120,7 @@ public class VoloDAO {
                     rs.getString("compagniaaerea"),
                     rs.getString("aeroportoorigine"),
                     rs.getString("aeroportodestinazione"),
-                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),//Data adesso è di tipo date //TODO inverire la data in formato gg/mm/aaaa (adesso è in formato aaaa-mm-gg)
+                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     rs.getString("orarioprevisto").substring(0, 5),//Adesso è di tipo time
                     rs.getInt("ritardo"),
                     rs.getInt("statovolo"),
@@ -157,7 +156,7 @@ public class VoloDAO {
                     rs.getString("compagniaaerea"),
                     rs.getString("aeroportoorigine"),
                     rs.getString("aeroportodestinazione"),
-                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),//Data adesso è di tipo date //TODO inverire la data in formato gg/mm/aaaa (adesso è in formato aaaa-mm-gg)
+                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     rs.getString("orarioprevisto").substring(0, 5),//Adesso è di tipo time
                     rs.getInt("ritardo"),
                     rs.getInt("statovolo"),

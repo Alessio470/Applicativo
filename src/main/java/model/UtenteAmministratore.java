@@ -25,8 +25,8 @@ public class UtenteAmministratore extends Utente {
     /**
      * Modifica gate.
      */
-//TODO
-    public void modificaGate() {  }
+
+    public void modificaGate() {  }//TODO
 
     @Override
     public String toString() {

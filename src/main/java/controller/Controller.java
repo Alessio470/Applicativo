@@ -152,7 +152,7 @@ public class Controller {
     /*   public void AddVoli(String compagniaaerea, String data, String orario, String aeroportoorigine,String aeroportodestinazione, String numerogate, JFrame frame, JFrame prevframe) {
 
         String codiceVolo = "Test123";
-        //TODO Generazione del codice volo
+
 
 
 

@@ -89,7 +89,7 @@ public class UtenteDAO {
                         "VALUES (?, ?, ?) RETURNING ruoloutente";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, utenteRegistrato.getUsername());
-            ps.setString(2, utenteRegistrato.getPassword()); // TODO: valuta hashing sicuro
+            ps.setString(2, utenteRegistrato.getPassword());
             ps.setInt(3, utenteRegistrato.getRuolo().ordinal());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

@@ -132,12 +132,10 @@ public class EffettuaPrenotazione {
         });//Roba buttonindietro actionlistener
 
 
-        //TODO ConfermaPrenotazione dopo aver implementato la tabella
         ButtonConfermaPrenotazione.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //TODO il dao che fa la insert in prenotazione, questa è la signature dell oggetto prenotazione:
                 //public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo,
                 // String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero)
 

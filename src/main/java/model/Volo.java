@@ -317,7 +317,7 @@ public class Volo {
      *
      * @param nuovoGate the nuovo gate
      */
-//TODO da modificare che invece di farlo localmente lo fa al db
+//TODO da modificare che invece di farlo localmente lo fa al db (forse)
     public void setNumeroGate(String nuovoGate) {
         this.gate = nuovoGate;
     }
