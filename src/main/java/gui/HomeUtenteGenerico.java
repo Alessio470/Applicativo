@@ -13,7 +13,14 @@ import java.util.List;
 
 
 /**
- * The type Home utente generico.
+ * Home dell'utente generico.
+ *
+ * <p>Mostra la lista dei voli, consente l’accesso all’area personale e l’avvio del flusso di prenotazione.
+ *
+ * @see controller.Controller
+ * @see gui.AreaPersonale
+ * @see gui.EffettuaPrenotazione
+ * @see model.Volo
  */
 public class HomeUtenteGenerico {
     private JPanel contentPane;
@@ -37,10 +44,17 @@ public class HomeUtenteGenerico {
     private static JFrame frame;
 
     /**
-     * Instantiates a new Home utente generico.
+     * Costruisce e visualizza la home utente generico.
      *
-     * @param prevframe  the prevframe
-     * @param controller the controller
+     * <p>Inizializza la finestra, saluta l’utente loggato, carica i voli dal {@link controller.Controller},
+     * popola la tabella (ordinamento attivo, celle non editabili, renderer centrato) e collega i pulsanti:
+     *
+     * <p>- Logout: chiude la finestra, effettua il logout e ritorna al frame precedente.
+     * <br>- Area personale: apre {@link gui.AreaPersonale} e nasconde la home.
+     * <br>- Effettua prenotazione: apre {@link gui.EffettuaPrenotazione} e nasconde la home.
+     *
+     * @param prevframe finestra chiamante a cui ritornare
+     * @param controller controller applicativo per ottenere i voli e lo username
      */
     public HomeUtenteGenerico(JFrame prevframe, Controller controller) {
 

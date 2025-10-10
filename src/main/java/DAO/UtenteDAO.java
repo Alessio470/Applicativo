@@ -11,26 +11,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * The type Utente dao.
+ * DAO per la gestione degli utenti.
+ * <p>Offre operazioni di verifica esistenza, login e registrazione.</p>
  */
 public class UtenteDAO {
+    /** Connessione JDBC attiva verso il database. */
     private final Connection conn;
 
     /**
-     * Instantiates a new Utente dao.
+     * Crea un {@code UtenteDAO} con la connessione fornita.
      *
-     * @param conn the conn
+     * @param conn connessione JDBC da utilizzare
      */
     public UtenteDAO(Connection conn) {
         this.conn = conn;
     }
 
     /**
-     * Username exists boolean.
+     * Verifica se esiste già un utente con lo username indicato.
      *
-     * @param username the username
-     * @return the boolean
-     * @throws SQLException the sql exception
+     * @param username username da cercare
+     * @return {@code true} se esiste almeno una corrispondenza, altrimenti {@code false}
+     * @throws SQLException in caso di errore nell’esecuzione della query
      */
     public boolean usernameExists(String username) throws SQLException {
         final String sql = "SELECT 1 FROM public.utente WHERE username = ?";
@@ -43,12 +45,15 @@ public class UtenteDAO {
     }
 
     /**
-     * Login utente.
+     * Esegue l’autenticazione restituendo l’utente corrispondente alle credenziali.
      *
-     * @param username the username
-     * @param password the password
-     * @return the utente
-     * @throws SQLException the sql exception
+     * <p>In base al ruolo letto dal DB restituisce un’istanza di
+     * {@link UtenteAmministratore} oppure {@link UtenteGenerico}.</p>
+     *
+     * @param username username fornito
+     * @param password password fornita
+     * @return l’utente autenticato, oppure {@code null} se le credenziali non corrispondono
+     * @throws SQLException in caso di errore nell’esecuzione della query
      */
     public Utente login(String username, String password) throws SQLException {
         String sql = "SELECT * FROM utente WHERE username = ? AND password = ?";
@@ -71,11 +76,13 @@ public class UtenteDAO {
 
 
     /**
-     * Registra utente int.
+     * Registra un nuovo utente a database.
      *
-     * @param utenteRegistrato the utente registrato
-     * @return the int
-     * @throws SQLException the sql exception
+     * <p>Inserisce username, password e ruolo (serializzato come {@code ordinal()} dell’enum {@link RuoloUtente}).</p>
+     *
+     * @param utenteRegistrato istanza da salvare
+     * @return valore restituito dal {@code RETURNING} (ID/indice del ruolo)
+     * @throws SQLException se il ruolo è assente/non valido o in caso di errore SQL
      */
     public int registraUtente(Utente utenteRegistrato) throws SQLException {
         // 1) Risolvi ID del ruolo (case-insensitive)

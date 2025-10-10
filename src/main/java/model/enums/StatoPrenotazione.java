@@ -1,19 +1,14 @@
 package model.enums;
 
 /**
- * The enum Stato prenotazione.
+ * Stati possibili di una prenotazione.
+ * <p>Indica l’esito del processo di richiesta/acquisto.</p>
  */
 public enum StatoPrenotazione {
-    /**
-     * Confermata stato prenotazione.
-     */
+    /** Prenotazione confermata. */
     CONFERMATA,
-    /**
-     * In attesa stato prenotazione.
-     */
+    /** Prenotazione registrata ma in attesa di conferma. */
     IN_ATTESA,
-    /**
-     * Cancellata stato prenotazione.
-     */
+    /** Prenotazione annullata. */
     CANCELLATA
 }

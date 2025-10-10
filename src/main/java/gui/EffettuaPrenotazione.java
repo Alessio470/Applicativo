@@ -11,7 +11,12 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
- * The type Effettua prenotazione.
+ * Finestra "Effettua Prenotazione".
+ * <p>Mostra i voli prenotabili in tabella, raccoglie i dati anagrafici/numero posto
+ * e invia la richiesta di prenotazione al {@link controller.Controller}.
+ *
+ * @see controller.Controller
+ * @see model.Volo
  */
 public class EffettuaPrenotazione {
     private JPanel PanelEffettuaPrenotazione;
@@ -48,10 +53,18 @@ public class EffettuaPrenotazione {
     private static JFrame frame;
 
     /**
-     * Instantiates a new Effettua prenotazione.
+     * Costruisce e visualizza la finestra di prenotazione.
      *
-     * @param prevframe  the prevframe
-     * @param controller the controller
+     * <p>Inizializza la {@link JFrame}, carica i voli prenotabili dal {@link controller.Controller},
+     * popola la tabella con colonne: Codice/Compagnia/Origine/Destinazione/Data/Orario/Ritardo/Stato/Gate,
+     * abilita ordinamento e sola lettura delle celle, centra il rendering e collega i pulsanti:
+     *
+     * <p>- Indietro: chiude e torna alla finestra precedente.
+     * <br>- Conferma prenotazione: legge la riga selezionata e i campi utente, poi invoca
+     *   {@link controller.Controller#effettuaPrenotazione(String, String, String, String, String)}.
+     *
+     * @param prevframe finestra chiamante a cui ritornare
+     * @param controller controller applicativo per reperire i voli e registrare la prenotazione
      */
     public EffettuaPrenotazione(JFrame prevframe, Controller controller) {
 
@@ -145,7 +158,6 @@ public class EffettuaPrenotazione {
                     return;
                 }
 
-// codice volo è nella colonna 0
                 // Codice volo è nella colonna 0
                 String codiceVolo = (String) TableVoli.getValueAt(selectedRow, 0);
                 controller.effettuaPrenotazione((String) TableVoli.getValueAt(selectedRow, 0),FieldNome.getText().trim(),FieldCognome.getText().trim(),FieldNumeroPosto.getText().trim(),FieldCodiceFiscale.getText().trim());

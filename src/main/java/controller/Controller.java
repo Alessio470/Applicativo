@@ -28,26 +28,33 @@ import model.Utente;
 
 
 /**
- * The type Controller.
+ * Controller dell’applicazione.
+ * <p>Coordina GUI, DAO e modello dominio per login/registrazione, gestione voli e prenotazioni.</p>
  */
 public class Controller {
 
+    /** Utente attualmente autenticato (se presente). */
     private Utente u=null;
 
     /**
-     * Instantiates a new Controller.
+     * Costruttore predefinito del controller.
      */
     public Controller() {
-        }
+    }
 
+    /**
+     * Esegue il logout azzerando l’utente corrente.
+     */
     public void doLogoutUser() { u=null; }
 
     /**
-     * Do login.
+     * Autentica un utente e apre la home corrispondente al ruolo.
      *
-     * @param user  the user
-     * @param pass  the pass
-     * @param frame the frame
+     * <p>In caso di credenziali non valide o errori DB mostra un {@link JOptionPane} con il messaggio.</p>
+     *
+     * @param user  username inserito
+     * @param pass  password inserita
+     * @param frame frame padre per i messaggi/modali
      */
     public void doLogin(String user, String pass, JFrame frame) {
 
@@ -85,13 +92,16 @@ public class Controller {
 
 
     /**
-     * On registrati.
+     * Gestisce la registrazione di un nuovo utente.
      *
-     * @param username the username
-     * @param password the password
-     * @param conferma the conferma
-     * @param ruolo    the ruolo
-     * @param frame    the frame
+     * <p>Esegue validazioni base, verifica unicità username e invoca {@link UtenteDAO#registraUtente(Utente)}.
+     * Mostra messaggi d’errore/successo tramite {@link JOptionPane}.</p>
+     *
+     * @param username username desiderato
+     * @param password password scelta
+     * @param conferma conferma password
+     * @param ruolo    ruolo selezionato (stringa che rappresenta l’enum {@link RuoloUtente})
+     * @param frame    frame padre per i messaggi
      */
     public void onRegistrati(String username, String password, String conferma,String ruolo, JFrame frame ) {
 
@@ -204,16 +214,19 @@ public class Controller {
 */
 
     /**
-     * Add voli.
+     * Crea e registra un nuovo volo impostando lo stato da stringa.
      *
-     * @param compagniaaerea        the compagniaaerea
-     * @param data                  the data
-     * @param orario                the orario
-     * @param aeroportoorigine      the aeroportoorigine
-     * @param aeroportodestinazione the aeroportodestinazione
-     * @param numerogate            the numerogate
-     * @param ritardoMinuti         the ritardo minuti
-     * @param statoVoloStr          the stato volo str
+     * <p>Valida i campi obbligatori, converte lo stato in {@link StatoVolo} e invoca {@link VoloDAO#registraVolo(Volo)}.
+     * In caso di errore mostra un messaggio all’utente.</p>
+     *
+     * @param compagniaaerea        compagnia aerea
+     * @param data                  data (formato {@code dd/MM/yyyy})
+     * @param orario                orario (formato {@code HH:mm})
+     * @param aeroportoorigine      aeroporto di origine
+     * @param aeroportodestinazione aeroporto di destinazione
+     * @param numerogate            gate assegnato
+     * @param ritardoMinuti         ritardo in minuti
+     * @param statoVoloStr          stato del volo come stringa (es. {@code "PROGRAMMATO"})
      */
     public void AddVoliConStato(String compagniaaerea, String data, String orario, String aeroportoorigine, String aeroportodestinazione, String numerogate, int ritardoMinuti, String statoVoloStr) {
 
@@ -256,11 +269,12 @@ public class Controller {
     }
 
     /**
-     * Gets voli prenotabili.
+     * Restituisce i voli prenotabili (stato programmato).
      *
-     * @return the voli prenotabili
+     * <p>In caso di errore di connessione/lettura mostra un messaggio e restituisce una lista vuota.</p>
+     *
+     * @return lista (eventualmente vuota) di voli prenotabili
      */
-// Restituisce solo i voli prenotabili
     public List<Volo> getVoliPrenotabili() {
 
         List<Volo> resultDB = new ArrayList<>();
@@ -285,13 +299,17 @@ public class Controller {
     }//Parentesi getVoliPrenotabilidaNapoli
 
     /**
-     * Effettua prenotazione.
+     * Effettua una prenotazione confermata per l’utente loggato.
      *
-     * @param codiceVolo              the codice volo
-     * @param nomePasseggero          the nome passeggero
-     * @param cognomePasseggero       the cognome passeggero
-     * @param posto                   the posto
-     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     * <p>Genera l’oggetto {@link Prenotazione} con stato confermato e invoca
+     * {@link PrenotazioneDAO#InserisciPrenotazione(Prenotazione)}.
+     * Eventuali errori vengono loggati/mostrati.</p>
+     *
+     * @param codiceVolo codice del volo
+     * @param nomePasseggero nome del passeggero
+     * @param cognomePasseggero cognome del passeggero
+     * @param posto posto assegnato
+     * @param codicefiscalepasseggero codice fiscale del passeggero
      */
     public void effettuaPrenotazione(String codiceVolo,String nomePasseggero,String cognomePasseggero,String posto, String codicefiscalepasseggero) {
 
@@ -328,18 +346,20 @@ public class Controller {
         }
 
     /**
-     * Gets username utente.
+     * Restituisce lo username dell’utente attualmente autenticato.
      *
-     * @return the username utente
+     * @return username dell’utente corrente
      */
     public String getUsernameUtente() {
             return u.getUsername();
     }
 
     /**
-     * Gets voli.
+     * Restituisce l’elenco di tutti i voli.
      *
-     * @return the voli
+     * <p>In caso di errore di connessione/lettura mostra un messaggio e restituisce una lista vuota.</p>
+     *
+     * @return lista (eventualmente vuota) di voli
      */
     public List<Volo> getVoli() {
         List<Volo> resultDB = new ArrayList<>();
@@ -368,17 +388,20 @@ public class Controller {
     }//Fine parentesi getVoli
 
     /**
-     * Conferma modifica.
+     * Conferma e salva le modifiche ai dati di un volo.
      *
-     * @param codiceVolo            the codice volo
-     * @param compagnia             the compagnia
-     * @param aeroportoOrigine      the aeroporto origine
-     * @param aeroportoDestinazione the aeroporto destinazione
-     * @param dataDDMMYYYY          the data ddmmyyyy
-     * @param orarioHHmm            the orario h hmm
-     * @param ritardoMinuti         the ritardo minuti
-     * @param statoVolo             the stato volo
-     * @param gate                  the gate
+     * <p>Crea un {@link Volo} con i nuovi valori e invoca {@link VoloDAO#updateVolo(Volo)}.
+     * Eventuali errori vengono propagati come {@link RuntimeException}.</p>
+     *
+     * @param codiceVolo            codice del volo
+     * @param compagnia             compagnia aerea
+     * @param aeroportoOrigine      aeroporto di origine
+     * @param aeroportoDestinazione aeroporto di destinazione
+     * @param dataDDMMYYYY          data nel formato {@code dd/MM/yyyy}
+     * @param orarioHHmm            orario nel formato {@code HH:mm}
+     * @param ritardoMinuti         ritardo in minuti
+     * @param statoVolo             stato del volo (stringa mappata all’enum)
+     * @param gate                  gate assegnato (facoltativo)
      */
     public void confermaModifica(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String dataDDMMYYYY, String orarioHHmm, int ritardoMinuti, String statoVolo, String gate) {
 
@@ -402,9 +425,11 @@ public class Controller {
     }
 
     /**
-     * Gets voli da per napoli.
+     * Restituisce i voli (da/per Napoli) ordinati per suffisso numerico del codice.
      *
-     * @return the voli da per napoli
+     * <p>Delega a {@link VoloDAO#getVoliDaPerNapoli()} e converte data/orario a stringa lato DAO.</p>
+     *
+     * @return lista (eventualmente vuota) di voli
      */
     public List<Volo> getVoliDaPerNapoli() {
 
@@ -439,9 +464,9 @@ public class Controller {
     }//Fine parentesi getVoliDaPerNapoli
 
     /**
-     * Gets gates.
+     * Restituisce l’elenco dei gate disponibili.
      *
-     * @return the gates
+     * @return lista (eventualmente vuota) di etichette/numero gate
      */
     public List<String> getGates() {
 
@@ -469,9 +494,11 @@ public class Controller {
     }//Fine Parentesi getGates
 
     /**
-     * Gets prenotazioni utente.
+     * Restituisce le prenotazioni dell’utente autenticato (con volo associato).
      *
-     * @return the prenotazioni utente
+     * <p>Delega a {@link PrenotazioneDAO#getPrenotazioniUtente(String)} usando lo username corrente.</p>
+     *
+     * @return lista (eventualmente vuota) di prenotazioni
      */
     public List<Prenotazione> getPrenotazioniUtente() {
 

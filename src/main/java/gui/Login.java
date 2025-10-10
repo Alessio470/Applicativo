@@ -11,7 +11,11 @@ import java.util.Arrays;
 
 
 /**
- * The type Login.
+ * Schermata di login dell'applicazione.
+ *
+ * <p>Gestisce l’autenticazione tramite {@link controller.Controller} e l’accesso alla registrazione.
+ *
+ * @see controller.Controller
  */
 public class Login {
     private JPanel PanelLogin;
@@ -35,7 +39,7 @@ public class Login {
     private JButton ButtonLogin;
 
     /**
-     * The constant frame.
+     * Frame principale della schermata di login.
      */
     public static JFrame frame;
 
@@ -43,8 +47,11 @@ public class Login {
 
 
     /**
-     * Instantiates a new Login.
+     * Inizializza la schermata di login e registra i listener dei pulsanti.
+     * <p>Login: invoca {@link controller.Controller#doLogin(String, String, JFrame)} e nasconde il frame.
+     * <p>Registrati: apre la finestra di registrazione e nasconde il frame.
      */
+
     public Login() {
         controller = new Controller();
 
@@ -69,9 +76,11 @@ public class Login {
     }//Parentesi Login
 
     /**
-     * The entry point of application.
+     * Entry point dell'applicazione.
      *
-     * @param args the input arguments
+     * <p>Crea e visualizza il frame di login.
+     *
+     * @param args argomenti da riga di comando (non utilizzati)
      */
     public static void main(String[] args) {
         frame = new JFrame("Login");

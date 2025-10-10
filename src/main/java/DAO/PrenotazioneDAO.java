@@ -12,26 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Prenotazione dao.
+ * DAO per l’accesso alle prenotazioni.
+ * <p>Gestisce inserimento e lettura delle prenotazioni, con eventuale join al volo associato.</p>
  */
 public class PrenotazioneDAO {
 
+    /** Connessione JDBC attiva verso il database. */
     private final Connection conn;
 
     /**
-     * Instantiates a new Prenotazione dao.
+     * Crea un {@code PrenotazioneDAO} con la connessione fornita.
      *
-     * @param conn the conn
+     * @param conn connessione JDBC da utilizzare
      */
     public PrenotazioneDAO( Connection conn ) { this.conn=conn; }
 
 
     /**
-     * Inserisci prenotazione int.
+     * Inserisce una nuova prenotazione.
      *
-     * @param prenotazione the prenotazione
-     * @return the int
-     * @throws SQLException the sql exception
+     * <p>Scrive i campi principali della prenotazione nella tabella {@code prenotazione}.
+     * Lo stato viene serializzato tramite {@code ordinal()} dell’enum.</p>
+     *
+     * @param prenotazione oggetto da inserire
+     * @return intero restituito dalla query (ad es. chiave generata, se la query prevede RETURNING)
+     * @throws SQLException in caso di errore SQL o se il {@code RETURNING} non produce risultati
      */
     public int InserisciPrenotazione(Prenotazione prenotazione) throws SQLException {
 
@@ -54,18 +59,20 @@ public class PrenotazioneDAO {
                 }
                 throw new SQLException("Insert volo fallita (RETURNING vuoto).");
             }
-
-
         }
     }//Parentesi InserisciPrenotazione
 
 
     /**
-     * Gets prenotazioni utente.
+     * Restituisce le prenotazioni di un utente, includendo i dettagli del volo associato.
      *
-     * @param username the username
-     * @return the prenotazioni utente
-     * @throws SQLException the sql exception
+     * <p>Esegue una join tra {@code prenotazione} e {@code volo} filtrando per username.
+     * <strong>Nota:</strong> la query costruita con concatenazione di stringhe è suscettibile a SQL injection
+     * se {@code username} non è sanificato; si raccomanda l’uso di {@link PreparedStatement} (indicazione generale).</p>
+     *
+     * @param username username proprietario delle prenotazioni
+     * @return lista (eventualmente vuota) di prenotazioni con volo associato
+     * @throws SQLException in caso di errori durante l’esecuzione o la lettura del result set
      */
     public List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException {
 

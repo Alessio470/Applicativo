@@ -4,58 +4,79 @@ import model.enums.StatoPrenotazione;
 import model.enums.StatoVolo;
 
 /**
- * The type Prenotazione.
+ * Rappresenta una prenotazione di volo.
+ * <p>Contiene riferimenti all’utente (facoltativo), al volo, ai dati del passeggero,
+ * al numero biglietto, al posto e allo stato; può includere anche il {@link Volo} associato.</p>
  */
 public class Prenotazione {
-    private String usernameUtente;    // può essere null se prenotazione senza login
-    private String codiceVolo;        // riferimento al codice del volo
-    private String nomePasseggero;    // nome passeggero
-    private String cognomePasseggero; // cognome passeggero
-    private String numeroBiglietto;   // identificativo biglietto
-    private String posto;             // posto a sedere
+
+    /** Username dell’utente che ha effettuato la prenotazione (campo facoltativo). */
+    private String usernameUtente;
+
+    /** Codice del volo prenotato (riferimento esterno). */
+    private String codiceVolo;
+
+    /** Nome del passeggero. */
+    private String nomePasseggero;
+
+    /** Cognome del passeggero. */
+    private String cognomePasseggero;
+
+    /** Identificativo del biglietto. */
+    private String numeroBiglietto;
+
+    /** Posto a sedere assegnato. */
+    private String posto;
+
+    /** Stato corrente della prenotazione. */
     private StatoPrenotazione stato;
+
+    /** Codice fiscale del passeggero. */
     private String codicefiscalepasseggero;
 
     //numerobiglietto,username,codvolo,nomepasseggero,cognomepasseggero,numeroposto,statoprenotazione,codicefiscalepasseggero
 
+    /** Entità volo eventualmente collegata alla prenotazione. */
     private Volo voloassociato;
 
 
     /**
-     * Instantiates a new Prenotazione.
+     * Crea una prenotazione specificando tutti i dati, con lo stato come valore dell’enum {@link StatoPrenotazione}.
      *
-     * @param numeroBiglietto         the numero biglietto
-     * @param usernameUtente          the username utente
-     * @param codiceVolo              the codice volo
-     * @param nomePasseggero          the nome passeggero
-     * @param cognomePasseggero       the cognome passeggero
-     * @param posto                   the posto
-     * @param stato                   the stato
-     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     * @param numeroBiglietto identificativo del biglietto
+     * @param usernameUtente username dell’utente (facoltativo)
+     * @param codiceVolo codice del volo
+     * @param nomePasseggero nome del passeggero
+     * @param cognomePasseggero cognome del passeggero
+     * @param posto posto a sedere
+     * @param stato stato della prenotazione
+     * @param codicefiscalepasseggero codice fiscale del passeggero
      */
     public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero) {
 
         this.usernameUtente = usernameUtente;
         this.codiceVolo = codiceVolo;
         this.nomePasseggero = nomePasseggero;
-        this.cognomePasseggero=cognomePasseggero;
+        this.cognomePasseggero = cognomePasseggero;
         this.numeroBiglietto = numeroBiglietto;
         this.posto = posto;
         this.stato = stato;
-        this.codicefiscalepasseggero= codicefiscalepasseggero;
+        this.codicefiscalepasseggero = codicefiscalepasseggero;
     }
 
     /**
-     * Instantiates a new Prenotazione.
+     * Crea una prenotazione specificando lo stato come intero (verrà convertito).
+     * <p>La conversione usa {@link #fromInt(int)} con la mappatura: 1→IN_ATTESA, 2→CONFERMATA, 3→CANCELLATA.</p>
      *
-     * @param numeroBiglietto         the numero biglietto
-     * @param usernameUtente          the username utente
-     * @param codiceVolo              the codice volo
-     * @param nomePasseggero          the nome passeggero
-     * @param cognomePasseggero       the cognome passeggero
-     * @param posto                   the posto
-     * @param stato                   the stato
-     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     * @param numeroBiglietto identificativo del biglietto
+     * @param usernameUtente username dell’utente (facoltativo)
+     * @param codiceVolo codice del volo
+     * @param nomePasseggero nome del passeggero
+     * @param cognomePasseggero cognome del passeggero
+     * @param posto posto a sedere
+     * @param stato stato della prenotazione come intero (1, 2, 3)
+     * @param codicefiscalepasseggero codice fiscale del passeggero
+     * @throws IllegalArgumentException se il codice stato non è supportato
      */
     public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, int stato, String codicefiscalepasseggero) {
 
@@ -71,157 +92,164 @@ public class Prenotazione {
 
 
     /**
-     * Gets username utente.
+     * Restituisce l'username dell’utente.
      *
-     * @return the username utente
+     * @return username (se presente)
      */
-// --- Getter ---
+    // --- Getter ---
     public String getUsernameUtente() { return usernameUtente; }
 
     /**
-     * Gets codice volo.
+     * Restituisce il codice del volo prenotato.
      *
-     * @return the codice volo
+     * @return codice volo
      */
     public String getCodiceVolo() { return codiceVolo; }
 
     /**
-     * Gets nome passeggero.
+     * Restituisce il nome del passeggero.
      *
-     * @return the nome passeggero
+     * @return nome passeggero
      */
     public String getNomePasseggero() { return nomePasseggero; }
 
     /**
-     * Gets cognome passeggero.
+     * Restituisce il cognome del passeggero.
      *
-     * @return the cognome passeggero
+     * @return cognome passeggero
      */
     public String getCognomePasseggero() { return cognomePasseggero; }
 
     /**
-     * Gets codicefiscalepasseggero.
+     * Restituisce il codice fiscale del passeggero.
      *
-     * @return the codicefiscalepasseggero
+     * @return codice fiscale
      */
     public String getCodicefiscalepasseggero() { return codicefiscalepasseggero; }
 
     /**
-     * Gets numero biglietto.
+     * Restituisce il numero del biglietto.
      *
-     * @return the numero biglietto
+     * @return numero biglietto
      */
     public String getNumeroBiglietto() { return numeroBiglietto; }
 
     /**
-     * Gets posto.
+     * Restituisce il posto assegnato.
      *
-     * @return the posto
+     * @return posto
      */
     public String getPosto() { return posto; }
 
     /**
-     * Gets stato.
+     * Restituisce lo stato della prenotazione.
      *
-     * @return the stato
+     * @return stato
      */
     public StatoPrenotazione getStato() { return stato; }
 
     /**
-     * Gets voloassociato.
+     * Restituisce il volo eventualmente associato.
      *
-     * @return the voloassociato
+     * @return volo associato, se presente
      */
     public Volo getVoloassociato() {
         return voloassociato;
     }
 
     /**
-     * Sets username utente.
+     * Imposta l'username dell’utente.
      *
-     * @param usernameUtente the username utente
+     * @param usernameUtente username da impostare
      */
-// --- Setter ---
+    // --- Setter ---
     public void setUsernameUtente(String usernameUtente) { this.usernameUtente = usernameUtente; }
 
     /**
-     * Sets codice volo.
+     * Imposta il codice del volo.
      *
-     * @param codiceVolo the codice volo
+     * @param codiceVolo codice volo da impostare
      */
     public void setCodiceVolo(String codiceVolo) { this.codiceVolo = codiceVolo; }
 
     /**
-     * Sets nome passeggero.
+     * Imposta il nome del passeggero.
      *
-     * @param nomePasseggero the nome passeggero
+     * @param nomePasseggero nome da impostare
      */
     public void setNomePasseggero(String nomePasseggero) { this.nomePasseggero = nomePasseggero; }
 
     /**
-     * Sets cognome passeggero.
+     * Imposta il cognome del passeggero.
      *
-     * @param cognomePasseggero the cognome passeggero
+     * @param cognomePasseggero cognome da impostare
      */
     public void setCognomePasseggero(String cognomePasseggero) { this.cognomePasseggero = cognomePasseggero; }
 
     /**
-     * Sets codicefiscalepasseggero.
+     * Imposta il codice fiscale del passeggero.
      *
-     * @param codicefiscalepasseggero the codicefiscalepasseggero
+     * @param codicefiscalepasseggero codice fiscale da impostare
      */
     public void setCodicefiscalepasseggero(String codicefiscalepasseggero) { this.codicefiscalepasseggero = codicefiscalepasseggero; }
 
     /**
-     * Sets numero biglietto.
+     * Imposta il numero del biglietto.
      *
-     * @param numeroBiglietto the numero biglietto
+     * @param numeroBiglietto numero biglietto da impostare
      */
     public void setNumeroBiglietto(String numeroBiglietto) { this.numeroBiglietto = numeroBiglietto; }
 
     /**
-     * Sets posto.
+     * Imposta il posto assegnato.
      *
-     * @param posto the posto
+     * @param posto posto da impostare
      */
     public void setPosto(String posto) { this.posto = posto; }
 
     /**
-     * Sets stato.
+     * Imposta lo stato della prenotazione.
      *
-     * @param stato the stato
+     * @param stato nuovo stato
      */
     public void setStato(StatoPrenotazione stato) { this.stato = stato; }
 
     /**
-     * Sets voloassociato.
+     * Imposta il volo associato alla prenotazione.
      *
-     * @param voloassociato the voloassociato
+     * @param voloassociato entità volo da associare
      */
     public void setVoloassociato(Volo voloassociato) { this.voloassociato = voloassociato; }
 
 
     /**
-     * Is confermata boolean.
+     * Indica se la prenotazione è confermata.
      *
-     * @return the boolean
+     * @return {@code true} se lo stato è CONFERMATA, altrimenti {@code false}
      */
-// --- Metodi utili ---
+    // --- Metodi utili ---
     public boolean isConfermata() {
         return stato == StatoPrenotazione.CONFERMATA;
     }
 
     /**
-     * Appartiene utente boolean.
+     * Verifica se la prenotazione appartiene all’utente indicato.
      *
-     * @param username the username
-     * @return the boolean
+     * @param username username da verificare
+     * @return {@code true} se l’username coincide con quello della prenotazione (se presente)
      */
     public boolean appartieneUtente(String username) {
         return usernameUtente != null && usernameUtente.equals(username);
     }
 
-
+    /**
+     * Converte un codice numerico di stato nella corrispondente costante {@link StatoPrenotazione}.
+     * <p>Mappatura: 1→IN_ATTESA, 2→CONFERMATA, 3→CANCELLATA.</p>
+     *
+     * @param stato codice numerico dello stato
+     * @return stato convertito
+     * @throws IllegalArgumentException se il codice non è supportato
+     */
     private StatoPrenotazione fromInt(int stato) {
 
         return switch (stato) {
@@ -233,7 +261,6 @@ public class Prenotazione {
         };
 
     }
-
 
     @Override
     public String toString() {

@@ -7,7 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type View info volo.
+ * Finestra di dettaglio di un {@link model.Volo}.
+ *
+ * <p>Mostra i campi principali del volo (codice, compagnia, aeroporti, data, orario,
+ * ritardo, stato e gate) in sola lettura, con pulsante per tornare alla finestra precedente.
+ *
+ * @see model.Volo
  */
 public class ViewInfoVolo {
     private JPanel PanelViewInfoVolo;
@@ -48,10 +53,16 @@ public class ViewInfoVolo {
     private JFrame frame;
 
     /**
-     * Instantiates a new View info volo.
+     * Costruisce e visualizza la finestra di dettaglio volo.
      *
-     * @param prevframe the prevframe
-     * @param voloview  the voloview
+     * <p>Inizializza la finestra, porta a fronte la GUI e valorizza le label con
+     * i dati del {@link model.Volo} passato.
+     *
+     * <p>Pulsante:
+     * <br>- Indietro: chiude la finestra e riporta al frame precedente.
+     *
+     * @param prevframe finestra chiamante a cui ritornare
+     * @param voloview  volo di cui mostrare i dettagli
      */
     public ViewInfoVolo(JFrame prevframe, Volo voloview) {
 

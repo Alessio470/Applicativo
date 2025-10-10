@@ -1,27 +1,18 @@
 package model.enums;
 
 /**
- * The enum Stato volo.
+ * Stati operativi di un volo.
+ * <p>Coprono l’intero ciclo: pianificazione, partenza, eventuale ritardo, arrivo, cancellazione.</p>
  */
 public enum StatoVolo {
-    /**
-     * Programmato stato volo.
-     */
+    /** Volo pianificato e non ancora partito. */
     PROGRAMMATO,
-    /**
-     * Decollato stato volo.
-     */
+    /** Volo decollato. */
     DECOLLATO,
-    /**
-     * In ritardo stato volo.
-     */
+    /** Volo con ritardo comunicato. */
     IN_RITARDO,
-    /**
-     * Atterrato stato volo.
-     */
+    /** Volo atterrato. */
     ATTERRATO,
-    /**
-     * Cancellato stato volo.
-     */
+    /** Volo cancellato. */
     CANCELLATO
 }

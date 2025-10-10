@@ -14,7 +14,14 @@ import java.util.List;
 
 
 /**
- * The type Homepage amministratore.
+ * Home dell'utente amministratore.
+ *
+ * <p>Mostra la tabella dei voli e consente inserimento, modifica e aggiornamento di campi
+ * quali compagnia, aeroporti, data, orario, stato, gate e ritardo.
+ *
+ * @see controller.Controller
+ * @see model.Volo
+ * @see model.enums.StatoVolo
  */
 public class HomepageAmministratore  {
     private JLabel LabelTitolo;
@@ -60,15 +67,21 @@ public class HomepageAmministratore  {
     private final Controller controller;
 
     /**
-     * Instantiates a new Homepage amministratore.
+     * Costruisce e visualizza la home amministratore.
      *
-     * @param prevframe  the prevframe
-     * @param controller the controller
+     * <p>Inizializza la finestra, applica maschere di input (data dd/MM/yyyy, orario HH:mm),
+     * carica valori nelle combo (stati volo, gate), configura la tabella con ordinamento
+     * e sola lettura, e registra i listener dei pulsanti:
+     *
+     * <p>- Logout: chiude la finestra e termina la sessione.
+     * <br>- Inserisci volo: apre la finestra di inserimento e nasconde la home.
+     * <br>- Conferma modifica: legge i campi e invoca {@link controller.Controller#confermaModifica(String, String, String, String, String, String, int, String, String)}.
+     * <br>- Aggiorna: ricarica i dati mantenendo, se possibile, la riga selezionata.
+     *
+     * @param prevframe  finestra chiamante a cui ritornare
+     * @param controller controller applicativo per operazioni su voli e lookup di gate
      */
     public HomepageAmministratore(JFrame prevframe, Controller controller) {
-
-
-
         // Inizializza frame
         frame = new JFrame("Frame Home Utente Amministratore");
         this.controller = controller;
@@ -197,6 +210,15 @@ public class HomepageAmministratore  {
 
     } //Fine parentesi homepageAmministratore
 
+    /**
+     * Popola/aggiorna la tabella dei voli con i dati forniti dal {@link controller.Controller}.
+     *
+     * <p>Colonne: Codice Volo, Compagnia, Origine, Destinazione, Data, Orario, Ritardo, Stato, Gate.
+     *
+     * <p>Imposta il modello, disabilita l’editing delle celle e centra il rendering.
+     *
+     * @param controller controller da cui recuperare la lista ordinata di voli
+     */
     private void aggiornaTabella(Controller controller) {
 
         //Mettiamo i dati nell array dei dati che andranno nella tabella

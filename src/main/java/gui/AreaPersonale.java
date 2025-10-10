@@ -11,7 +11,13 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * The type Area personale.
+ * Pannello “Area Personale” dell’utente.
+ *
+ * <p>Mostra l’elenco delle {@link model.Prenotazione prenotazioni} in una Tabella con ordinamento abilitato e celle non editabili.</p>
+ *
+ * <p>La tabella include una colonna nascosta che contiene l’oggetto {@link model.Volo} associato
+ * a ciascuna prenotazione, utile per aprire il dettaglio volo.</p>
+ *
  */
 public class AreaPersonale {
     private JPanel PanelAeraPersonale;
@@ -33,10 +39,17 @@ public class AreaPersonale {
     private List<Prenotazione> prenotazioni=null;
 
     /**
-     * Instantiates a new Area personale.
+     * Costruisce e visualizza l'area personale.
+     * <p>Inizializza la {@link JFrame}, configura la {@link JTable} (selezione singola, ordinamento attivo, renderer centrato),
+     * popola il modello con le prenotazioni ottenute dal {@link controller.Controller} e nasconde una colonna tecnica
+     * che contiene l'oggetto {@link model.Volo} per l'apertura del dettaglio.
      *
-     * @param prevframe  the prevframe
-     * @param controller the controller
+     * <p>Listener principali:
+     * <br>- Indietro: chiude la finestra corrente e riporta al frame precedente.
+     * <br>- Visualizza volo / doppio click riga: recupera il {@link model.Volo} dalla colonna nascosta e apre {@code ViewInfoVolo}.
+     *
+     * @param prevframe finestra chiamante (per posizionamento/ritorno)
+     * @param controller controller applicativo per recuperare le prenotazioni dell'utente
      */
     public AreaPersonale(JFrame prevframe, Controller controller) {
 

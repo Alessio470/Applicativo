@@ -10,7 +10,12 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * The type Inserisci volo.
+ * Finestra per l'inserimento di un nuovo volo.
+ *
+ * <p>Consente di compilare compagnia, aeroporti, data, orario, ritardo, stato e gate, validare i campi e delegare il salvataggio al {@link controller.Controller}.
+ *
+ * @see controller.Controller
+ * @see model.enums.StatoVolo
  */
 public class InserisciVolo {
 
@@ -61,11 +66,17 @@ public class InserisciVolo {
     private final HomepageAmministratore home;
 
     /**
-     * Instantiates a new Inserisci volo.
+     * Costruisce e visualizza la finestra di inserimento volo.
      *
-     * @param prevFrame  the prev frame
-     * @param controller the controller
-     * @param home       the home
+     * <p>Inizializza la finestra, imposta le maschere di input per data e orario,
+     * popola le combo di stato e gate, definisce i valori di default e collega i pulsanti:
+     *
+     * <p>- Conferma: valida i dati e invoca {@link controller.Controller#AddVoliConStato(String, String, String, String, String, String, int, String)}.
+     * <br>- Indietro: chiude e torna alla finestra precedente.
+     *
+     * @param prevFrame finestra chiamante a cui ritornare
+     * @param controller controller applicativo per operazioni su voli e lookup di gate
+     * @param home riferimento alla home amministratore che potrà essere aggiornata dopo l’inserimento
      */
     public InserisciVolo(JFrame prevFrame, Controller controller, HomepageAmministratore home) {
         frame = new JFrame("Frame Inserisci Volo");
@@ -113,6 +124,10 @@ public class InserisciVolo {
 
     // ---------------- Init ----------------
 
+    /**
+     * Imposta le maschere di input per data (dd/MM/yyyy) e orario (HH:mm).
+     * <br>I campi committano o ripristinano il valore alla perdita di focus.
+     */
     private void initMasks() {
         try {
             MaskFormatter dataMask = new MaskFormatter("##/##/####");
@@ -133,6 +148,9 @@ public class InserisciVolo {
         } catch (Exception ignored) {}
     }
 
+    /**
+     * Popola la combo degli stati con i valori di {@link StatoVolo} e seleziona di default PROGRAMMATO.
+     */
     private void initStatoCombo() {
         ComboStatoVolo.removeAllItems();
         for (StatoVolo s : StatoVolo.values()) {
@@ -143,6 +161,12 @@ public class InserisciVolo {
         }
     }
 
+    /**
+     * Popola la combo dei gate interrogando il {@link controller.Controller}.
+     * <br>In caso di errore mostra un messaggio d’allerta.
+     *
+     * @param controller controller da cui recuperare l’elenco dei gate
+     */
     private void initGateCombo(Controller controller) {
         ComboGate.removeAllItems();
         try {
@@ -156,6 +180,9 @@ public class InserisciVolo {
         }
     }
 
+    /**
+     * Imposta valori iniziali dei campi (es. ritardo = 0).
+     */
     private void initDefaults() {
         FieldRitardo.setText("0"); // valore iniziale visibile
         FieldRitardo.setEditable(true);
@@ -164,6 +191,13 @@ public class InserisciVolo {
 
     // --------------- Azione conferma ---------------
 
+    /**
+     * Valida i campi e, se corretti, delega l'inserimento al {@link controller.Controller}.
+     * <br>Costruisce i parametri richiesti, interpreta il ritardo come intero (predefinito 0) e mostra un messaggio di esito all’utente.
+     *
+     * @param controller controller applicativo
+     * @param prevFrame finestra chiamante a cui ritornare dopo la chiusura
+     */
     private void onConferma(Controller controller, JFrame prevFrame) {
         String compagnia = safe(FieldCompagnia);
         String origine   = safe(FieldAeroportoOrigine);
@@ -205,6 +239,12 @@ public class InserisciVolo {
         }
     }
 
+    /**
+     * Restituisce il contenuto del campo, trimmato; restituisce stringa vuota se nullo.
+     *
+     * @param f campo di testo da leggere
+     * @return testo trimmato o stringa vuota se mancante
+     */
     private String safe(JTextField f) {
         return (f == null || f.getText() == null) ? "" : f.getText().trim();
     }

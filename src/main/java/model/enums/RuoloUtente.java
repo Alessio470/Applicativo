@@ -1,15 +1,12 @@
 package model.enums;
 
 /**
- * The enum Ruolo utente.
+ * Ruoli applicativi dell’utente.
+ * <p>Distingue tra utenti standard e amministratori.</p>
  */
 public enum RuoloUtente {
-    /**
-     * Generico ruolo utente.
-     */
+    /** Utente con privilegi standard. */
     GENERICO,
-    /**
-     * Amministratore ruolo utente.
-     */
+    /** Utente con privilegi amministrativi. */
     AMMINISTRATORE
 }

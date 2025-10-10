@@ -5,17 +5,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * The type Connessione database.
+ * Gestore singleton della connessione JDBC a PostgreSQL.
+ * <p>Carica il driver e mantiene una singola {@link Connection} riutilizzabile.</p>
  */
 public class ConnessioneDatabase {
+
     private static ConnessioneDatabase instance;
     private Connection connection;
 
-    private final String url = "jdbc:postgresql://localhost:5433/db_aeroporto";
+    /** URL JDBC del database. */
+    private final String url = "jdbc:postgresql://localhost:5432/db_aeroporto";
+    /** Username del database. */
     private final String user = "postgres";
-    private final String password = "password"; // metti la tua
+    /** Password del database. */
+    private final String password = "password";
+    /** Nome del driver JDBC PostgreSQL. */
     private final String driver = "org.postgresql.Driver";
 
+    /**
+     * Inizializza la connessione caricando il driver e aprendo la {@link Connection}.
+     *
+     * @throws SQLException se il driver non è disponibile o la connessione fallisce
+     */
     private ConnessioneDatabase() throws SQLException {
         try {
             Class.forName(driver);
@@ -26,10 +37,10 @@ public class ConnessioneDatabase {
     }
 
     /**
-     * Gets instance.
+     * Restituisce l’istanza singleton, creandola se assente o se la connessione è chiusa.
      *
-     * @return the instance
-     * @throws SQLException the sql exception
+     * @return istanza di {@code ConnessioneDatabase}
+     * @throws SQLException se l’inizializzazione fallisce
      */
     public static ConnessioneDatabase getInstance() throws SQLException {
         if (instance == null || instance.connection.isClosed()) {
@@ -39,9 +50,9 @@ public class ConnessioneDatabase {
     }
 
     /**
-     * Gets connection.
+     * Restituisce la connessione JDBC attiva.
      *
-     * @return the connection
+     * @return connessione al database
      */
     public Connection getConnection() {
         return connection;

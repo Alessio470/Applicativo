@@ -3,18 +3,25 @@ package model;
 import model.enums.RuoloUtente;
 
 /**
- * The type Utente.
+ * Modello astratto per un utente del sistema.
+ * <p>Comprende credenziali (username, password) e il {@link RuoloUtente} associato.</p>
  */
 public abstract class Utente {
+
+    /** Nome utente. */
     private String username;
+
+    /** Password dell’utente (confrontata in chiaro in questa implementazione). */
     private String password;
+
+    /** Ruolo dell’utente. */
     private RuoloUtente ruolo=null;
 
     /**
-     * Instantiates a new Utente.
+     * Crea un utente con credenziali.
      *
-     * @param username the username
-     * @param password the password
+     * @param username nome utente
+     * @param password password
      */
     public Utente(String username, String password) {
         this.username = username;
@@ -22,54 +29,54 @@ public abstract class Utente {
     }
 
     /**
-     * Gets username.
+     * Restituisce lo username.
      *
-     * @return the username
+     * @return username
      */
     public String getUsername() { return username; }
 
     /**
-     * Gets password.
+     * Restituisce la password.
      *
-     * @return the password
+     * @return password
      */
     public String getPassword() { return password; }
 
     /**
-     * Gets ruolo.
+     * Restituisce il ruolo dell’utente.
      *
-     * @return the ruolo
+     * @return ruolo utente
      */
     public RuoloUtente getRuolo() { return ruolo; }
 
     /**
-     * Sets username.
+     * Imposta lo username.
      *
-     * @param username the username
+     * @param username nuovo username
      */
     public void setUsername(String username) { this.username = username; }
 
     /**
-     * Sets password.
+     * Imposta la password.
      *
-     * @param password the password
+     * @param password nuova password
      */
     public void setPassword(String password) { this.password = password; }
 
     /**
-     * Sets ruolo.
+     * Imposta il ruolo dell’utente.
      *
-     * @param ruolo the ruolo
+     * @param ruolo nuovo ruolo
      */
     public void setRuolo(RuoloUtente ruolo) { this.ruolo = ruolo; }
 
     /**
-     * Verifica password boolean.
+     * Verifica se la password indicata coincide con quella dell’utente.
      *
-     * @param pass the pass
-     * @return the boolean
+     * @param pass password da verificare
+     * @return {@code true} se coincide, altrimenti {@code false}
      */
-// Metodo utile per login
+    // Metodo utile per login
     public boolean verificaPassword(String pass) {
         return password.equals(pass);
     }

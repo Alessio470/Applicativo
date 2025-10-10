@@ -1,33 +1,36 @@
 package model;
 
 /**
- * The type Gate.
+ * Rappresenta un gate d’imbarco.
+ * <p>È identificato da un numero/etichetta.
+ * <p>
+ * Assegna un volo a questo gate mantenendo la consistenza bidirezionale.
+ * Se il volo aveva già un altro gate, viene liberato.
+ * Se questo gate è occupato da un altro volo, lancia IllegalStateException.
  */
 public class Gate {
+    /** Numero/etichetta del gate. */
     private final String numero;
 
     /**
-     * Instantiates a new Gate.
+     * Crea un gate.
      *
-     * @param numero the numero
+     * @param numero identificativo del gate
      */
     public Gate(String numero) {
         this.numero = numero;
     }
 
+    // --- Getter ---
+
     /**
-     * Gets numero.
+     * Restituisce l'identificativo del gate.
      *
-     * @return the numero
+     * @return numero del gate
      */
     public String getNumero() { return numero; }
 
-    /**
-     * Assegna un volo a questo gate mantenendo la consistenza bidirezionale.
-     * Se il volo aveva già un altro gate, viene liberato.
-     * Se questo gate è occupato da un altro volo, lancia IllegalStateException.
-     */
-
+    // --- toString ---
 
     @Override
     public String toString() {

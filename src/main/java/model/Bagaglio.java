@@ -3,21 +3,33 @@ package model;
 import model.enums.StatoBagaglio;
 
 /**
- * The type Bagaglio.
+ * Rappresenta un bagaglio nel sistema.
+ * <p>Include identificativo, proprietario, volo (eventuale) e stato corrente.
+ *
+ * @see Passeggero
+ * @see Volo
+ * @see StatoBagaglio
  */
 public class Bagaglio {
-    private String codice;          // identificativo univoco del bagaglio
-    private Passeggero passeggero;  // passeggero a cui appartiene
-    private Volo volo;              // volo associato
-    private StatoBagaglio stato;    // stato attuale del bagaglio
+    /** Identificativo univoco del bagaglio.*/
+    private String codice;
+
+    /** Passeggero proprietario del bagaglio. */
+    private Passeggero passeggero;
+
+    /** Volo associato al bagaglio. */
+    private Volo volo;
+
+    /** Stato operativo del bagaglio. */
+    private StatoBagaglio stato;
 
     /**
-     * Instantiates a new Bagaglio.
+     * Crea un bagaglio con i dati forniti.
      *
-     * @param codice     the codice
-     * @param passeggero the passeggero
-     * @param volo       the volo
-     * @param stato      the stato
+     * @param codice identificativo univoco del bagaglio
+     * @param passeggero proprietario del bagaglio
+     * @param volo volo associato
+     * @param stato stato operativo del bagaglio
      */
     public Bagaglio(String codice, Passeggero passeggero, Volo volo, StatoBagaglio stato) {
         this.codice = codice;
@@ -26,63 +38,67 @@ public class Bagaglio {
         this.stato = stato;
     }
 
+    // --- Getter ---
+
     /**
-     * Gets codice.
+     * Restituisce il codice del bagaglio.
      *
-     * @return the codice
+     * @return codice del bagaglio
      */
-// --- Getter ---
     public String getCodice() { return codice; }
 
     /**
-     * Gets passeggero.
+     * Restituisce il passeggero proprietario.
      *
-     * @return the passeggero
+     * @return passeggero proprietario
      */
     public Passeggero getPasseggero() { return passeggero; }
 
     /**
-     * Gets volo.
+     * Restituisce il volo associato.
      *
-     * @return the volo
+     * @return volo associato
      */
     public Volo getVolo() { return volo; }
 
     /**
-     * Gets stato.
+     * Restituisce lo stato del bagaglio.
      *
-     * @return the stato
+     * @return stato del bagaglio
      */
     public StatoBagaglio getStato() { return stato; }
 
+    // --- Setter ---
+
     /**
-     * Sets codice.
+     * Imposta il codice del bagaglio.
      *
-     * @param codice the codice
+     * @param codice nuovo codice
      */
-// --- Setter ---
     public void setCodice(String codice) { this.codice = codice; }
 
     /**
-     * Sets passeggero.
+     * Imposta il passeggero proprietario.
      *
-     * @param passeggero the passeggero
+     * @param passeggero nuovo proprietario
      */
     public void setPasseggero(Passeggero passeggero) { this.passeggero = passeggero; }
 
     /**
-     * Sets volo.
+     * Imposta il volo associato.
      *
-     * @param volo the volo
+     * @param volo nuovo volo;
      */
     public void setVolo(Volo volo) { this.volo = volo; }
 
     /**
-     * Sets stato.
+     * Imposta lo stato del bagaglio.
      *
-     * @param stato the stato
+     * @param stato nuovo stato
      */
     public void setStato(StatoBagaglio stato) { this.stato = stato; }
+
+    // --- toString ---
 
     @Override
     public String toString() {

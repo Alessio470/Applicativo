@@ -21,27 +21,32 @@ VALUES (DA GENERARE,     ComboBox,         ?,         ?,             0,        1
  */
 
 /**
- * The type Volo dao.
+ * DAO per l’accesso ai dati dei voli.
+ * <p>Gestisce inserimento, lettura elenco/filtrata e aggiornamento dei voli.</p>
  */
 public class VoloDAO {
 
+    /** Connessione JDBC attiva verso il database. */
     private final Connection conn;
 
     /**
-     * Instantiates a new Volo dao.
+     * Crea un {@code VoloDAO} con la connessione fornita.
      *
-     * @param conn the conn
+     * @param conn connessione JDBC da utilizzare
      */
     public VoloDAO(Connection conn) {
         this.conn = conn;
     }
 
     /**
-     * Registra volo int.
+     * Inserisce un nuovo volo a database.
      *
-     * @param v the v
-     * @return the int
-     * @throws SQLException the sql exception
+     * <p>Scrive i campi del modello {@link Volo} nella tabella {@code volo};
+     * lo stato è serializzato con {@code getStatoToInt() + 1} per allinearlo alla codifica DB.</p>
+     *
+     * @param v istanza di volo da registrare
+     * @return numero di righe inserite (0 o 1)
+     * @throws SQLException in caso di errore durante l’esecuzione
      */
     public int registraVolo(Volo v) throws SQLException {
 
@@ -70,10 +75,13 @@ public class VoloDAO {
 
 
     /**
-     * Gets voli prenotabili.
+     * Restituisce i voli prenotabili (stato = 1).
      *
-     * @return the voli prenotabili
-     * @throws SQLException the sql exception
+     * <p>Seleziona dalla tabella {@code volo} i record con {@code statovolo = 1}
+     * e costruisce le istanze {@link Volo} convertendo data e orario in stringhe formattate.</p>
+     *
+     * @return lista (eventualmente vuota) di voli prenotabili
+     * @throws SQLException in caso di errore durante l’esecuzione
      */
     public List<Volo> getVoliPrenotabili() throws SQLException {
 
@@ -101,10 +109,10 @@ public class VoloDAO {
     }//Fine getVolidaNapoli
 
     /**
-     * Gets voli.
+     * Restituisce tutti i voli presenti a database.
      *
-     * @return the voli
-     * @throws SQLException the sql exception
+     * @return lista (eventualmente vuota) di voli
+     * @throws SQLException in caso di errore durante l’esecuzione
      */
     public List<Volo> getVoli() throws SQLException {
 
@@ -133,10 +141,13 @@ public class VoloDAO {
     }//Fine getVoli
 
     /**
-     * Gets voli da per napoli.
+     * Restituisce i voli con ordinamento numerico sul suffisso del codice.
      *
-     * @return the voli da per napoli
-     * @throws SQLException the sql exception
+     * <p>Esegue {@code ORDER BY substring(codicevolo from 3)::int} per ottenere
+     * l’ordinamento naturale di codici come {@code CV3}, {@code CV10}.</p>
+     *
+     * @return lista (eventualmente vuota) di voli ordinati per codice numerico
+     * @throws SQLException in caso di errore durante l’esecuzione
      */
     public List<Volo> getVoliDaPerNapoli() throws SQLException {
 
@@ -165,14 +176,17 @@ public class VoloDAO {
             resultDB.add(v);
         }
 
-return resultDB;
+        return resultDB;
     }//Parentesi finale getVoliDaPerNapoli
 
     /**
-     * Update volo.
+     * Aggiorna i dati di un volo esistente, individuato dal codice.
      *
-     * @param v the v
-     * @throws SQLException the sql exception
+     * <p>Imposta compagnia, aeroporti, data/orario, stato, gate e ritardo
+     * in base ai valori presenti nell’oggetto {@link Volo} passato.</p>
+     *
+     * @param v istanza con i nuovi valori
+     * @throws SQLException in caso di errore durante l’aggiornamento
      */
     public void updateVolo(Volo v) throws SQLException {
 

@@ -10,9 +10,13 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 
 /**
- * The type Registrazione.
+ * Finestra di registrazione utente.
+ *
+ * <p>Consente l'inserimento di username, password e ruolo, e delega la creazione al {@link controller.Controller}.
+ *
+ * @see controller.Controller
  */
-public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
+public class Registrazione {
     private JPanel PanelRegistrazione;
     private JPanel PanelTitolo;
     private JPanel PanelCampi;
@@ -37,15 +41,19 @@ public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
     private JComboBox ComboRuolo;
 
 
-
-
     private JFrame frame;
 
     /**
-     * Instantiates a new Registrazione.
+     * Costruisce e visualizza la finestra di registrazione.
      *
-     * @param prevframe  the prevframe
-     * @param controller the controller
+     * <p>Inizializza la GUI, precompila la combo del ruolo (default GENERICO) e registra i listener:
+     *
+     * <p>- Indietro: chiude e torna alla finestra precedente.
+     * <br>- Registrati: valida campi a cura del {@link controller.Controller} e invoca
+     *   {@link controller.Controller#onRegistrati(String, String, String, String, JFrame)}.
+     *
+     * @param prevframe finestra chiamante a cui ritornare
+     * @param controller controller applicativo che gestisce la registrazione
      */
     public Registrazione(JFrame prevframe, Controller controller) {
 
@@ -62,10 +70,7 @@ public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
         frame.setLocationRelativeTo(prevframe);
         frame.setVisible(true);
 
-
         // Inizializza DAO
-
-
 
         ButtonIndietro.addActionListener(new ActionListener() {
             @Override
@@ -90,7 +95,4 @@ public class Registrazione { //HO CAMBIATO LA ROBA DA EXTEND JFRAME L HO TOLTA
 
     }//Parentesi costruttore
 
-
-
-
-    }//Parentesi Finale
+}//Parentesi Finale

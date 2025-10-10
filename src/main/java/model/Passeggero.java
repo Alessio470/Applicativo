@@ -4,20 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Passeggero.
+ * Rappresenta un passeggero.
+ * <p>Include nome, cognome e codice fiscale.
  */
 public class Passeggero {
+
+    /** Nome del passeggero. */
     private String nome;
+
+    /** Cognome del passeggero. */
     private String cognome;
+
+    /** Codice fiscale del passeggero. */
     private String codiceFiscale;
 
-
     /**
-     * Instantiates a new Passeggero.
+     * Crea un passeggero con i dati forniti.
      *
-     * @param nome          the nome
-     * @param cognome       the cognome
-     * @param codiceFiscale the codice fiscale
+     * @param nome nome del passeggero
+     * @param cognome cognome del passeggero
+     * @param codiceFiscale codice fiscale del passeggero
      */
     public Passeggero(String nome, String cognome, String codiceFiscale) {
         this.nome = nome;
@@ -26,30 +32,30 @@ public class Passeggero {
 
     }
 
+    // --- Getter ---
+
     /**
-     * Gets nome.
+     * Restituisce il nome del passeggero.
      *
-     * @return the nome
+     * @return nome
      */
-// --- Getter ---
     public String getNome() { return nome; }
 
     /**
-     * Gets cognome.
+     * Restituisce il cognome del passeggero.
      *
-     * @return the cognome
+     * @return cognome
      */
     public String getCognome() { return cognome; }
 
     /**
-     * Gets codice fiscale.
+     * Restituisce il codice fiscale del passeggero.
      *
-     * @return the codice fiscale
+     * @return codice fiscale
      */
     public String getCodiceFiscale() { return codiceFiscale; }
 
-
-    // --- Metodi utili ---
+    // --- toString ---
 
     @Override
     public String toString() {
