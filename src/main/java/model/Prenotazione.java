@@ -1,7 +1,6 @@
 package model;
 
 import model.enums.StatoPrenotazione;
-import model.enums.StatoVolo;
 
 /**
  * Rappresenta una prenotazione di volo.

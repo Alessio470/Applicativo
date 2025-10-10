@@ -1,7 +1,6 @@
 package gui;
 
 import controller.Controller;
-import model.Prenotazione;
 import model.Volo;
 
 import javax.swing.*;

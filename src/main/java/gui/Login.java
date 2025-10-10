@@ -1,13 +1,10 @@
 package gui;
 
 import controller.Controller;
-import model.Utente;
 
-import javax.swing.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 
 /**

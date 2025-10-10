@@ -1,13 +1,10 @@
 package gui;
 
-import DAO.UtenteDAO;
 import controller.Controller;
-import database.ConnessioneDatabase;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 
 /**
  * Finestra di registrazione utente.

@@ -1,12 +1,8 @@
 package DAO;
 
 import database.ConnessioneDatabase;
-import model.Prenotazione;
 import model.Volo;
-import model.enums.StatoVolo;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

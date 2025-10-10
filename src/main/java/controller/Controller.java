@@ -15,7 +15,6 @@ import model.enums.*;
 import DAO.UtenteDAO;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
