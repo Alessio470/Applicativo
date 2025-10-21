@@ -36,12 +36,13 @@ public class GateDAO {
          List<String> resultDB = new ArrayList<>();
 
 
-        ResultSet rs;
         try (Statement st = conn.createStatement()) {
-            rs = st.executeQuery(query);
-        }
-        while ( rs.next() ) {
-            resultDB.add(rs.getString("numerogate"));
+            ResultSet rs = st.executeQuery(query);
+
+
+            while ( rs.next() ) {
+                resultDB.add(rs.getString("numerogate"));
+            }
         }
         return resultDB;
     }//Parentesi getGates

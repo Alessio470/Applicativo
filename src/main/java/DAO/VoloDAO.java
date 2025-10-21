@@ -90,26 +90,27 @@ public class VoloDAO {
 
         String query = "SELECT * FROM volo as v WHERE v.statovolo= 1"; // nome tabella nel db
 
-        ResultSet rs;
         try (Statement st = conn.createStatement()) {
-            rs = st.executeQuery(query);
-        }
-        while (rs.next()) {
-            Volo v = new Volo(
-                    rs.getString(COL_CODICE_VOLO),
-                    rs.getString(COL_COMPAGNIA_AEREA),
-                    rs.getString(COL_AEROPORTO_ORIGINE),
-                    rs.getString(COL_AEROPORTO_DESTINAZIONE),
-                    LocalDate.parse(
-                            rs.getString(COL_DATA_VOLO),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                    ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se vuoi, puoi usare rs.getTime() come suggerito prima
-                    rs.getInt(COL_RITARDO),
-                    rs.getInt(COL_STATO_VOLO),
-                    rs.getString(COL_NUMERO_GATE)
-            );
-            voli.add(v);
+            ResultSet rs = st.executeQuery(query);
+
+
+            while (rs.next()) {
+                Volo v = new Volo(
+                        rs.getString(COL_CODICE_VOLO),
+                        rs.getString(COL_COMPAGNIA_AEREA),
+                        rs.getString(COL_AEROPORTO_ORIGINE),
+                        rs.getString(COL_AEROPORTO_DESTINAZIONE),
+                        LocalDate.parse(
+                                rs.getString(COL_DATA_VOLO),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se vuoi, puoi usare rs.getTime() come suggerito prima
+                        rs.getInt(COL_RITARDO),
+                        rs.getInt(COL_STATO_VOLO),
+                        rs.getString(COL_NUMERO_GATE)
+                );
+                voli.add(v);
+            }
         }
         return voli;
     }//Fine getVolidaNapoli
@@ -126,28 +127,30 @@ public class VoloDAO {
 
         String query = "SELECT * FROM volo"; // nome tabella nel db
 
-        ResultSet rs;
         try (Statement st = conn.createStatement()) {
-            rs = st.executeQuery(query);
+            ResultSet rs = st.executeQuery(query);
+
+
+            while (rs.next()) {
+                Volo v = new Volo(
+                        rs.getString(COL_CODICE_VOLO),
+                        rs.getString(COL_COMPAGNIA_AEREA),
+                        rs.getString(COL_AEROPORTO_ORIGINE),
+                        rs.getString(COL_AEROPORTO_DESTINAZIONE),
+                        LocalDate.parse(
+                                rs.getString(COL_DATA_VOLO),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se preferisci puoi leggere con rs.getTime() per un TIME nativo
+                        rs.getInt(COL_RITARDO),
+                        rs.getInt(COL_STATO_VOLO),
+                        rs.getString(COL_NUMERO_GATE)
+                );
+                voli.add(v);
+                System.out.println(v.toString());
+            }
         }
 
-        while (rs.next()) {
-            Volo v = new Volo(
-                    rs.getString(COL_CODICE_VOLO),
-                    rs.getString(COL_COMPAGNIA_AEREA),
-                    rs.getString(COL_AEROPORTO_ORIGINE),
-                    rs.getString(COL_AEROPORTO_DESTINAZIONE),
-                    LocalDate.parse(
-                            rs.getString(COL_DATA_VOLO),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                    ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se preferisci puoi leggere con rs.getTime() per un TIME nativo
-                    rs.getInt(COL_RITARDO),
-                    rs.getInt(COL_STATO_VOLO),
-                    rs.getString(COL_NUMERO_GATE)
-            );
-            voli.add(v);
-        }
         return voli;
 
     }//Fine getVoli
@@ -169,29 +172,32 @@ public class VoloDAO {
         final String sql =
                 "SELECT * FROM volo ORDER BY substring(codicevolo from 3)::int;";
 
-        ResultSet rs;
+
         try (Statement st = conn.createStatement()) {
-            rs = st.executeQuery(sql);
+            ResultSet rs = st.executeQuery(sql);
+
+
+            while (rs.next()) {
+                Volo v = new Volo(
+                        rs.getString(COL_CODICE_VOLO),
+                        rs.getString(COL_COMPAGNIA_AEREA),
+                        rs.getString(COL_AEROPORTO_ORIGINE),
+                        rs.getString(COL_AEROPORTO_DESTINAZIONE),
+                        LocalDate.parse(
+                                rs.getString(COL_DATA_VOLO),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se preferisci puoi leggere con rs.getTime() per un TIME nativo
+                        rs.getInt(COL_RITARDO),
+                        rs.getInt(COL_STATO_VOLO),
+                        rs.getString(COL_NUMERO_GATE)
+                );
+                resultDB.add(v);
+            }
+
         }
 
 
-        while (rs.next()) {
-            Volo v = new Volo(
-                    rs.getString(COL_CODICE_VOLO),
-                    rs.getString(COL_COMPAGNIA_AEREA),
-                    rs.getString(COL_AEROPORTO_ORIGINE),
-                    rs.getString(COL_AEROPORTO_DESTINAZIONE),
-                    LocalDate.parse(
-                            rs.getString(COL_DATA_VOLO),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                    ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se preferisci puoi leggere con rs.getTime() per un TIME nativo
-                    rs.getInt(COL_RITARDO),
-                    rs.getInt(COL_STATO_VOLO),
-                    rs.getString(COL_NUMERO_GATE)
-            );
-            resultDB.add(v);
-        }
 
         return resultDB;
     }//Parentesi finale getVoliDaPerNapoli

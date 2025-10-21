@@ -79,35 +79,35 @@ public class PrenotazioneDAO {
 
         final String query = "SELECT v.*, p.* FROM prenotazione as p join volo as v on p.codvolo=v.codicevolo WHERE p.username='"+username+"'";
 
-        ResultSet rs;
         try (Statement st = conn.createStatement()) {
-            rs = st.executeQuery(query);
-        }
-        while (rs.next()) {
-            Prenotazione p = new Prenotazione(
-                    rs.getString("numerobiglietto"),
-                    username,
-                    rs.getString("codvolo"),
-                    rs.getString("nomepasseggero"),
-                    rs.getString("cognomepasseggero"),
-                    rs.getString("numeroposto"),
-                    rs.getInt("statoprenotazione"),
-                    rs.getString("codicefiscalepasseggero")
-            );
+            ResultSet rs = st.executeQuery(query);
 
-            p.setVoloassociato(new Volo(
-                    rs.getString("codvolo"),
-                    rs.getString("compagniaaerea"),
-                    rs.getString("aeroportoorigine"),
-                    rs.getString("aeroportodestinazione"),
-                    LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    rs.getString("orarioprevisto").substring(0, 5),
-                    rs.getInt("ritardo"),
-                    rs.getInt("statovolo"),
-                    rs.getString("numeroGate")
-            ));
+            while (rs.next()) {
+                Prenotazione p = new Prenotazione(
+                        rs.getString("numerobiglietto"),
+                        username,
+                        rs.getString("codvolo"),
+                        rs.getString("nomepasseggero"),
+                        rs.getString("cognomepasseggero"),
+                        rs.getString("numeroposto"),
+                        rs.getInt("statoprenotazione"),
+                        rs.getString("codicefiscalepasseggero")
+                );
 
-            prenotazioni.add(p);
+                p.setVoloassociato(new Volo(
+                        rs.getString("codvolo"),
+                        rs.getString("compagniaaerea"),
+                        rs.getString("aeroportoorigine"),
+                        rs.getString("aeroportodestinazione"),
+                        LocalDate.parse(rs.getString("datavolo"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        rs.getString("orarioprevisto").substring(0, 5),
+                        rs.getInt("ritardo"),
+                        rs.getInt("statovolo"),
+                        rs.getString("numeroGate")
+                ));
+
+                prenotazioni.add(p);
+            }
         }
 
         return prenotazioni;
