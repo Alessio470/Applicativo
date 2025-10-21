@@ -22,11 +22,6 @@ public class UtenteAmministratore extends Utente {
         this.setRuolo(RuoloUtente.AMMINISTRATORE);
     }
 
-    /**
-     * Punto d’estensione per la modifica dei gate.
-     * <p>Da implementare: logica di aggiornamento dei gate lato amministratore.</p>
-     */
-    public void modificaGate() {  }//TODO
 
     @Override
     public String toString() {

@@ -23,7 +23,7 @@ public abstract class Utente {
      * @param username nome utente
      * @param password password
      */
-    public Utente(String username, String password) {
+    protected Utente(String username, String password) {
         this.username = username;
         this.password = password;
     }

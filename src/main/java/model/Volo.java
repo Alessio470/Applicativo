@@ -334,11 +334,11 @@ public class Volo {
 
     /**
      * Imposta il numero/etichetta del gate.
-     * <p>Nota: c’è un TODO per delegare l’aggiornamento al database.</p>
+     *
      *
      * @param nuovoGate valore da impostare
      */
-    //TODO da modificare che invece di farlo localmente lo fa al db (forse)
+
     public void setNumeroGate(String nuovoGate) {
         this.gate = nuovoGate;
     }
