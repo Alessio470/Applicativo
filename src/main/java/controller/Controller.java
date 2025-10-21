@@ -301,7 +301,7 @@ public class Controller {
      * Effettua una prenotazione confermata per l’utente loggato.
      *
      * <p>Genera l’oggetto {@link Prenotazione} con stato confermato e invoca
-     * {@link PrenotazioneDAO#InserisciPrenotazione(Prenotazione)}.
+     * {@link PrenotazioneDAO#inserisciPrenotazione(Prenotazione)}.
      * Eventuali errori vengono loggati/mostrati.</p>
      *
      * @param codiceVolo codice del volo
@@ -336,7 +336,7 @@ public class Controller {
         Prenotazione prenotazione=new Prenotazione(null,this.getUsernameUtente(),codiceVolo,nomePasseggero,cognomePasseggero,posto,stato,codicefiscalepasseggero);
 
         try{
-            PrenotazioneDAO.InserisciPrenotazione(prenotazione);
+            PrenotazioneDAO.inserisciPrenotazione(prenotazione);
         }catch (SQLException e){
             e.printStackTrace();
         }

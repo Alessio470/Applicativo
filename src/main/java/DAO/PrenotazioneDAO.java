@@ -37,7 +37,7 @@ public class PrenotazioneDAO {
      * @return intero restituito dalla query (ad es. chiave generata, se la query prevede RETURNING)
      * @throws SQLException in caso di errore SQL o se il {@code RETURNING} non produce risultati
      */
-    public int InserisciPrenotazione(Prenotazione prenotazione) throws SQLException {
+    public int inserisciPrenotazione(Prenotazione prenotazione) throws SQLException {
 
     final String sql = "INSERT INTO prenotazione( numeroposto, statoprenotazione, username, codvolo, nomepasseggero, cognomepasseggero, codicefiscalepasseggero)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -79,8 +79,10 @@ public class PrenotazioneDAO {
 
         final String query = "SELECT v.*, p.* FROM prenotazione as p join volo as v on p.codvolo=v.codicevolo WHERE p.username='"+username+"'";
 
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(query);
+        ResultSet rs;
+        try (Statement st = conn.createStatement()) {
+            rs = st.executeQuery(query);
+        }
         while (rs.next()) {
             Prenotazione p = new Prenotazione(
                     rs.getString("numerobiglietto"),

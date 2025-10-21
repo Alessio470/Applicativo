@@ -33,11 +33,13 @@ public class GateDAO {
     public List<String> getGates() throws SQLException {
 
          final String query= "SELECT * FROM gate AS g ORDER BY substring(g.numerogate from 2)::int";
-         List<String> resultDB = new ArrayList<String>();
+         List<String> resultDB = new ArrayList<>();
 
 
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(query);
+        ResultSet rs;
+        try (Statement st = conn.createStatement()) {
+            rs = st.executeQuery(query);
+        }
         while ( rs.next() ) {
             resultDB.add(rs.getString("numerogate"));
         }
