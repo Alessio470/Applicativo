@@ -52,12 +52,10 @@ public class PrenotazioneDAO {
             ps.setString(6,prenotazione.getCognomePasseggero());
             ps.setString(7,prenotazione.getCodicefiscalepasseggero());
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-                throw new SQLException("Insert volo fallita (RETURNING vuoto).");
-            }
+            // Ritorna 1 se l'INSERT è andato a buon fine
+            int updated = ps.executeUpdate();
+            if (updated != 1) throw new SQLException("Insert prenotazione: nessuna riga inserita.");
+            return updated;
         }
     }//Parentesi InserisciPrenotazione
 
