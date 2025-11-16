@@ -33,6 +33,8 @@ public class AreaPersonale {
     private JPanel PanelButtonIndietro;
     private JPanel PanelButtonViewVolo;
     private JButton buttonViewVolo;
+    private JPanel PanelButtonCancella;
+    private JButton buttonCancellaPrenotazione;
 
     private JFrame frame;
 
@@ -187,6 +189,40 @@ public class AreaPersonale {
                 }
             }
         });//Fine parentesi Mouselistener TablePrenotazioni per ViewVolo
+
+
+        buttonCancellaPrenotazione.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // RIGA SELEZIONATA NELLA VISTA
+                int viewRow = TablePrenotazioni.getSelectedRow();
+
+                if (viewRow < 0) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Seleziona prima una prenotazione dalla tabella.");
+                    return;
+                }
+
+                // Converte l'indice della vista in indice del modello
+                int modelRow = TablePrenotazioni.convertRowIndexToModel(viewRow);
+
+                // Recupera il modello della tabella
+                DefaultTableModel modello = (DefaultTableModel) TablePrenotazioni.getModel();
+
+                // Colonna 0 = "numerobiglietto"
+                String numeroBiglietto = (String) modello.getValueAt(modelRow, 0);
+
+                boolean ok = controller.cancellaPrenotazioneUtente(numeroBiglietto);
+
+                if (ok) {
+                    modello.removeRow(modelRow);
+                    JOptionPane.showMessageDialog(frame,
+                            "Prenotazione cancellata con successo.");
+                }
+            }
+        });
+
 
 
     }//Fine parentesi AereaPersonale

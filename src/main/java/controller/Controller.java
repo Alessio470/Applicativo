@@ -342,7 +342,53 @@ public class Controller {
         }
 
 
+    }
+
+    /**
+     * Cancella una prenotazione dell'utente attualmente loggato,
+     * dato il numero di biglietto.
+     *
+     * <p>Delega a {@link PrenotazioneDAO#cancellaPrenotazione(String, String)}
+     * passando lo username dell'utente corrente.</p>
+     *
+     * @param numeroBiglietto numero del biglietto da cancellare
+     * @return true se è stata cancellata una riga, false altrimenti
+     */
+    public boolean cancellaPrenotazioneUtente(String numeroBiglietto) {
+
+        PrenotazioneDAO prenotazioneDAO = null;
+
+        // Connessione al DB
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            prenotazioneDAO = new PrenotazioneDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Errore connessione DB:\n" + ex.getMessage());
+            return false;
         }
+
+        try {
+            int rows = prenotazioneDAO.cancellaPrenotazione(
+                    numeroBiglietto,
+                    this.getUsernameUtente()
+            );
+
+            if (rows == 0) {
+                JOptionPane.showMessageDialog(null,
+                        "Nessuna prenotazione trovata (forse già cancellata?).");
+                return false;
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Errore durante la cancellazione della prenotazione:\n" + e.getMessage());
+            return false;
+        }
+    }
+
 
     /**
      * Restituisce lo username dell’utente attualmente autenticato.

@@ -31,7 +31,7 @@ public class PrenotazioneDAO {
      * Inserisce una nuova prenotazione.
      *
      * <p>Scrive i campi principali della prenotazione nella tabella {@code prenotazione}.
-     * Lo stato viene serializzato tramite {@code ordinal()} dell’enum.</p>
+     * Lo stato viene serializzato tramite ordinal() dell’enum.</p>
      *
      * @param prenotazione oggetto da inserire
      * @return intero restituito dalla query (ad es. chiave generata, se la query prevede RETURNING)
@@ -63,9 +63,7 @@ public class PrenotazioneDAO {
     /**
      * Restituisce le prenotazioni di un utente, includendo i dettagli del volo associato.
      *
-     * <p>Esegue una join tra {@code prenotazione} e {@code volo} filtrando per username.
-     * <strong>Nota:</strong> la query costruita con concatenazione di stringhe è suscettibile a SQL injection
-     * se {@code username} non è sanificato; si raccomanda l’uso di {@link PreparedStatement} (indicazione generale).</p>
+     * <p>Esegue una join tra prenotazione e volo filtrando per username.
      *
      * @param username username proprietario delle prenotazioni
      * @return lista (eventualmente vuota) di prenotazioni con volo associato
@@ -111,6 +109,31 @@ public class PrenotazioneDAO {
         return prenotazioni;
 
     }//Fine getPrenotazioniUtente
+
+    /**
+     * Cancella una prenotazione dato il numero di biglietto e lo username.
+     *
+     * <p>Viene eseguita una DELETE sulla tabella prenotazione.
+     * Il vincolo ON DELETE CASCADE su bagaglio garantirà la cancellazione
+     * automatica di eventuali bagagli collegati.</p>
+     *
+     * @param numeroBiglietto numero del biglietto (PK della tabella prenotazione)
+     * @param username username proprietario della prenotazione
+     * @return numero di righe cancellate (0 se nessuna trovata)
+     * @throws SQLException in caso di errore SQL
+     */
+    public int cancellaPrenotazione(String numeroBiglietto, String username) throws SQLException {
+
+        final String sql = "DELETE FROM prenotazione WHERE numerobiglietto = ? AND username = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, numeroBiglietto);
+            ps.setString(2, username);
+
+            return ps.executeUpdate(); // dovrebbe essere 1 se tutto ok
+        }
+    }
+
 
 
 }
