@@ -25,16 +25,16 @@ public class AreaPersonale {
     private JPanel PanelRicercaRapida;
     private JPanel PanelTabella;
     private JPanel PanelButton;
-    private JTable TablePrenotazioni;
-    private JButton ButtonIndietro;
-    private JLabel LabelTitolo;
-    private JLabel LabelRicercaRapida;
-    private JComboBox ComboRicerca;
     private JPanel PanelButtonIndietro;
     private JPanel PanelButtonViewVolo;
-    private JButton buttonViewVolo;
     private JPanel PanelButtonCancella;
+    private JTable TablePrenotazioni;
+    private JButton ButtonIndietro;
+    private JButton buttonViewVolo;
     private JButton buttonCancellaPrenotazione;
+    private JComboBox ComboRicerca;
+    private JLabel LabelTitolo;
+    private JLabel LabelRicercaRapida;
 
     private JFrame frame;
 

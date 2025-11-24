@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class InserisciVolo {
 
-    // ----- Pannelli/label dal .form -----
     private JPanel PanelInserisciVolo;
     private JPanel PanelCampiInserimento;
     private JPanel PanelDataVolo;
@@ -34,10 +33,18 @@ public class InserisciVolo {
     private JPanel PanelCompagnia;
     private JPanel PanelStato;
     private JPanel PanelGate;
-
+    private JTextField FieldCompagnia;
+    private JTextField FieldAeroportoOrigine;
+    private JTextField FieldAeroportoDestinazione;
+    private JTextField FieldRitardo;
+    private JFormattedTextField formattedTextFieldDataVolo;
+    private JFormattedTextField formattedTextFieldOrario;
+    private JButton ButtonConferma;
+    private JButton ButtonIndietro;
+    private JComboBox<String> ComboStatoVolo;
+    private JComboBox<String> ComboGate;
     private JLabel LabelTitolo;
     private JLabel LabelDataVolo;
-    private JLabel LabelOrarioPrevisto;
     private JLabel LabelRitardo;
     private JLabel LabelOrario;
     private JLabel LabelAeroportoOrigine;
@@ -46,22 +53,6 @@ public class InserisciVolo {
     private JLabel LabelStato;
     private JLabel LabelGate;
 
-    // ----- Campi di input (come da tua form) -----
-    private JTextField FieldCompagnia;
-    private JTextField FieldAeroportoOrigine;
-    private JTextField FieldAeroportoDestinazione;
-
-    private JFormattedTextField formattedTextFieldDataVolo;
-    private JFormattedTextField formattedTextFieldOrario;
-
-    private JTextField FieldRitardo;
-    private JComboBox<String> ComboStatoVolo;
-    private JComboBox<String> ComboGate;
-
-    private JButton ButtonConferma;
-    private JButton ButtonIndietro;
-
-    // ----- Finestra -----
     private final JFrame frame;
     private final HomepageAmministratore home;
 

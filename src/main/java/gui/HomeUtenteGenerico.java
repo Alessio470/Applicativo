@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class HomeUtenteGenerico {
     private JPanel contentPane;
-
     private JPanel PanelHomeGenerico;
     private JPanel PanelTitolo;
     private JPanel PanelButton;
@@ -31,16 +30,17 @@ public class HomeUtenteGenerico {
     private JPanel PanelButtonLogout;
     private JPanel PanelButtonAreaPersonale;
     private JPanel PanelButtonEffettuaPrenotazione;
-    private JButton ButtonAereaPersonale;
-    private JButton ButtonEffettuaPrenotazione;
     private JTable TableVoli;
+    private JButton ButtonAreaPersonale;
+    private JButton ButtonEffettuaPrenotazione;
     private JButton ButtonLogout;
     private JLabel LabelTitolo;
     private JLabel LabelCiao;
-    private Controller controller;
+
 
 
     private static JFrame frame;
+    private Controller controller;
 
     /**
      * Costruisce e visualizza la home utente generico.
@@ -130,7 +130,7 @@ public class HomeUtenteGenerico {
             }
         });
 
-        ButtonAereaPersonale.addActionListener(new ActionListener() {
+        ButtonAreaPersonale.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
                 AreaPersonale area = new AreaPersonale(frame,controller); // "this" è HomeUtenteGenerico

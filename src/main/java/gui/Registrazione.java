@@ -18,25 +18,23 @@ public class Registrazione {
     private JPanel PanelTitolo;
     private JPanel PanelCampi;
     private JPanel PanelButtons;
-    private JLabel LabelTitolo;
     private JPanel PanelUsername;
     private JPanel PanelPassword;
     private JPanel PanelConfermaPassword;
+    private JPanel PanelButtonRegistrati;
+    private JPanel PanelRuolo;
+    private JPanel PanelButtonIndietro;
     private JTextField FieldUsername;
+    private JPasswordField FieldPassword1;   // password
+    private JPasswordField FieldPassword2;   // conferma
+    private JButton ButtonRegistrati;
+    private JButton ButtonIndietro;
+    private JComboBox ComboRuolo;
+    private JLabel LabelTitolo;
     private JLabel LableUsername;
     private JLabel LabelPassword;
     private JLabel LabelConfermaPassword;
-    private JPanel PanelButtonRegistrati;
-    private JPanel PanelButtonIndietro;
-    private JButton ButtonRegistrati;
-    private JButton ButtonIndietro;
-    private JPasswordField FieldPassword1;   // password
-    private JPasswordField FieldPassword2;   // conferma
-    private JPanel PanelRuolo;
     private JLabel LabelRuolo;
-
-    private JComboBox ComboRuolo;
-
 
     private JFrame frame;
 

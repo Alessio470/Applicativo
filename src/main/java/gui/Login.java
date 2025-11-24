@@ -19,27 +19,21 @@ public class Login {
     private JPanel PanelTitolo;
     private JPanel PanelCampi;
     private JPanel PanelButtons;
-    private JLabel LabelTitolo;
     private JPanel PanelUsername;
-    private JLabel LabelUsername;
-    private JTextField FieldUsername;
-    private JPanel PanelPassword;
-    private JLabel LabelPassword;
-    private JPasswordField FieldPassword;
-    private JPanel PanelButtonLogin;
-
     private JPanel PanelOppure;
-    private JLabel LabelOppure;
     private JPanel PanelButtonRegistrati;
-
+    private JPanel PanelButtonLogin;
+    private JPanel PanelPassword;
+    private JTextField FieldUsername;
+    private JPasswordField FieldPassword;
     private JButton ButtonRegistrati;
     private JButton ButtonLogin;
+    private JLabel LabelOppure;
+    private JLabel LabelUsername;
+    private JLabel LabelPassword;
+    private JLabel LabelTitolo;
 
-    /**
-     * Frame principale della schermata di login.
-     */
     public static JFrame frame;
-
     private Controller controller;
 
 

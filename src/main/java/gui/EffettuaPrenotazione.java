@@ -18,35 +18,31 @@ import java.util.List;
  */
 public class EffettuaPrenotazione {
     private JPanel PanelEffettuaPrenotazione;
-    private JTable tableVoli;
-    private JTextField FieldNome; // Nome
-    private JTextField FieldCognome;
-    private JTextField FieldCodiceFiscale;
-    private JTextField textField3; // Codice fiscale
-    private JButton buttonConfermaPrenotazione;
-    private JButton buttonIndietro;
-    private JLabel LableNome;
-    private JLabel LabelCognome;
+    private JPanel PanelButtonConfermaPrenotazione;
+    private JPanel PanelButtonIndietro;
     private JPanel PanelCodiceFiscale; // Cognome
     private JPanel PanelNumeroPosto;
     private JPanel PanelButtons;
-    private JLabel LableCodiceFiscale;
     private JPanel PanelTitolo;
     private JPanel PanelTabellaVoli;
     private JPanel PanelNome;
     private JPanel PanelCognome;
-    private JLabel LableNumeroPosto;
-    private JTextField FieldNumeroPosto;
     private JPanel PanelBagaglio;
-    private JLabel LabelBagaglio;
-    private JRadioButton RadioButtonNo;
-    private JRadioButton RadioButtonSi;
-    private JLabel LabelTitolo;
     private JTable TableVoli;
+    private JTextField FieldNome; // Nome
+    private JTextField FieldCognome;
+    private JTextField FieldCodiceFiscale;
+    private JTextField FieldNumeroPosto;
     private JButton ButtonConfermaPrenotazione;
     private JButton ButtonIndietro;
-    private JPanel PanelButtonConfermaPrenotazione;
-    private JPanel PanelButtonIndietro;
+    private JRadioButton RadioButtonNo;
+    private JRadioButton RadioButtonSi;
+    private JLabel LableNome;
+    private JLabel LabelCognome;
+    private JLabel LableCodiceFiscale;
+    private JLabel LableNumeroPosto;
+    private JLabel LabelBagaglio;
+    private JLabel LabelTitolo;
 
     private static JFrame frame;
 

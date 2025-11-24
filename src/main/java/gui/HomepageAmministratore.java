@@ -24,26 +24,6 @@ import java.util.List;
  * @see model.enums.StatoVolo
  */
 public class HomepageAmministratore  {
-    private JLabel LabelTitolo;
-    private JButton ButtonInserisciVolo;
-    private JButton ButtonLogout;
-    private JTable TabellaVoli;
-    private JPanel PanelHomepageAmministratore;
-    private JPanel PanelTabellaVoli;
-    private JPanel PanelButtonInserisciVolo;
-    private JButton ButtonConfermaModifica;
-    private JPanel PanelTitolo;
-    private JPanel PanelCampiModifica;
-    private JLabel LableCompagniaAerea;
-    private JTextField FieldCompagniaAerea;
-    private JLabel LableAeroportoOrigine;
-    private JTextField FieldAeroportoOrigine;
-    private JLabel LabelAeroporotoDestinazione;
-    private JTextField FieldAeroportoDestinazione;
-    private JLabel LabelDataVolo;
-    private JLabel LabelOrario;
-    private JLabel LabelStatoVolo;
-    private JComboBox<String> ComboStatoVolo;
     private JPanel PanelButtons;
     private JPanel PanelButtonConfermaModifica;
     private JPanel PanelButtonLogout;
@@ -53,15 +33,35 @@ public class HomepageAmministratore  {
     private JPanel PanelDataVolo;
     private JPanel PanelOrarioPrevisto;
     private JPanel PanelStatoVolo;
+    private JPanel PanelTabellaVoli;
+    private JPanel PanelButtonInserisciVolo;
+    private JPanel PanelTitolo;
+    private JPanel PanelGate;
+    private JPanel PanelRitardo;
+    private JPanel PanelHomepageAmministratore;
+    private JPanel PanelCampiModifica;
+    private JTable TabellaVoli;
+    private JTextField FieldRitardo;
+    private JTextField FieldCompagniaAerea;
+    private JTextField FieldAeroportoOrigine;
+    private JTextField FieldAeroportoDestinazione;
     private JFormattedTextField formattedTextFieldData;   // dd/MM/yyyy
     private JFormattedTextField formattedTextFieldOrario; // HH:mm
-    private JTextField FieldRitardo;
-    private JLabel LabelRitardo;
-    private JComboBox comboGate;
-    private JLabel LabelGate;
-    private JPanel PanelGate;
+    private JButton ButtonInserisciVolo;
+    private JButton ButtonLogout;
+    private JButton ButtonConfermaModifica;
     private JButton ButtonAggiorna;
-    private JPanel PanelRitardo;
+    private JComboBox comboGate;
+    private JComboBox<String> ComboStatoVolo;
+    private JLabel LableAeroportoOrigine;
+    private JLabel LabelAeroporotoDestinazione;
+    private JLabel LabelTitolo;
+    private JLabel LabelDataVolo;
+    private JLabel LabelOrario;
+    private JLabel LabelStatoVolo;
+    private JLabel LableCompagniaAerea;
+    private JLabel LabelRitardo;
+    private JLabel LabelGate;
 
     private static JFrame frame;
     private final Controller controller;

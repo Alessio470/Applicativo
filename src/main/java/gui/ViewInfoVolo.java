@@ -18,25 +18,25 @@ public class ViewInfoVolo {
     private JPanel PanelViewInfoVolo;
     private JPanel PanelCampiInserimento;
     private JPanel PanelDataVolo;
-    private JLabel LabelDataVolo;
     private JPanel PanelOrarioPrevisto;
-    private JLabel LabelOrario;
     private JPanel PanelRitardo;
-    private JLabel LabelRitardo;
     private JPanel PanelAeroportoOrigine;
-    private JLabel LabelAeroportoOrigine;
     private JPanel PanelAeroportoDestinazione;
-    private JLabel LabelAeroportoDestinazione;
     private JPanel PanelCompagnia;
-    private JLabel LabelCompagnia;
     private JPanel PanelStato;
-    private JLabel LabelStato;
     private JPanel PanelGate;
-    private JLabel LabelGate;
     private JPanel PanelButtons;
     private JPanel PanelButtonIndietro;
-    private JButton ButtonIndietro;
     private JPanel PanelTitolo;
+    private JButton ButtonIndietro;
+    private JLabel LabelDataVolo;
+    private JLabel LabelOrario;
+    private JLabel LabelRitardo;
+    private JLabel LabelAeroportoOrigine;
+    private JLabel LabelAeroportoDestinazione;
+    private JLabel LabelCompagnia;
+    private JLabel LabelStato;
+    private JLabel LabelGate;
     private JLabel LabelTitolo;
 
     //Tutte le label Get Sono qui
