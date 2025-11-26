@@ -1,5 +1,6 @@
-package DAO;
+package dao.implementazioniPostgresDAO;
 
+import dao.VoloDAO;
 import database.ConnessioneDatabase;
 import model.Volo;
 
@@ -10,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO per l’accesso ai dati dei voli.
- * <p>Gestisce inserimento, lettura elenco/filtrata e aggiornamento dei voli.</p>
+ * Implementazione PostgreSQL di VoloDAO.
+ * <p>È sostanzialmente il vecchio VoloDAO, solo rinominato e fatto
+ * implementare l’interfaccia.</p>
  */
-public class VoloDAO {
+public class VoloImplementazionePostgresDAO implements VoloDAO {
 
     //Dichiarazioni delle colonne del db
     private static final String COL_CODICE_VOLO = "codicevolo";
@@ -26,36 +28,24 @@ public class VoloDAO {
     private static final String COL_STATO_VOLO = "statovolo";
     private static final String COL_NUMERO_GATE = "numeroGate";
 
-
     /** Connessione JDBC attiva verso il database. */
     private final Connection conn;
 
     /**
-     * Crea un {@code VoloDAO} con la connessione fornita.
+     * Crea un {@code VoloImplementazionePostgresDAO} con la connessione fornita.
      *
      * @param conn connessione JDBC da utilizzare
      */
-    public VoloDAO(Connection conn) {
+    public VoloImplementazionePostgresDAO(Connection conn) {
         this.conn = conn;
     }
 
-    /**
-     * Inserisce un nuovo volo a database.
-     *
-     * <p>Scrive i campi del modello {@link Volo} nella tabella {@code volo};
-     * lo stato è serializzato con {@code getStatoToInt() + 1} per allinearlo alla codifica DB.</p>
-     *
-     * @param v istanza di volo da registrare
-     * @return numero di righe inserite (0 o 1)
-     * @throws SQLException in caso di errore durante l’esecuzione
-     */
+    @Override
     public int registraVolo(Volo v) throws SQLException {
 
-        // Query inserimento Volo
         final String sql =
                 "INSERT INTO volo(codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, \"numeroGate\") " +
                         "VALUES (?,?,?,?,?,?,?,?,?)";
-
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -69,30 +59,19 @@ public class VoloDAO {
             ps.setString(8, v.getAeroportoDestinazione()); //aeroportodestinazione
             ps.setString(9, v.getGate()); //'numeroGate'
 
-
             return ps.executeUpdate();
         }
-    }//Fine registraVolo
+    }
 
-
-    /**
-     * Restituisce i voli prenotabili (stato = 1).
-     *
-     * <p>Seleziona dalla tabella {@code volo} i record con {@code statovolo = 1}
-     * e costruisce le istanze {@link Volo} convertendo data e orario in stringhe formattate.</p>
-     *
-     * @return lista (eventualmente vuota) di voli prenotabili
-     * @throws SQLException in caso di errore durante l’esecuzione
-     */
+    @Override
     public List<Volo> getVoliPrenotabili() throws SQLException {
 
         List<Volo> voli = new ArrayList<>();
 
-        String query = "SELECT * FROM volo as v WHERE v.statovolo= 1"; // nome tabella nel db
+        String query = "SELECT * FROM volo as v WHERE v.statovolo= 1";
 
-        try (Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery(query);
-
+        try (Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
                 Volo v = new Volo(
@@ -104,7 +83,7 @@ public class VoloDAO {
                                 rs.getString(COL_DATA_VOLO),
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd")
                         ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se vuoi, puoi usare rs.getTime() come suggerito prima
+                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5),
                         rs.getInt(COL_RITARDO),
                         rs.getInt(COL_STATO_VOLO),
                         rs.getString(COL_NUMERO_GATE)
@@ -113,23 +92,17 @@ public class VoloDAO {
             }
         }
         return voli;
-    }//Fine getVolidaNapoli
+    }
 
-    /**
-     * Restituisce tutti i voli presenti a database.
-     *
-     * @return lista (eventualmente vuota) di voli
-     * @throws SQLException in caso di errore durante l’esecuzione
-     */
+    @Override
     public List<Volo> getVoli() throws SQLException {
 
         List<Volo> voli = new ArrayList<>();
 
-        String query = "SELECT * FROM volo"; // nome tabella nel db
+        String query = "SELECT * FROM volo";
 
-        try (Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery(query);
-
+        try (Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
                 Volo v = new Volo(
@@ -141,7 +114,7 @@ public class VoloDAO {
                                 rs.getString(COL_DATA_VOLO),
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd")
                         ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se preferisci puoi leggere con rs.getTime() per un TIME nativo
+                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5),
                         rs.getInt(COL_RITARDO),
                         rs.getInt(COL_STATO_VOLO),
                         rs.getString(COL_NUMERO_GATE)
@@ -152,30 +125,18 @@ public class VoloDAO {
         }
 
         return voli;
+    }
 
-    }//Fine getVoli
-
-    /**
-     * Restituisce i voli con ordinamento numerico sul suffisso del codice.
-     *
-     * <p>Esegue {@code ORDER BY substring(codicevolo from 3)::int} per ottenere
-     * l’ordinamento naturale di codici come {@code CV3}, {@code CV10}.</p>
-     *
-     * @return lista (eventualmente vuota) di voli ordinati per codice numerico
-     * @throws SQLException in caso di errore durante l’esecuzione
-     */
+    @Override
     public List<Volo> getVoliDaPerNapoli() throws SQLException {
-
 
         List<Volo> resultDB = new ArrayList<>();
 
         final String sql =
                 "SELECT * FROM volo ORDER BY substring(codicevolo from 3)::int;";
 
-
-        try (Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery(sql);
-
+        try (Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
                 Volo v = new Volo(
@@ -187,30 +148,19 @@ public class VoloDAO {
                                 rs.getString(COL_DATA_VOLO),
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd")
                         ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5), // se preferisci puoi leggere con rs.getTime() per un TIME nativo
+                        rs.getString(COL_ORARIO_PREVISTO).substring(0, 5),
                         rs.getInt(COL_RITARDO),
                         rs.getInt(COL_STATO_VOLO),
                         rs.getString(COL_NUMERO_GATE)
                 );
                 resultDB.add(v);
             }
-
         }
 
-
-
         return resultDB;
-    }//Parentesi finale getVoliDaPerNapoli
+    }
 
-    /**
-     * Aggiorna i dati di un volo esistente, individuato dal codice.
-     *
-     * <p>Imposta compagnia, aeroporti, data/orario, stato, gate e ritardo
-     * in base ai valori presenti nell’oggetto {@link Volo} passato.</p>
-     *
-     * @param v istanza con i nuovi valori
-     * @throws SQLException in caso di errore durante l’aggiornamento
-     */
+    @Override
     public void updateVolo(Volo v) throws SQLException {
 
         try {
@@ -220,6 +170,7 @@ public class VoloDAO {
                             "    datavolo=?, orarioprevisto=?, statovolo=?, \"numeroGate\"=?, ritardo=? " +
                             "WHERE codicevolo=?";
 
+            // volendo qui potremmo usare direttamente la connessione 'conn'
             try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
                  PreparedStatement ps = cn.prepareStatement(sql)) {
 
@@ -234,11 +185,9 @@ public class VoloDAO {
                 ps.setString(9, v.getCodiceV());
 
                 ps.executeUpdate();
-
             }
         } catch (SQLException ex) {
-            throw new SQLException("Errore query di update"+ ex);
+            throw new SQLException("Errore query di update" + ex);
         }
-    }//parentesi updateVolo
-
-}//Parentesi finale
+    }
+}

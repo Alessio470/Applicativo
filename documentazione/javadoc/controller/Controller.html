@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Controller</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Controller dell’applicazione.
- <p>Coordina GUI, DAO e modello dominio per login/registrazione, gestione voli e prenotazioni.</p></div>
+ <p>Coordina GUI, dao e modello dominio per login/registrazione, gestione voli e prenotazioni.</p></div>
 </div>
 </section>
 <section class="summary">
@@ -440,7 +440,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Volo.html" title="class in model">Volo</a>&gt;</span>&nbsp;<span class="element-name">getVoliDaPerNapoli</span>()</div>
 <div class="block">Restituisce i voli (da/per Napoli) ordinati per suffisso numerico del codice.
 
- <p>Delega a <a href="../DAO/VoloDAO.html#getVoliDaPerNapoli()"><code>VoloDAO.getVoliDaPerNapoli()</code></a> e converte data/orario a stringa lato DAO.</p></div>
+ <p>Delega a <a href="../DAO/VoloDAO.html#getVoliDaPerNapoli()"><code>VoloDAO.getVoliDaPerNapoli()</code></a> e converte data/orario a stringa lato dao.</p></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>lista (eventualmente vuota) di voli</dd>
