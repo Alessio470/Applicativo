@@ -235,6 +235,27 @@ public class AreaPersonale {
         });
 
 
-
+        buttonShow.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: DA FARE
+            }
+        });
+        ButtonRicerca.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: DA FARE
+            }
+        });
     }//Fine parentesi AereaPersonale
 }//Fine Parentesi Finale
