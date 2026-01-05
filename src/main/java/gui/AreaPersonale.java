@@ -32,9 +32,20 @@ public class AreaPersonale {
     private JButton ButtonIndietro;
     private JButton buttonViewVolo;
     private JButton buttonCancellaPrenotazione;
-    private JComboBox ComboRicerca;
     private JLabel LabelTitolo;
     private JLabel LabelRicercaRapida;
+    private JPanel PanelLabelRicerca;
+    private JPanel PanelFieldsRicerca;
+    private JPanel PanelRicerca;
+    private JTextField textFieldnumerobiglietto;
+    private JTextField textFieldnumeroposto;
+    private JTextField textFieldnomepasseggero;
+    private JButton buttonShow;
+    private JComboBox comboBoxStatoPrenotazione;
+    private JTextField textFieldcognomepasseggero;
+    private JTextField textFieldcodicefiscalepasseggero;
+    private JTextField textFieldcodicevolo;
+    private JButton ButtonRicerca;
 
     private JFrame frame;
 
@@ -77,7 +88,7 @@ public class AreaPersonale {
 //Mettiamo i dati nell array dei dati che andranno nella tabella
         List<Prenotazione> prenotazioni = controller.getPrenotazioniUtente();
         String[] colonnep = {"numerobiglietto", "numeroposto","statoprenotazione","codvolo","nomepasseggero","cognomepasseggero","codicefiscalepasseggero","Oggetto"};
-
+        //"codvolo"
         //String[] colonnev = {"codicevolo","compagniaaerea","datavolo","orarioprevisto","ritardo","statovolo","aeroportoorigine","aeroportodestinazione","numeroGate"};
 
 
