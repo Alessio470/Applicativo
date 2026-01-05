@@ -139,10 +139,6 @@ public class HomeUtenteGenerico {
         });
 
 
-        ButtonEffettuaPrenotazione.addActionListener(e -> {
-
-        });
-
         ButtonEffettuaPrenotazione.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e){
@@ -158,7 +154,7 @@ public class HomeUtenteGenerico {
                 super.mouseClicked(e);
 
                 int rowIndex = TableVoli.rowAtPoint(e.getPoint());
-                System.out.println("Riga cliccata: "+rowIndex);
+                //System.out.println("Riga cliccata: "+rowIndex);
             }
         });
     }

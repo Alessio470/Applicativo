@@ -120,7 +120,7 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
                         rs.getString(COL_NUMERO_GATE)
                 );
                 voli.add(v);
-                System.out.println(v.toString());
+                //System.out.println(v.toString());
             }
         }
 
