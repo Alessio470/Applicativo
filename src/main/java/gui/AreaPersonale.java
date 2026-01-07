@@ -136,6 +136,14 @@ public class AreaPersonale {
         TablePrenotazioni.setAutoCreateRowSorter(true);
 
 
+//Il panel della ricerca all'inizio è disabilitato e metto il bottone col nome giusto
+        String VISIBILESI="Show";
+        String VISIBILENO="Hide";
+
+        PanelRicerca.setVisible(false);
+        buttonShow.setText(VISIBILESI);
+
+
 
         ButtonIndietro.addActionListener(new ActionListener() {
             @Override
@@ -243,7 +251,14 @@ public class AreaPersonale {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: DA FARE
+                boolean currvisibility= PanelRicerca.isVisible();
+                PanelRicerca.setVisible(!currvisibility);
+
+                if(PanelRicerca.isVisible()){
+                    buttonShow.setText(VISIBILENO);
+                }else {
+                    buttonShow.setText(VISIBILESI);
+                }
             }
         });
         ButtonRicerca.addActionListener(new ActionListener() {
