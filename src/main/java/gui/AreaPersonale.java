@@ -286,10 +286,8 @@ public class AreaPersonale {
                 if (cognome.isEmpty()) cognome = null;
                 if (cf.isEmpty()) cf = null;
 
-                Prenotazione p = new Prenotazione(numBiglietto,controller.getUsernameUtente(),codVolo,nome, cognome, numPosto, 1, cf);
-
                 // 2. Chiedo al controller i dati filtrati
-                List<Prenotazione> risultati = controller.getCercaPrenotazioni(p);
+                List<Prenotazione> risultati = controller.getCercaPrenotazioni(new Prenotazione(numBiglietto,controller.getUsernameUtente(),codVolo,nome, cognome, numPosto, 1, cf));
 
                 // 3. Aggiorno la tabella
                 //aggiornaTabella(risultati);
