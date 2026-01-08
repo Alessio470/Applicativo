@@ -39,4 +39,6 @@ public interface PrenotazioneDAO {
      * @throws SQLException in caso di errore SQL
      */
     int cancellaPrenotazione(String numeroBiglietto, String username) throws SQLException;
+
+    List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p);
 }

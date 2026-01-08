@@ -144,4 +144,11 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
             return ps.executeUpdate(); // 1 se ok, 0 se nessuna riga cancellata
         }
     }
+
+    List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p){
+        List<Prenotazione> prenotazioni = new ArrayList<>();
+        //TODO: DA FINIRE
+    }
+
+
 }

@@ -557,7 +557,7 @@ public class Controller {
         List<Prenotazione> resultDB= null;
         try {
 
-            resultDB = prenotazioneDAO.getPrenotazioniUtente(this.getUsernameUtente());
+            resultDB = prenotazioneDAO.getPrenotazioniUtenteSearch(p);
 
         } catch (SQLException e) {
             e.printStackTrace();
