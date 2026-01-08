@@ -32,7 +32,7 @@ public class Volo {
     /** Ritardo espresso in minuti (può essere 0). */
     private int ritardoMinuti;
     /** Stato operativo del volo. */
-    private StatoVolo stato;
+    private StatoVolo stato = null;
     /** Numero/etichetta del gate assegnato (campo facoltativo). */
     private String gate; // null se non ancora assegnato
 
@@ -259,6 +259,9 @@ public class Volo {
      * @throws NullPointerException se l’orario non è interpretabile
      */
     public Time getOrarioSql() {
+        if (this.orario == null || this.orario.isEmpty()) {
+            return null;
+        }
         return Time.valueOf(Objects.requireNonNull(this.getOrarioLocalTime()));
     }
 
@@ -285,6 +288,9 @@ public class Volo {
      * @throws NullPointerException se la data non è interpretabile
      */
     public java.sql.Date getDatasql() {
+        if (this.data == null || this.data.isEmpty()) {
+            return null;
+        }
         return new java.sql.Date(this.getDataDate().getTime());
     }
 
@@ -294,6 +300,9 @@ public class Volo {
      * @return intero corrispondente alla posizione dell’enum
      */
     public int getStatoToInt() {
+        if (this.stato == null) {
+            return -1;
+        }
         return stato.ordinal();
     }
 

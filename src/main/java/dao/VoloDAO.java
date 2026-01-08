@@ -45,6 +45,15 @@ public interface VoloDAO {
     List<Volo> getVoliDaPerNapoli() throws SQLException;
 
     /**
+     * Restituisce i voli che corrispondono ai criteri di ricerca.
+     *
+     * @param v volo con i criteri di ricerca
+     * @return lista di voli (eventualmente vuota)
+     * @throws SQLException in caso di errore SQL
+     */
+    List<Volo> cercaVoli(Volo v) throws SQLException;
+
+    /**
      * Aggiorna i dati di un volo esistente, individuato dal codice.
      *
      * @param v volo con i nuovi valori

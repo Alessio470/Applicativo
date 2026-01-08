@@ -190,4 +190,83 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
             throw new SQLException("Errore query di update" + ex);
         }
     }
+
+    @Override
+    public List<Volo> cercaVoli(Volo v) throws SQLException {
+        List<Volo> voli = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM volo WHERE 1=1");
+        if (v.getCodiceV() != null && !v.getCodiceV().isEmpty()) {
+            sql.append(" AND ").append(COL_CODICE_VOLO).append(" = ?");
+        }
+        if (v.getCompagnia() != null && !v.getCompagnia().isEmpty()) {
+            sql.append(" AND ").append(COL_COMPAGNIA_AEREA).append(" = ?");
+        }
+        if (v.getAeroportoOrigine() != null && !v.getAeroportoOrigine().isEmpty()) {
+            sql.append(" AND ").append(COL_AEROPORTO_ORIGINE).append(" = ?");
+        }
+        if (v.getAeroportoDestinazione() != null && !v.getAeroportoDestinazione().isEmpty()) {
+            sql.append(" AND ").append(COL_AEROPORTO_DESTINAZIONE).append(" = ?");
+        }
+        if (v.getDatasql() != null) {
+            sql.append(" AND ").append(COL_DATA_VOLO).append(" = ?");
+        }
+        if (v.getOrarioSql() != null) {
+            sql.append(" AND ").append(COL_ORARIO_PREVISTO).append(" = ?");
+        }
+        if (v.getStato() != null) {
+            sql.append(" AND ").append(COL_STATO_VOLO).append(" = ?");
+        }
+        if (v.getGate() != null && !v.getGate().isEmpty()) {
+            sql.append(" AND ").append(COL_NUMERO_GATE).append(" = ?");
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+            int i = 1;
+            if (v.getCodiceV() != null && !v.getCodiceV().isEmpty()) {
+                ps.setString(i++, v.getCodiceV());
+            }
+            if (v.getCompagnia() != null && !v.getCompagnia().isEmpty()) {
+                ps.setString(i++, v.getCompagnia());
+            }
+            if (v.getAeroportoOrigine() != null && !v.getAeroportoOrigine().isEmpty()) {
+                ps.setString(i++, v.getAeroportoOrigine());
+            }
+            if (v.getAeroportoDestinazione() != null && !v.getAeroportoDestinazione().isEmpty()) {
+                ps.setString(i++, v.getAeroportoDestinazione());
+            }
+            if (v.getDatasql() != null) {
+                ps.setDate(i++, v.getDatasql());
+            }
+            if (v.getOrarioSql() != null) {
+                ps.setTime(i++, v.getOrarioSql());
+            }
+            if (v.getStato() != null) {
+                ps.setInt(i++, v.getStato().ordinal() + 1);
+            }
+            if (v.getGate() != null && !v.getGate().isEmpty()) {
+                ps.setString(i++, v.getGate());
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Volo volo = new Volo(
+                            rs.getString(COL_CODICE_VOLO),
+                            rs.getString(COL_COMPAGNIA_AEREA),
+                            rs.getString(COL_AEROPORTO_ORIGINE),
+                            rs.getString(COL_AEROPORTO_DESTINAZIONE),
+                            LocalDate.parse(
+                                    rs.getString(COL_DATA_VOLO),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                            ).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            rs.getString(COL_ORARIO_PREVISTO).substring(0, 5),
+                            rs.getInt(COL_RITARDO),
+                            rs.getInt(COL_STATO_VOLO),
+                            rs.getString(COL_NUMERO_GATE)
+                    );
+                    voli.add(volo);
+                }
+            }
+        }
+        return voli;
+    }
 }

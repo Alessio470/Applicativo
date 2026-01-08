@@ -36,7 +36,15 @@ public class HomeUtenteGenerico {
     private JButton ButtonLogout;
     private JLabel LabelTitolo;
     private JLabel LabelCiao;
-
+    private JPanel PanelCerca;
+    private JTextField codiceVoloTextField;
+    private JTextField compagniaTextField;
+    private JTextField aeroportoOrigineTextField;
+    private JTextField aeroportoDestinazioneTextField;
+    private JTextField dataTextField;
+    private JTextField orarioTextField;
+    private JTextField gateTextField;
+    private JButton cercaButton;
 
 
     private static JFrame frame;
@@ -155,6 +163,43 @@ public class HomeUtenteGenerico {
 
                 int rowIndex = TableVoli.rowAtPoint(e.getPoint());
                 //System.out.println("Riga cliccata: "+rowIndex);
+            }
+        });
+        cercaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Volo> voli = controller.cercaVoli(
+                        codiceVoloTextField.getText().trim(),
+                        compagniaTextField.getText().trim(),
+                        aeroportoOrigineTextField.getText().trim(),
+                        aeroportoDestinazioneTextField.getText().trim(),
+                        dataTextField.getText().trim(),
+                        orarioTextField.getText().trim(),
+                        gateTextField.getText().trim()
+                );
+                Object[][] dati = new Object[voli.size()][9]; // 9 colonne come intestazioni
+                for (int i = 0; i < voli.size(); i++) {
+                    Volo volo = voli.get(i);
+                    dati[i][0] = volo.getCodiceV();
+                    dati[i][1] = volo.getCompagnia();
+                    dati[i][2] = volo.getAeroportoOrigine();
+                    dati[i][3] = volo.getAeroportoDestinazione();
+                    dati[i][4] = volo.getDataStr();
+                    dati[i][5] = volo.getOrarioStr();
+                    dati[i][6] = volo.getRitardoMinuti();
+                    dati[i][7] = volo.getStato().name();
+                    dati[i][8] = volo.getGate();
+                }
+                String[] colonne = {"Codice Volo", "Compagnia", "Origine", "Destinazione", "Data", "Orario", "Ritardo", "Stato", "Gate"};
+                javax.swing.table.DefaultTableModel modello = new javax.swing.table.DefaultTableModel(dati, colonne);
+                TableVoli.setModel(modello);
+
+                // Reapply center renderer
+                javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                for (int i = 0; i < TableVoli.getColumnCount(); i++) {
+                    TableVoli.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                }
             }
         });
     }

@@ -3,6 +3,7 @@ package gui;
 import controller.Controller;
 import model.Prenotazione;
 import model.Volo;
+import model.enums.StatoVolo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -269,8 +270,33 @@ public class AreaPersonale {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: DA FARE
+                // 1. Recupero i dati dai campi di testo
+                String numBiglietto = textFieldnumerobiglietto.getText().trim();
+                String numPosto = textFieldnumeroposto.getText().trim();
+                String codVolo = textFieldcodicevolo.getText().trim();
+                String nome = textFieldnomepasseggero.getText().trim();
+                String cognome = textFieldcognomepasseggero.getText().trim();
+                String cf = textFieldcodicefiscalepasseggero.getText().trim();
+
+                // Trasformo stringhe vuote in null per facilitare il DB (opzionale, dipende dal tuo DAO)
+                if (numBiglietto.isEmpty()) numBiglietto = null;
+                if (numPosto.isEmpty()) numPosto = null;
+                if (codVolo.isEmpty()) codVolo = null;
+                if (nome.isEmpty()) nome = null;
+                if (cognome.isEmpty()) cognome = null;
+                if (cf.isEmpty()) cf = null;
+
+                Prenotazione p = new Prenotazione(numBiglietto,controller.getUsernameUtente(),codVolo,nome, cognome, numPosto, 1, cf);
+
+                // 2. Chiedo al controller i dati filtrati
+                List<Prenotazione> risultati = controller.getCercaPrenotazioni(p);
+
+                // 3. Aggiorno la tabella
+                //aggiornaTabella(risultati);
+
             }
         });
     }//Fine parentesi AereaPersonale
+
+
 }//Fine Parentesi Finale

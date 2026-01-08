@@ -505,4 +505,66 @@ public class Controller {
 
     }//Fine Parentesi getPrenotazioniUtente
 
+
+    public List<Volo> cercaVoli(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, String gate) {
+        List<Volo> resultDB = new ArrayList<>();
+        VoloDAO voloDAO = null;
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            voloDAO = new VoloImplementazionePostgresDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+        // Create a Volo object with the search criteria, setting null for empty strings
+        Volo criteriVolo = new Volo(
+                codiceVolo != null && !codiceVolo.trim().isEmpty() ? codiceVolo.trim() : null,
+                compagnia != null && !compagnia.trim().isEmpty() ? compagnia.trim() : null,
+                aeroportoOrigine != null && !aeroportoOrigine.trim().isEmpty() ? aeroportoOrigine.trim() : null,
+                aeroportoDestinazione != null && !aeroportoDestinazione.trim().isEmpty() ? aeroportoDestinazione.trim() : null,
+                data != null && !data.trim().isEmpty() ? data.trim() : null,
+                orario != null && !orario.trim().isEmpty() ? orario.trim() : null,
+                0, // Default value for ritardoMinuti
+                null, // Default value for stato, as it's not a search criterion here
+                gate != null && !gate.trim().isEmpty() ? gate.trim() : null
+        );
+
+        try {
+            resultDB = voloDAO.cercaVoli(criteriVolo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Errore durante la ricerca voli:\n" + e.getMessage());
+        }
+
+        return resultDB;
+    }
+
+
+    public List<Prenotazione> getCercaPrenotazioni(Prenotazione p) {
+
+        PrenotazioneDAO prenotazioneDAO=null;//TODO: L HO COPIATO DEVO FINIRE DI EDITARLO
+
+        //Connessione al db
+        try {
+            Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO(conn);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
+        }
+
+        List<Prenotazione> resultDB= null;
+        try {
+
+            resultDB = prenotazioneDAO.getPrenotazioniUtente(this.getUsernameUtente());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultDB;
+
+    }//Fine Parentesi getPrenotazioniUtente
+
 }//Fine parentesi Finale
