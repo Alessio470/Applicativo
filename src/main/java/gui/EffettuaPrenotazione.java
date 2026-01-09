@@ -55,9 +55,9 @@ public class EffettuaPrenotazione {
      *
      * <p>- Indietro: chiude e torna alla finestra precedente.
      * <br>- Conferma prenotazione: legge la riga selezionata e i campi utente, poi invoca
-     *   {@link controller.Controller#effettuaPrenotazione(String, String, String, String, String)}.
+     * {@link controller.Controller#effettuaPrenotazione(String, String, String, String, String)}.
      *
-     * @param prevframe finestra chiamante a cui ritornare
+     * @param prevframe  finestra chiamante a cui ritornare
      * @param controller controller applicativo per reperire i voli e registrare la prenotazione
      */
     public EffettuaPrenotazione(JFrame prevframe, Controller controller) {

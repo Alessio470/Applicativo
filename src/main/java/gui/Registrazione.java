@@ -45,9 +45,9 @@ public class Registrazione {
      *
      * <p>- Indietro: chiude e torna alla finestra precedente.
      * <br>- Registrati: valida campi a cura del {@link controller.Controller} e invoca
-     *   {@link controller.Controller#onRegistrati(String, String, String, String, JFrame)}.
+     * {@link controller.Controller#onRegistrati(String, String, String, String, JFrame)}.
      *
-     * @param prevframe finestra chiamante a cui ritornare
+     * @param prevframe  finestra chiamante a cui ritornare
      * @param controller controller applicativo che gestisce la registrazione
      */
     public Registrazione(JFrame prevframe, Controller controller) {

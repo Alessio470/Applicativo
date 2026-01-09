@@ -33,6 +33,9 @@ public class Login {
     private JLabel LabelPassword;
     private JLabel LabelTitolo;
 
+    /**
+     * The constant frame.
+     */
     public static JFrame frame;
     private Controller controller;
 
@@ -42,7 +45,6 @@ public class Login {
      * <p>Login: invoca {@link controller.Controller#doLogin(String, String, JFrame)} e nasconde il frame.
      * <p>Registrati: apre la finestra di registrazione e nasconde il frame.
      */
-
     public Login() {
         controller = new Controller();
 

@@ -65,9 +65,9 @@ public class InserisciVolo {
      * <p>- Conferma: valida i dati e invoca {@link controller.Controller#AddVoliConStato(String, String, String, String, String, String, int, String)}.
      * <br>- Indietro: chiude e torna alla finestra precedente.
      *
-     * @param prevFrame finestra chiamante a cui ritornare
+     * @param prevFrame  finestra chiamante a cui ritornare
      * @param controller controller applicativo per operazioni su voli e lookup di gate
-     * @param home riferimento alla home amministratore che potrà essere aggiornata dopo l’inserimento
+     * @param home       riferimento alla home amministratore che potrà essere aggiornata dopo l’inserimento
      */
     public InserisciVolo(JFrame prevFrame, Controller controller, HomepageAmministratore home) {
         frame = new JFrame("Frame Inserisci Volo");

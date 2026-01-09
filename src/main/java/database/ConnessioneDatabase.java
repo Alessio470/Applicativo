@@ -14,7 +14,7 @@ public class ConnessioneDatabase {
     private Connection connection;
 
     /** URL JDBC del database. */
-    private final String url = "jdbc:postgresql://localhost:5433/db_aeroporto";
+    private final String url = "jdbc:postgresql://localhost:5432/db_aeroporto";
     /** Username del database. */
     private final String user = "postgres";
     /** Password del database. */

@@ -3,7 +3,6 @@ package gui;
 import controller.Controller;
 import model.Prenotazione;
 import model.Volo;
-import model.enums.StatoVolo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +17,6 @@ import java.util.List;
  *
  * <p>La tabella include una colonna nascosta che contiene l’oggetto {@link model.Volo} associato
  * a ciascuna prenotazione, utile per aprire il dettaglio volo.</p>
- *
  */
 public class AreaPersonale {
     private JPanel PanelAeraPersonale;
@@ -47,6 +45,7 @@ public class AreaPersonale {
     private JTextField textFieldcodicefiscalepasseggero;
     private JTextField textFieldcodicevolo;
     private JButton ButtonRicerca;
+    private JButton ButtonReset;
 
     private JFrame frame;
 
@@ -62,11 +61,10 @@ public class AreaPersonale {
      * <br>- Indietro: chiude la finestra corrente e riporta al frame precedente.
      * <br>- Visualizza volo / doppio click riga: recupera il {@link model.Volo} dalla colonna nascosta e apre {@code ViewInfoVolo}.
      *
-     * @param prevframe finestra chiamante (per posizionamento/ritorno)
+     * @param prevframe  finestra chiamante (per posizionamento/ritorno)
      * @param controller controller applicativo per recuperare le prenotazioni dell'utente
      */
     public AreaPersonale(JFrame prevframe, Controller controller) {
-
 
         frame = new JFrame("Panel Area Personale");
         frame.setTitle("Area Personale"); //QUA HO FATTO LE ROBE PER INIZIALIZZARE LA FRAME
@@ -80,71 +78,20 @@ public class AreaPersonale {
         //Tabella in ordine
         TablePrenotazioni.setAutoCreateRowSorter(true);
 
-
         // Tabella
         TablePrenotazioni.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablePrenotazioni.setFillsViewportHeight(true);
 
-
-//Mettiamo i dati nell array dei dati che andranno nella tabella
+        // CARICAMENTO INIZIALE TABELLA
         List<Prenotazione> prenotazioni = controller.getPrenotazioniUtente();
-        String[] colonnep = {"numerobiglietto", "numeroposto","statoprenotazione","codvolo","nomepasseggero","cognomepasseggero","codicefiscalepasseggero","Oggetto"};
-        //"codvolo"
-        //String[] colonnev = {"codicevolo","compagniaaerea","datavolo","orarioprevisto","ritardo","statovolo","aeroportoorigine","aeroportodestinazione","numeroGate"};
+        aggiornaTabellaPrenotazioni(prenotazioni);
 
-
-// Crea il modello dinamico
-        DefaultTableModel modello = new DefaultTableModel(colonnep, 0);
-
-// Riempi la tabella con i dati
-        for (Prenotazione p : prenotazioni) {
-            modello.addRow(new Object[]{
-                    p.getNumeroBiglietto(),
-                    p.getPosto(),
-                    p.getStato(),
-                    p.getCodiceVolo(),
-                    p.getNomePasseggero(),
-                    p.getCognomePasseggero(),
-                    p.getCodicefiscalepasseggero(),
-                    p.getVoloassociato()  // salvo l’oggetto Volo (colonna nascosta)
-            });
-        }
-
-// Imposta il modello nella JTable
-        TablePrenotazioni.setModel(modello);
-
-
-
-        // Nascondi la colonna "Oggetto"
-        int colObjIndex = 7; // indice della colonna "Oggetto"
-        TablePrenotazioni.getColumnModel().getColumn(colObjIndex).setMinWidth(0);
-        TablePrenotazioni.getColumnModel().getColumn(colObjIndex).setMaxWidth(0);
-        TablePrenotazioni.getColumnModel().getColumn(colObjIndex).setWidth(0);
-        TablePrenotazioni.getColumnModel().getColumn(colObjIndex).setPreferredWidth(0);
-
-
-
-// Disabilitiamo modifiche dirette
-        TablePrenotazioni.setDefaultEditor(Object.class, null);
-
-// Centriamo tutte le celle
-        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < TablePrenotazioni.getColumnCount(); i++) {
-            TablePrenotazioni.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-
-        TablePrenotazioni.setAutoCreateRowSorter(true);
-
-
-//Il panel della ricerca all'inizio è disabilitato e metto il bottone col nome giusto
-        String VISIBILESI="Show";
-        String VISIBILENO="Hide";
+        //Il panel della ricerca all'inizio è disabilitato e metto il bottone col nome giusto
+        String VISIBILESI = "Show";
+        String VISIBILENO = "Hide";
 
         PanelRicerca.setVisible(false);
         buttonShow.setText(VISIBILESI);
-
-
 
         ButtonIndietro.addActionListener(new ActionListener() {
             @Override
@@ -161,7 +108,7 @@ public class AreaPersonale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = TablePrenotazioni.getSelectedRow(); // riga selezionata nella vista
-                if(row>-1){
+                if (row > -1) {
 
                     // converte l'indice della riga della vista in indice del modello
                     int modelRow = TablePrenotazioni.convertRowIndexToModel(row);
@@ -182,10 +129,9 @@ public class AreaPersonale {
                         frame.setVisible(false);
                     }
 
-                }else JOptionPane.showMessageDialog(frame, "Seleziona prima una prenotazione!");
-
-
-
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Seleziona prima una prenotazione!");
+                }
             }
         });//Fine parentesi ActionListener ButtonViewVolo
 
@@ -209,7 +155,6 @@ public class AreaPersonale {
                 }
             }
         });//Fine parentesi Mouselistener TablePrenotazioni per ViewVolo
-
 
         buttonCancellaPrenotazione.addActionListener(new ActionListener() {
             @Override
@@ -243,31 +188,21 @@ public class AreaPersonale {
             }
         });
 
-
         buttonShow.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             *
-             * @param e the event to be processed
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean currvisibility= PanelRicerca.isVisible();
+                boolean currvisibility = PanelRicerca.isVisible();
                 PanelRicerca.setVisible(!currvisibility);
 
-                if(PanelRicerca.isVisible()){
+                if (PanelRicerca.isVisible()) {
                     buttonShow.setText(VISIBILENO);
-                }else {
+                } else {
                     buttonShow.setText(VISIBILESI);
                 }
             }
         });
+
         ButtonRicerca.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             *
-             * @param e the event to be processed
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 1. Recupero i dati dai campi di testo
@@ -278,7 +213,7 @@ public class AreaPersonale {
                 String cognome = textFieldcognomepasseggero.getText().trim();
                 String cf = textFieldcodicefiscalepasseggero.getText().trim();
 
-                // Trasformo stringhe vuote in null per facilitare il DB (opzionale, dipende dal tuo DAO)
+                // Trasformo stringhe vuote in null
                 if (numBiglietto.isEmpty()) numBiglietto = null;
                 if (numPosto.isEmpty()) numPosto = null;
                 if (codVolo.isEmpty()) codVolo = null;
@@ -287,17 +222,100 @@ public class AreaPersonale {
                 if (cf.isEmpty()) cf = null;
 
                 // 2. Chiedo al controller i dati filtrati
-                List<Prenotazione> risultati = controller.getCercaPrenotazioni(new Prenotazione(numBiglietto,controller.getUsernameUtente(),codVolo,nome, cognome, numPosto, 1, cf));
-                for (Prenotazione p : risultati){
-                    System.out.println(p.toString());
-                }
-                // 3. Aggiorno la tabella
-                //TODO: metodo aggiorna tabella
-                //aggiornaTabella(risultati);
+                List<Prenotazione> risultati = controller.getCercaPrenotazioni(
+                        new Prenotazione(numBiglietto, controller.getUsernameUtente(), codVolo, nome, cognome, numPosto, 1, cf)
+                );
 
+                // 3. Aggiorno la tabella
+                aggiornaTabellaPrenotazioni(risultati);
             }
         });
-    }//Fine parentesi AereaPersonale
+
+        ButtonReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 1. Reset campi di testo
+                textFieldnumerobiglietto.setText("");
+                textFieldnumeroposto.setText("");
+                textFieldcodicevolo.setText("");
+                textFieldnomepasseggero.setText("");
+                textFieldcognomepasseggero.setText("");
+                textFieldcodicefiscalepasseggero.setText("");
+
+                // 2. Ricarico tutte le prenotazioni dell’utente
+                List<Prenotazione> tutte = controller.getPrenotazioniUtente();
+
+                // 3. Aggiorno la tabella
+                aggiornaTabellaPrenotazioni(tutte);
+            }
+        });
+    }
+//Fine parentesi AereaPersonale
+
+    /**
+     * Aggiorna (o popola) la tabella delle prenotazioni.
+     *
+     * <p>Ricrea il DefaultTableModel a partire dalla lista passata, mantiene la colonna
+     * tecnica con l'oggetto Volo (nascosta), disabilita l'editing delle celle e centra
+     * i valori di tutte le colonne visibili.</p>
+     *
+     * @param lista lista di prenotazioni da visualizzare (se null viene trattata come lista vuota)
+     */
+    private void aggiornaTabellaPrenotazioni(List<Prenotazione> lista) {
+
+        if (lista == null) {
+            lista = java.util.Collections.emptyList();
+        }
+
+        String[] colonne = {
+                "numerobiglietto",
+                "numeroposto",
+                "statoprenotazione",
+                "codvolo",
+                "nomepasseggero",
+                "cognomepasseggero",
+                "codicefiscalepasseggero",
+                "Oggetto" // colonna tecnica (Volo) da nascondere
+        };
+
+        DefaultTableModel modello = new DefaultTableModel(colonne, 0);
+
+        for (Prenotazione p : lista) {
+            modello.addRow(new Object[]{
+                    p.getNumeroBiglietto(),
+                    p.getPosto(),
+                    p.getStato(),
+                    p.getCodiceVolo(),
+                    p.getNomePasseggero(),
+                    p.getCognomePasseggero(),
+                    p.getCodicefiscalepasseggero(),
+                    p.getVoloassociato()
+            });
+        }
+
+        TablePrenotazioni.setModel(modello);
+
+        // Nascondo la colonna "Oggetto" (indice 7)
+        int colObj = 7;
+        TablePrenotazioni.getColumnModel().getColumn(colObj).setMinWidth(0);
+        TablePrenotazioni.getColumnModel().getColumn(colObj).setMaxWidth(0);
+        TablePrenotazioni.getColumnModel().getColumn(colObj).setWidth(0);
+        TablePrenotazioni.getColumnModel().getColumn(colObj).setPreferredWidth(0);
+
+        // Disabilito editing celle
+        TablePrenotazioni.setDefaultEditor(Object.class, null);
+
+        // Centro il contenuto
+        javax.swing.table.DefaultTableCellRenderer center = new javax.swing.table.DefaultTableCellRenderer();
+        center.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < TablePrenotazioni.getColumnCount(); i++) {
+            TablePrenotazioni.getColumnModel().getColumn(i).setCellRenderer(center);
+        }
+
+        TablePrenotazioni.setAutoCreateRowSorter(true);
+    }
+
+
 
 
 }//Fine Parentesi Finale
