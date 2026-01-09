@@ -128,7 +128,7 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
     }
 
     // ------------------------------------------------------------
-    // DELETE
+    // SELECT
     // ------------------------------------------------------------
 
     @Override
@@ -145,10 +145,118 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
         }
     }
 
-    List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p){
+    // ------------------------------------------------------------
+    // DELETE
+    // ------------------------------------------------------------
+    @Override
+    public List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p) throws SQLException {
         List<Prenotazione> prenotazioni = new ArrayList<>();
-        //TODO: DA FINIRE
+
+        // Base della query: usiamo StringBuilder per comporre la stringa SQL
+        StringBuilder sql = new StringBuilder(
+                "SELECT v.*, p.* " +
+                        "FROM prenotazione AS p " +
+                        "JOIN volo AS v ON p.codvolo = v.codicevolo " +
+                        "WHERE 1=1" // Punto di partenza
+        );
+
+        // Lista per gestire i valori dei parametri del PreparedStatement
+        List<Object> parameters = new ArrayList<>();
+
+        // --- Inizio costruzione dinamica ---
+
+        if (p.getUsernameUtente() != null && !p.getUsernameUtente().isEmpty()) {
+            sql.append(" AND p.username LIKE ?");
+            parameters.add(p.getUsernameUtente());
+        }
+
+        if (p.getNumeroBiglietto() != null && !p.getNumeroBiglietto().isEmpty()) {
+            sql.append(" AND p.numerobiglietto LIKE ?");
+            parameters.add("%" + p.getNumeroBiglietto() + "%");
+        }
+
+        if (p.getCodiceVolo() != null && !p.getCodiceVolo().isEmpty()) {
+            sql.append(" AND p.codvolo LIKE ?");
+            parameters.add("%" + p.getCodiceVolo() + "%");
+        }
+
+        if (p.getNomePasseggero() != null && !p.getNomePasseggero().isEmpty()) {
+            sql.append(" AND p.nomepasseggero LIKE ?");
+            parameters.add("%" + p.getNomePasseggero() + "%");
+        }
+
+        if (p.getCognomePasseggero() != null && !p.getCognomePasseggero().isEmpty()) {
+            sql.append(" AND p.cognomepasseggero LIKE ?");
+            parameters.add("%" + p.getCognomePasseggero() + "%");
+        }
+
+        if (p.getCodicefiscalepasseggero() != null && !p.getCodicefiscalepasseggero().isEmpty()) {
+            sql.append(" AND p.codicefiscalepasseggero LIKE ?");
+            parameters.add("%" + p.getCodicefiscalepasseggero() + "%");
+        }
+        // --- Fine costruzione dinamica ---
+
+        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            // Inserimento dinamico dei parametri
+            for (int i = 0; i < parameters.size(); i++) {
+                ps.setObject(i + 1, parameters.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Creazione dell'oggetto Prenotazione dai risultati del DB
+
+                    Prenotazione resP = new Prenotazione(
+                            rs.getString("numerobiglietto"),
+                            rs.getString("username"),
+                            rs.getString("codvolo"),
+                            rs.getString("nomepasseggero"),
+                            rs.getString("cognomepasseggero"),
+                            rs.getString("numeroposto"),
+                            rs.getInt("statoprenotazione"),
+                            rs.getString("codicefiscalepasseggero")
+                    );
+
+                    // Formattazione Data
+                    java.sql.Date dataSql = rs.getDate("datavolo");
+                    String dataFormattata = null;
+                    if (dataSql != null) {
+                        dataFormattata = dataSql.toLocalDate()
+                                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    }
+
+                    // Formattazione Orario
+                    String orarioPrevisto = rs.getString("orarioprevisto");
+                    if (orarioPrevisto != null && orarioPrevisto.length() >= 5) {
+                        orarioPrevisto = orarioPrevisto.substring(0, 5);
+                    }
+
+                    // Creazione Volo associato
+                    Volo v = new Volo(
+                            rs.getString("codvolo"),
+                            rs.getString("compagniaaerea"),
+                            rs.getString("aeroportoorigine"),
+                            rs.getString("aeroportodestinazione"),
+                            dataFormattata,
+                            orarioPrevisto,
+                            rs.getInt("ritardo"),
+                            rs.getInt("statovolo"),
+                            rs.getString("numeroGate")
+                    );
+
+                    resP.setVoloassociato(v);
+                    prenotazioni.add(resP);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Errore nella ricerca dinamica delle prenotazioni", e);
+        }
+
+
+        return prenotazioni;
     }
+
 
 
 }

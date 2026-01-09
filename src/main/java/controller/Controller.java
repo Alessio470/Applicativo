@@ -544,7 +544,7 @@ public class Controller {
 
     public List<Prenotazione> getCercaPrenotazioni(Prenotazione p) {
 
-        PrenotazioneDAO prenotazioneDAO=null;//TODO: L HO COPIATO DEVO FINIRE DI EDITARLO
+        PrenotazioneDAO prenotazioneDAO=null;
 
         //Connessione al db
         try {

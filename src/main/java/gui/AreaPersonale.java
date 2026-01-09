@@ -288,8 +288,11 @@ public class AreaPersonale {
 
                 // 2. Chiedo al controller i dati filtrati
                 List<Prenotazione> risultati = controller.getCercaPrenotazioni(new Prenotazione(numBiglietto,controller.getUsernameUtente(),codVolo,nome, cognome, numPosto, 1, cf));
-
+                for (Prenotazione p : risultati){
+                    System.out.println(p.toString());
+                }
                 // 3. Aggiorno la tabella
+                //TODO: metodo aggiorna tabella
                 //aggiornaTabella(risultati);
 
             }
