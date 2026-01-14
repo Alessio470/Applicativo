@@ -43,6 +43,7 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
     @Override
     public Utente login(String username, String password) throws SQLException {
         final String sql = "SELECT * FROM public.utente WHERE username = ? AND password = ?";
+        Utente utenteTrovato = null;
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
@@ -52,16 +53,13 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
                 if (rs.next()) {
                     int ruolo = rs.getInt("ruoloutente");
 
-                    // Mantengo lo stesso comportamento della tua vecchia classe:
                     if (ruolo == 2) {
-                        // amministratore
-                        return new UtenteAmministratore(
+                        utenteTrovato = new UtenteAmministratore(
                                 rs.getString("username"),
                                 rs.getString("password")
                         );
                     } else {
-                        // generico
-                        return new UtenteGenerico(
+                        utenteTrovato = new UtenteGenerico(
                                 rs.getString("username"),
                                 rs.getString("password")
                         );
@@ -70,9 +68,13 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
             }
         }
 
-        // Login fallito
-        return null;
-    }
+        // Se utenteTrovato è ancora null, sollevo l'eccezione manualmente
+        if (utenteTrovato == null) {
+            throw new NullPointerException("Login fallito: Credenziali non valide.");
+        }
+
+        return utenteTrovato;
+    }//Parentesi doLogin
 
     // ------------------------------------------------------------
     //  registraUtente

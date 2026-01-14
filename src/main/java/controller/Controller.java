@@ -60,38 +60,43 @@ public class Controller {
      * @param frame frame padre per i messaggi/modali
      */
     public void doLogin(String user, String pass, JFrame frame) {
-
-        UtenteDAO utenteDAO=null;
+        // Inizializziamo a null per sicurezza
+        UtenteDAO utenteDAO = null;
 
         try {
+            // 1. TENTATIVO DI CONNESSIONE E ISTANZA DAO
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
             utenteDAO = new UtenteImplementazionePostgresDAO(conn);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
-        }
 
-        try {
-             u = utenteDAO.login(user, pass);//TODO controllare questo perchè forse da null
-            if (u == null) {
-                JOptionPane.showMessageDialog(frame, "Credenziali non valide");
+            // 2. TENTATIVO DI LOGIN
+            // Se le credenziali sono errate, il DAO lancia NullPointerException
+            u = utenteDAO.login(user, pass);
+
+            // 3. SE SIAMO QUI, IL LOGIN È RIUSCITO (u non è null)
+            if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
+                new HomepageAmministratore(frame, this);
+            } else if (u.getRuolo() == RuoloUtente.GENERICO) {
+                new HomeUtenteGenerico(frame, this);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Ruolo utente non riconosciuto");
                 return;
             }
 
-            if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
-                new HomepageAmministratore(frame, this);
-            } else if (u.getRuolo()== RuoloUtente.GENERICO) {
-                new HomeUtenteGenerico(frame, this);
-            }else {
-                JOptionPane.showMessageDialog(frame, "Utente non valido");
-            }
+            System.out.println("Loggato con -> Username: " + u.getUsername() + " | Password: " + u.getPassword());
+
+        } catch (NullPointerException ex) {
+            // Cattura il "throw new NullPointerException" che hai messo nel DAO
+            JOptionPane.showMessageDialog(frame, "Credenziali non valide!");
+
+        } catch (SQLException ex) {
+            // Cattura errori di rete, database o driver
+            JOptionPane.showMessageDialog(frame, "Errore Database:\n" + ex.getMessage());
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame, "Errore durante il login:\n" + ex.getMessage());
+            // Cattura qualsiasi altro errore (es. utenteDAO che è rimasto null)
+            JOptionPane.showMessageDialog(frame, "Errore imprevisto:\n" + ex.getMessage());
         }
-
-        System.out.println("Loggato con -> Username: " + u.getUsername() + " | Password: " + u.getPassword());
-
-    }//Parentesi doLogin
+    }
 
 
     /**
