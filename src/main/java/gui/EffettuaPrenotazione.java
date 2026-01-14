@@ -27,7 +27,6 @@ public class EffettuaPrenotazione {
     private JPanel PanelTabellaVoli;
     private JPanel PanelNome;
     private JPanel PanelCognome;
-    private JPanel PanelBagaglio;
     private JTable TableVoli;
     private JTextField FieldNome; // Nome
     private JTextField FieldCognome;
@@ -35,13 +34,10 @@ public class EffettuaPrenotazione {
     private JTextField FieldNumeroPosto;
     private JButton ButtonConfermaPrenotazione;
     private JButton ButtonIndietro;
-    private JRadioButton RadioButtonNo;
-    private JRadioButton RadioButtonSi;
     private JLabel LableNome;
     private JLabel LabelCognome;
     private JLabel LableCodiceFiscale;
     private JLabel LableNumeroPosto;
-    private JLabel LabelBagaglio;
     private JLabel LabelTitolo;
 
     private static JFrame frame;
