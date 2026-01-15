@@ -115,7 +115,7 @@ public class Controller {
 
             UtenteDAO utenteDAO=null;
 
-            //Try del dao
+        // Connessione DB
         try {
             Connection conn = ConnessioneDatabase.getInstance().getConnection();
             utenteDAO = new UtenteImplementazionePostgresDAO(conn);
@@ -142,13 +142,24 @@ public class Controller {
             return;
         }
 
+        RuoloUtente ruoloEnum;
+        try {
+            ruoloEnum = RuoloUtente.valueOf(ruolo);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(frame, "Ruolo non valido.");
+            return;
+        }
+
         //REGISTRAZIONE UTENTE
         Utente utenteRegistrato = null;
 
-        if (ruolo.equals(RuoloUtente.GENERICO)) {
+        if (ruoloEnum == RuoloUtente.GENERICO) {
             utenteRegistrato = new UtenteGenerico(username, password);
-        } else {
+        } else if (ruoloEnum == RuoloUtente.AMMINISTRATORE) {
             utenteRegistrato = new UtenteAmministratore(username, password);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Ruolo utente non riconosciuto.");
+            return;
         }
 
         try {

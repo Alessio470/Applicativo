@@ -96,7 +96,8 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, utenteRegistrato.getUsername());
             ps.setString(2, utenteRegistrato.getPassword());
-            ps.setInt(3, utenteRegistrato.getRuolo().ordinal());
+            int ruoloDb = utenteRegistrato.getRuolo().ordinal() + 1;
+            ps.setInt(3, ruoloDb);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
