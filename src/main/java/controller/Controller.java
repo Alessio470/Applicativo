@@ -5,10 +5,9 @@ import dao.GateDAO;
 import dao.PrenotazioneDAO;
 import dao.implementazioniPostgresDAO.PrenotazioneImplementazionePostgresDAO;
 import dao.implementazioniPostgresDAO.GateImplementazionePostgresDAO;
-import gui.HomeUtenteGenerico;
-import gui.HomepageAmministratore;
 
 import model.Prenotazione;
+import model.Utente;
 import model.UtenteAmministratore;
 import model.UtenteGenerico;
 import model.Volo;
@@ -23,11 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
 
-
-
 import dao.VoloDAO;
 import dao.implementazioniPostgresDAO.VoloImplementazionePostgresDAO;
-import model.Utente;
 
 
 /**
@@ -51,52 +47,35 @@ public class Controller {
     public void doLogoutUser() { u=null; }
 
     /**
-     * Autentica un utente e apre la home corrispondente al ruolo.
+     * Autentica un utente sulla base delle credenziali fornite.
      *
-     * <p>In caso di credenziali non valide o errori DB mostra un {@link JOptionPane} con il messaggio.</p>
+     * <p>Il risultato dell’autenticazione viene restituito al login,
+     * che provvede ad aggiornare l’interfaccia grafica e a mostrare la schermata appropriata.</p>
      *
-     * @param user  username inserito
-     * @param pass  password inserita
-     * @param frame frame padre per i messaggi/modali
+     * @param user username inserito
+     * @param pass password inserita
+     * @return il ruolo dell’utente autenticato, oppure {@code null} se le credenziali non sono valide
+     * @throws SQLException in caso di errore di accesso al database
      */
-    public void doLogin(String user, String pass, JFrame frame) {
-        // Inizializziamo a null per sicurezza
-        UtenteDAO utenteDAO = null;
+    public RuoloUtente doLogin(String user, String pass) throws SQLException {
+
+        UtenteDAO utenteDAO = new UtenteImplementazionePostgresDAO();
 
         try {
-            // 1. ISTANZA DAO
-            utenteDAO = new UtenteImplementazionePostgresDAO();
+            Utente logged = utenteDAO.login(user, pass);
 
-
-            // 2. TENTATIVO DI LOGIN
-            // Se le credenziali sono errate, il DAO lancia NullPointerException
-            u = utenteDAO.login(user, pass);
-
-            // 3. SE SIAMO QUI, IL LOGIN È RIUSCITO (u non è null)
-            if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
-                new HomepageAmministratore(frame, this);
-            } else if (u.getRuolo() == RuoloUtente.GENERICO) {
-                new HomeUtenteGenerico(frame, this);
-            } else {
-                JOptionPane.showMessageDialog(frame, "Ruolo utente non riconosciuto");
-                return;
+            if (logged == null) {
+                return null; // credenziali errate
             }
 
-            System.out.println("Loggato con -> Username: " + u.getUsername() + " | Password: " + u.getPassword());
+            this.u = logged;
+            return logged.getRuolo();
 
         } catch (NullPointerException ex) {
-            // Cattura il "throw new NullPointerException" che hai messo nel DAO
-            JOptionPane.showMessageDialog(frame, "Credenziali non valide!");
-
-        } catch (SQLException ex) {
-            // Cattura errori di rete, database o driver
-            JOptionPane.showMessageDialog(frame, "Errore Database:\n" + ex.getMessage());
-
-        } catch (Exception ex) {
-            // Cattura qualsiasi altro errore (es. utenteDAO che è rimasto null)
-            JOptionPane.showMessageDialog(frame, "Errore imprevisto:\n" + ex.getMessage());
+            return null;
         }
     }
+
 
 
     /**
