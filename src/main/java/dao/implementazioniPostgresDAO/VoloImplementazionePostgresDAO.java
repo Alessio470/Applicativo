@@ -28,16 +28,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
     private static final String COL_STATO_VOLO = "statovolo";
     private static final String COL_NUMERO_GATE = "numeroGate";
 
-    /** Connessione JDBC attiva verso il database. */
-    private final Connection conn;
-
-    /**
-     * Crea un {@code VoloImplementazionePostgresDAO} con la connessione fornita.
-     *
-     * @param conn connessione JDBC da utilizzare
-     */
-    public VoloImplementazionePostgresDAO(Connection conn) {
-        this.conn = conn;
+    private Connection conn() throws SQLException {
+        return ConnessioneDatabase.getInstance().getConnection();
     }
 
     @Override
@@ -47,7 +39,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
                 "INSERT INTO volo(codicevolo, compagniaaerea, datavolo, orarioprevisto, ritardo, statovolo, aeroportoorigine, aeroportodestinazione, \"numeroGate\") " +
                         "VALUES (?,?,?,?,?,?,?,?,?)";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        Connection c = conn();
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setString(1, v.getCodiceV()); //codicevolo
             ps.setString(2, v.getCompagnia()); // compagniaaerea
@@ -70,7 +63,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
 
         String query = "SELECT * FROM volo as v WHERE v.statovolo= 1";
 
-        try (Statement st = conn.createStatement();
+        Connection c = conn();
+        try (Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
@@ -101,7 +95,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
 
         String query = "SELECT * FROM volo";
 
-        try (Statement st = conn.createStatement();
+        Connection c = conn();
+        try (Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
@@ -135,7 +130,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         final String sql =
                 "SELECT * FROM volo ORDER BY substring(codicevolo from 3)::int;";
 
-        try (Statement st = conn.createStatement();
+        Connection c = conn();
+        try (Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -170,9 +166,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
                             "    datavolo=?, orarioprevisto=?, statovolo=?, \"numeroGate\"=?, ritardo=? " +
                             "WHERE codicevolo=?";
 
-            // volendo qui potremmo usare direttamente la connessione 'conn'
-            try (Connection cn = ConnessioneDatabase.getInstance().getConnection();
-                 PreparedStatement ps = cn.prepareStatement(sql)) {
+            Connection c = conn();
+            try (PreparedStatement ps = c.prepareStatement(sql)) {
 
                 ps.setString(1, v.getCompagnia());
                 ps.setString(2, v.getAeroportoOrigine());
@@ -187,7 +182,7 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
                 ps.executeUpdate();
             }
         } catch (SQLException ex) {
-            throw new SQLException("Errore query di update" + ex);
+            throw new SQLException("Errore query di update: " + ex.getMessage(), ex);
         }
     }
 
@@ -220,7 +215,8 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
             sql.append(" AND ").append(COL_NUMERO_GATE).append(" = ?");
         }
 
-        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+        Connection c = conn();
+        try (PreparedStatement ps = c.prepareStatement(sql.toString())) {
             int i = 1;
             if (v.getCodiceV() != null && !v.getCodiceV().isEmpty()) {
                 ps.setString(i++, v.getCodiceV());
