@@ -93,7 +93,7 @@ public class Prenotazione {
     /**
      * Restituisce l'username dell’utente.
      *
-     * @return String username (se presente)
+     * @return username utente (se presente)
      */
 // --- Getter ---
     public String getUsernameUtente() { return usernameUtente; }
@@ -101,54 +101,54 @@ public class Prenotazione {
     /**
      * Restituisce il codice del volo prenotato.
      *
-     * @return String codice volo
+     * @return codice volo
      */
     public String getCodiceVolo() { return codiceVolo; }
 
     /**
      * Restituisce il nome del passeggero.
      *
-     * @return String nome passeggero
+     * @return nome passeggero
      */
     public String getNomePasseggero() { return nomePasseggero; }
 
     /**
      * Restituisce il cognome del passeggero.
      *
-     * @return String cognome passeggero
+     * @return cognome passeggero
      */
     public String getCognomePasseggero() { return cognomePasseggero; }
 
     /**
      * Restituisce il codice fiscale del passeggero.
      *
-     * @return String codice fiscale
+     * @return codice fiscale
      */
     public String getCodicefiscalepasseggero() { return codicefiscalepasseggero; }
 
     /**
      * Restituisce il numero del biglietto.
      *
-     * @return String numero biglietto
+     * @return numero biglietto
      */
     public String getNumeroBiglietto() { return numeroBiglietto; }
 
     /**
      * Restituisce il posto assegnato.
      *
-     * @return String posto
+     * @return posto
      */
     public String getPosto() { return posto; }
 
     /**
-     * @return {@code StatoPrenotazione} stato
+     * @return stato
      */
     public StatoPrenotazione getStato() { return stato; }
 
     /**
      * Restituisce il volo eventualmente associato.
      *
-     * @return {@code Volo} volo associato, se presente
+     * @return volo associato, se presente
      */
     public Volo getVoloassociato() {
         return voloassociato;
@@ -222,7 +222,7 @@ public class Prenotazione {
     /**
      * Indica se la prenotazione è confermata.
      *
-     * @return boolean {@code true} se lo stato è CONFERMATA, altrimenti {@code false}
+     * @return {@code true} se lo stato è CONFERMATA, altrimenti {@code false}
      */
 // --- Metodi utili ---
     public boolean isConfermata() {
@@ -233,7 +233,7 @@ public class Prenotazione {
      * Verifica se la prenotazione appartiene all’utente indicato.
      *
      * @param username username da verificare
-     * @return boolean {@code true} se l’username coincide con quello della prenotazione (se presente)
+     * @return {@code true} se l’username coincide con quello della prenotazione (se presente)
      */
     public boolean appartieneUtente(String username) {
         return usernameUtente != null && usernameUtente.equals(username);
@@ -244,7 +244,7 @@ public class Prenotazione {
      * <p>Mappatura: 1→IN_ATTESA, 2→CONFERMATA, 3→CANCELLATA.</p>
      *
      * @param stato codice numerico dello stato
-     * @return {@code StatoPrenotazione} stato convertito
+     * @return stato della prenotazione convertito in int
      * @throws IllegalArgumentException se il codice non è supportato
      */
     private StatoPrenotazione fromInt(int stato) {

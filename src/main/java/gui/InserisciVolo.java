@@ -234,7 +234,7 @@ public class InserisciVolo {
      * Restituisce il contenuto del campo, trimmato; restituisce stringa vuota se nullo.
      *
      * @param f campo di testo da leggere
-     * @return String testo trimmato o stringa vuota se mancante
+     * @return testo trimmato o stringa vuota se mancante
      */
     private String safe(JTextField f) {
         return (f == null || f.getText() == null) ? "" : f.getText().trim();

@@ -216,7 +216,7 @@ public class Controller {
      *
      * <p>In caso di errore di connessione/lettura mostra un messaggio e restituisce una lista vuota.</p>
      *
-     * @return {@code List<Volo>} lista (eventualmente vuota) di voli prenotabili
+     * @return lista (eventualmente vuota) di voli prenotabili
      */
     public List<Volo> getVoliPrenotabili() {
 
@@ -311,7 +311,7 @@ public class Controller {
     /**
      * Restituisce lo username dell’utente attualmente autenticato.
      *
-     * @return String username dell’utente corrente
+     * @return username dell’utente corrente
      */
     public String getUsernameUtente() {
             return u.getUsername();
@@ -322,7 +322,7 @@ public class Controller {
      *
      * <p>In caso di errore di connessione/lettura mostra un messaggio e restituisce una lista vuota.</p>
      *
-     * @return {@code List<Volo>} lista (eventualmente vuota) di voli
+     * @return lista (eventualmente vuota) di voli
      */
     public List<Volo> getVoli() {
         List<Volo> resultDB = new ArrayList<>();
@@ -390,7 +390,7 @@ public class Controller {
      *
      * <p>Delega a {@link VoloDAO#getVoliDaPerNapoli()} e converte data/orario a stringa lato DAO.</p>
      *
-     * @return {@code List<Volo>} lista (eventualmente vuota) di voli
+     * @return lista (eventualmente vuota) di voli
      */
     public List<Volo> getVoliDaPerNapoli() {
 
@@ -426,7 +426,7 @@ public class Controller {
     /**
      * Restituisce l’elenco dei gate disponibili.
      *
-     * @return {@code List<String>} lista (eventualmente vuota) di etichette/numero gate
+     * @return lista (eventualmente vuota) di numero gate
      */
     public List<String> getGates() {
 
@@ -457,7 +457,7 @@ public class Controller {
      *
      * <p>Delega a {@link PrenotazioneDAO#getPrenotazioniUtente(String)} usando lo username corrente.</p>
      *
-     * @return {@code List<Prenotazione>} lista (eventualmente vuota) di prenotazioni
+     * @return lista (eventualmente vuota) di prenotazioni
      */
     public List<Prenotazione> getPrenotazioniUtente() {
 
@@ -494,7 +494,7 @@ public class Controller {
      * @param data                  La data del volo.
      * @param orario                L'orario del volo.
      * @param gate                  Il gate del volo.
-     * @return {@code List<Volo>} una lista di voli che corrispondono ai criteri di ricerca.
+     * @return una lista di voli che corrispondono ai criteri di ricerca.
      */
     public List<Volo> cercaVoli(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, String gate) {
         List<Volo> resultDB = new ArrayList<>();
@@ -535,7 +535,7 @@ public class Controller {
      * Cerca le prenotazioni in base ai criteri specificati.
      *
      * @param p L'oggetto Prenotazione con i criteri di ricerca.
-     * @return {@code List<Prenotazione>} una lista di prenotazioni che corrispondono ai criteri di ricerca.
+     * @return una lista di prenotazioni che corrispondono ai criteri di ricerca.
      */
     public List<Prenotazione> getCercaPrenotazioni(Prenotazione p) {
 

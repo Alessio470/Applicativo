@@ -16,7 +16,7 @@ public interface PrenotazioneDAO {
      * Inserisce una nuova prenotazione nel database.
      *
      * @param prenotazione oggetto da inserire
-     * @return int numero di righe interessate (ad es. 1 se l’inserimento è andato a buon fine)
+     * @return numero di righe interessate (ad es. 1 se l’inserimento è andato a buon fine)
      * @throws SQLException in caso di errore SQL
      */
     int inserisciPrenotazione(Prenotazione prenotazione) throws SQLException;
@@ -25,7 +25,7 @@ public interface PrenotazioneDAO {
      * Restituisce tutte le prenotazioni associate a uno username.
      *
      * @param username username proprietario delle prenotazioni
-     * @return {@code List<Prenotazione>} lista di prenotazioni trovate (eventualmente vuota)
+     * @return lista di prenotazioni trovate (eventualmente vuota)
      * @throws SQLException in caso di errore SQL
      */
     List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException;
@@ -35,7 +35,7 @@ public interface PrenotazioneDAO {
      *
      * @param numeroBiglietto numero del biglietto (PK della tabella prenotazione)
      * @param username        username proprietario della prenotazione
-     * @return int numero di righe cancellate (0 se nessuna trovata)
+     * @return numero di righe cancellate (0 se nessuna trovata)
      * @throws SQLException in caso di errore SQL
      */
     int cancellaPrenotazione(String numeroBiglietto, String username) throws SQLException;
@@ -44,7 +44,7 @@ public interface PrenotazioneDAO {
      * Restituisce le prenotazioni di un utente che corrispondono ai criteri di ricerca.
      *
      * @param p l'oggetto Prenotazione con i criteri di ricerca
-     * @return {@code List<Prenotazione>} una lista di prenotazioni che corrispondono ai criteri di ricerca
+     * @return una lista di prenotazioni che corrispondono ai criteri di ricerca
      * @throws SQLException in caso di errore SQL
      */
     List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p) throws SQLException;

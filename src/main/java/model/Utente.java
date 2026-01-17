@@ -31,21 +31,21 @@ public abstract class Utente {
     /**
      * Restituisce lo username.
      *
-     * @return String username
+     * @return username
      */
     public String getUsername() { return username; }
 
     /**
      * Restituisce la password.
      *
-     * @return String password
+     * @return password
      */
     public String getPassword() { return password; }
 
     /**
      * Restituisce il ruolo dell’utente.
      *
-     * @return {@code RuoloUtente} ruolo utente
+     * @return ruolo utente
      */
     public RuoloUtente getRuolo() { return ruolo; }
 
@@ -74,7 +74,7 @@ public abstract class Utente {
      * Verifica se la password indicata coincide con quella dell’utente.
      *
      * @param pass password da verificare
-     * @return boolean {@code true} se coincide, altrimenti {@code false}
+     * @return {@code true} se coincide, altrimenti {@code false}
      */
     // Metodo utile per login
     public boolean verificaPassword(String pass) {

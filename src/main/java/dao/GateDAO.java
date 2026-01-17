@@ -14,7 +14,7 @@ public interface GateDAO {
      * <p>L’ordinamento è basato sulla parte numerica del codice,
      * ottenuta con substring dal secondo carattere e conversione a intero.</p>
      *
-     * @return {@code List<String>} lista (eventualmente vuota) di etichette di gate, ordinate per valore numerico
+     * @return lista (eventualmente vuota) di etichette di gate, ordinate per valore numerico
      * @throws SQLException in caso di errore durante l’esecuzione della query
      */
     List<String> getGates() throws SQLException;

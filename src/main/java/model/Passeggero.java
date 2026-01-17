@@ -35,21 +35,21 @@ public class Passeggero {
     /**
      * Restituisce il nome del passeggero.
      *
-     * @return String nome
+     * @return nome del passeggero
      */
     public String getNome() { return nome; }
 
     /**
      * Restituisce il cognome del passeggero.
      *
-     * @return String cognome
+     * @return cognome del passeggero
      */
     public String getCognome() { return cognome; }
 
     /**
      * Restituisce il codice fiscale del passeggero.
      *
-     * @return String codice fiscale
+     * @return codice fiscale del passeggero
      */
     public String getCodiceFiscale() { return codiceFiscale; }
 
