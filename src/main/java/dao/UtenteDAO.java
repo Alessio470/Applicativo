@@ -17,7 +17,7 @@ public interface UtenteDAO {
      * Verifica se esiste già un utente con lo username indicato.
      *
      * @param username username da cercare
-     * @return true se esiste almeno una corrispondenza, altrimenti false
+     * @return boolean true se esiste almeno una corrispondenza, altrimenti false
      * @throws SQLException in caso di errore SQL
      */
     boolean usernameExists(String username) throws SQLException;
@@ -27,7 +27,7 @@ public interface UtenteDAO {
      *
      * @param username username fornito
      * @param password password fornita
-     * @return l’utente autenticato, oppure null se le credenziali non corrispondono
+     * @return {@code Utente} l’utente autenticato, oppure null se le credenziali non corrispondono
      * @throws SQLException in caso di errore SQL
      */
     Utente login(String username, String password) throws SQLException;
@@ -36,7 +36,7 @@ public interface UtenteDAO {
      * Registra un nuovo utente nel database.
      *
      * @param utenteRegistrato istanza da salvare
-     * @return valore restituito dal RETURNING (di solito l’ID/indice del ruolo)
+     * @return int valore restituito dal RETURNING (di solito l’ID/indice del ruolo)
      * @throws SQLException in caso di errore SQL
      */
     int registraUtente(Utente utenteRegistrato) throws SQLException;

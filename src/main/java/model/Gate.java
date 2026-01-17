@@ -26,7 +26,7 @@ public class Gate {
     /**
      * Restituisce l'identificativo del gate.
      *
-     * @return numero del gate
+     * @return String numero del gate
      */
     public String getNumero() { return numero; }
 

@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Implementazione PostgreSQL di UtenteDAO.
+ * Implementazione PostgreSQL di {@link UtenteDAO}.
+ * <p>Fornisce le implementazioni concrete delle operazioni di accesso ai dati
+ * per la gestione degli utenti, utilizzando un database PostgreSQL.</p>
  */
 public class UtenteImplementazionePostgresDAO implements UtenteDAO {
 
@@ -48,6 +50,15 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
     // ------------------------------------------------------------
     //  login
     // ------------------------------------------------------------
+    /**
+     * Esegue il login di un utente nel database.
+     *
+     * @param username l'username dell'utente.
+     * @param password la password dell'utente.
+     * @return {@code Utente} l'oggetto utente se il login ha successo.
+     * @throws SQLException in caso di errore di accesso al database.
+     * @throws NullPointerException se le credenziali non sono valide.
+     */
     @Override
     public Utente login(String username, String password) throws SQLException {
         final String sql = "SELECT * FROM public.utente WHERE username = ? AND password = ?";

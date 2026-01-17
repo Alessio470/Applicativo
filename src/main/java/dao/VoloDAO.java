@@ -15,7 +15,7 @@ public interface VoloDAO {
      * Inserisce un nuovo volo a database.
      *
      * @param v volo da inserire
-     * @return numero di righe interessate (tipicamente 1)
+     * @return int numero di righe interessate (tipicamente 1)
      * @throws SQLException in caso di errore SQL
      */
     int registraVolo(Volo v) throws SQLException;
@@ -23,7 +23,7 @@ public interface VoloDAO {
     /**
      * Restituisce tutti i voli presenti a database.
      *
-     * @return lista di voli (eventualmente vuota)
+     * @return {@code List<Volo>} lista di voli (eventualmente vuota)
      * @throws SQLException in caso di errore SQL
      */
     List<Volo> getVoli() throws SQLException;
@@ -31,7 +31,7 @@ public interface VoloDAO {
     /**
      * Restituisce i voli prenotabili (stato = 1, cioè programmato).
      *
-     * @return lista di voli prenotabili (eventualmente vuota)
+     * @return {@code List<Volo>} lista di voli prenotabili (eventualmente vuota)
      * @throws SQLException in caso di errore SQL
      */
     List<Volo> getVoliPrenotabili() throws SQLException;
@@ -39,7 +39,7 @@ public interface VoloDAO {
     /**
      * Restituisce i voli (da/per Napoli) ordinati per suffisso numerico del codice.
      *
-     * @return lista di voli ordinati (eventualmente vuota)
+     * @return {@code List<Volo>} lista di voli ordinati (eventualmente vuota)
      * @throws SQLException in caso di errore SQL
      */
     List<Volo> getVoliDaPerNapoli() throws SQLException;
@@ -48,7 +48,7 @@ public interface VoloDAO {
      * Restituisce i voli che corrispondono ai criteri di ricerca.
      *
      * @param v volo con i criteri di ricerca
-     * @return lista di voli (eventualmente vuota)
+     * @return {@code List<Volo>} lista di voli (eventualmente vuota)
      * @throws SQLException in caso di errore SQL
      */
     List<Volo> cercaVoli(Volo v) throws SQLException;

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementazione PostgreSQL di VoloDAO.
- * <p>È sostanzialmente il vecchio VoloDAO, solo rinominato e fatto
- * implementare l’interfaccia.</p>
+ * Implementazione PostgreSQL di {@link VoloDAO}.
+ * <p>Fornisce le implementazioni concrete delle operazioni di accesso ai dati
+ * per la gestione dei voli, utilizzando un database PostgreSQL.</p>
  */
 public class VoloImplementazionePostgresDAO implements VoloDAO {
 

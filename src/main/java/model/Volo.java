@@ -95,63 +95,63 @@ public class Volo {
     /**
      * Restituisce il codice del volo.
      *
-     * @return codice volo
+     * @return String codice volo
      */
     public String getCodiceV() { return codicevolo; }
 
     /**
      * Restituisce la compagnia aerea.
      *
-     * @return compagnia
+     * @return String compagnia
      */
     public String getCompagnia() { return compagnia; }
 
     /**
      * Restituisce l’aeroporto di partenza.
      *
-     * @return aeroporto di origine
+     * @return String aeroporto di origine
      */
     public String getAeroportoOrigine() { return aeroportoOrigine; }
 
     /**
      * Restituisce l’aeroporto di arrivo.
      *
-     * @return aeroporto di destinazione
+     * @return String aeroporto di destinazione
      */
     public String getAeroportoDestinazione() { return aeroportoDestinazione; }
 
     /**
      * Restituisce la data in formato stringa {@code dd/MM/yyyy}.
      *
-     * @return data del volo
+     * @return String data del volo
      */
     public String getDataStr() { return data; }
 
     /**
      * Restituisce l’orario in formato stringa {@code HH:mm}.
      *
-     * @return orario previsto
+     * @return String orario previsto
      */
     public String getOrarioStr() { return orario; }
 
     /**
      * Restituisce il ritardo espresso in minuti.
      *
-     * @return ritardo in minuti
+     * @return int ritardo in minuti
      */
     public int getRitardoMinuti() { return ritardoMinuti; }
 
     /**
      * Restituisce lo stato operativo del volo.
      *
-     * @return stato
+     * @return {@code StatoVolo} stato
      */
     public StatoVolo getStato() { return stato; }
 
     /**
      * Restituisce il gate assegnato.
      *
-     * @return gate (se presente)
+     * @return String gate (se presente)
      */
     public String getGate() { return gate; }
 
@@ -224,7 +224,7 @@ public class Volo {
     /**
      * Indica se il volo parte da Napoli.
      *
-     * @return {@code true} se l’aeroporto di origine è “Napoli”
+     * @return boolean {@code true} se l’aeroporto di origine è “Napoli”
      */
 // Helper per distinguere arrivi e partenze
     public boolean isPartenzaDaNapoli() { return "Napoli".equalsIgnoreCase(aeroportoOrigine); }
@@ -232,7 +232,7 @@ public class Volo {
     /**
      * Indica se il volo arriva a Napoli.
      *
-     * @return {@code true} se l’aeroporto di destinazione è “Napoli”
+     * @return boolean {@code true} se l’aeroporto di destinazione è “Napoli”
      */
     public boolean isArrivoANapoli() { return "Napoli".equalsIgnoreCase(aeroportoDestinazione); }
 
@@ -241,7 +241,7 @@ public class Volo {
     /**
      * Converte l’orario in {@link LocalTime} usando il formato {@code HH:mm}.
      *
-     * @return l’orario convertito; se non interpretabile, valore mancante
+     * @return {@code LocalTime} l’orario convertito; se non interpretabile, valore mancante
      */
     public LocalTime getOrarioLocalTime() {
         try {
@@ -255,7 +255,7 @@ public class Volo {
     /**
      * Converte l’orario in {@link java.sql.Time}.
      *
-     * @return l’orario in formato SQL
+     * @return {@code Time} l’orario in formato SQL
      * @throws NullPointerException se l’orario non è interpretabile
      */
     public Time getOrarioSql() {
@@ -269,7 +269,7 @@ public class Volo {
     /**
      * Converte la data in {@link java.util.Date} usando il formato {@code dd/MM/yyyy}.
      *
-     * @return la data convertita; se non interpretabile, valore mancante
+     * @return {@code java.util.Date} la data convertita; se non interpretabile, valore mancante
      */
     public java.util.Date getDataDate() {
         try {
@@ -284,7 +284,7 @@ public class Volo {
     /**
      * Converte la data in {@link java.sql.Date}.
      *
-     * @return la data in formato SQL
+     * @return {@code java.sql.Date} la data in formato SQL
      * @throws NullPointerException se la data non è interpretabile
      */
     public java.sql.Date getDatasql() {
@@ -297,7 +297,7 @@ public class Volo {
     /**
      * Restituisce l’indice dello stato (ordinal) a partire da 0.
      *
-     * @return intero corrispondente alla posizione dell’enum
+     * @return int intero corrispondente alla posizione dell’enum
      */
     public int getStatoToInt() {
         if (this.stato == null) {
@@ -311,7 +311,7 @@ public class Volo {
      * <p>Mappatura: 1→PROGRAMMATO, 2→DECOLLATO, 3→IN_RITARDO, 4→ATTERRATO, 5→CANCELLATO.</p>
      *
      * @param codice codice numerico dello stato
-     * @return stato del volo
+     * @return {@code StatoVolo} stato del volo
      * @throws IllegalArgumentException se il codice non è supportato
      */
     public static StatoVolo fromInt(int codice) {

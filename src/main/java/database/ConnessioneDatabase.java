@@ -39,7 +39,7 @@ public class ConnessioneDatabase {
     /**
      * Restituisce l’istanza singleton, creandola se assente o se la connessione è chiusa.
      *
-     * @return istanza di {@code ConnessioneDatabase}
+     * @return {@code ConnessioneDatabase} istanza di {@code ConnessioneDatabase}
      * @throws SQLException se l’inizializzazione fallisce
      */
     public static ConnessioneDatabase getInstance() throws SQLException {
@@ -52,7 +52,7 @@ public class ConnessioneDatabase {
     /**
      * Restituisce la connessione JDBC attiva.
      *
-     * @return connessione al database
+     * @return {@code Connection} connessione al database
      */
     public Connection getConnection() {
         return connection;
