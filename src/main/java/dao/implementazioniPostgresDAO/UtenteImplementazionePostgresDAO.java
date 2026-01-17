@@ -1,6 +1,7 @@
 package dao.implementazioniPostgresDAO;
 
 import dao.UtenteDAO;
+import database.ConnessioneDatabase;
 import model.Utente;
 import model.UtenteAmministratore;
 import model.UtenteGenerico;
@@ -17,16 +18,11 @@ import java.sql.SQLException;
  * per la gestione degli utenti, utilizzando un database PostgreSQL.</p>
  */
 public class UtenteImplementazionePostgresDAO implements UtenteDAO {
-
-    private final Connection conn;
-
     /**
      * Costruisce un'istanza di UtenteImplementazionePostgresDAO.
-     *
-     * @param conn la connessione al database.
      */
-    public UtenteImplementazionePostgresDAO(Connection conn) {
-        this.conn = conn;
+    private Connection conn() throws SQLException {
+        return ConnessioneDatabase.getInstance().getConnection();
     }
 
     // ------------------------------------------------------------
@@ -39,7 +35,7 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
     public boolean usernameExists(String username) throws SQLException {
         final String sql = "SELECT 1 FROM public.utente WHERE username = ?";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn().prepareStatement(sql)) {
             ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
@@ -64,7 +60,7 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
         final String sql = "SELECT * FROM public.utente WHERE username = ? AND password = ?";
         Utente utenteTrovato = null;
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn().prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.setString(2, password);
 
@@ -115,10 +111,11 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
                 "INSERT INTO public.utente (username, password, ruoloutente) " +
                         "VALUES (?, ?, ?) RETURNING ruoloutente";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn().prepareStatement(sql)) {
             ps.setString(1, utenteRegistrato.getUsername());
             ps.setString(2, utenteRegistrato.getPassword());
-            ps.setInt(3, utenteRegistrato.getRuolo().ordinal());
+            int ruoloDb = utenteRegistrato.getRuolo().ordinal() + 1;
+            ps.setInt(3, ruoloDb);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

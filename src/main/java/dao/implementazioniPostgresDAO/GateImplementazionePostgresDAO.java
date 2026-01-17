@@ -1,6 +1,7 @@
 package dao.implementazioniPostgresDAO;
 
 import dao.GateDAO;
+import database.ConnessioneDatabase;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,16 +16,8 @@ import java.util.List;
  */
 public class GateImplementazionePostgresDAO implements GateDAO {
 
-    /** Connessione JDBC attiva verso il database. */
-    private final Connection conn;
-
-    /**
-     * Crea un {@code GateImplementazionePostgresDAO} con la connessione fornita.
-     *
-     * @param conn connessione JDBC da utilizzare
-     */
-    public GateImplementazionePostgresDAO(Connection conn) {
-        this.conn = conn;
+    private Connection conn() throws SQLException {
+        return ConnessioneDatabase.getInstance().getConnection();
     }
 
     /**
@@ -39,7 +32,7 @@ public class GateImplementazionePostgresDAO implements GateDAO {
 
         List<String> resultDB = new ArrayList<>();
 
-        try (Statement st = conn.createStatement();
+        try (Statement st = conn().createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {

@@ -5,10 +5,9 @@ import dao.GateDAO;
 import dao.PrenotazioneDAO;
 import dao.implementazioniPostgresDAO.PrenotazioneImplementazionePostgresDAO;
 import dao.implementazioniPostgresDAO.GateImplementazionePostgresDAO;
-import gui.HomeUtenteGenerico;
-import gui.HomepageAmministratore;
 
 import model.Prenotazione;
+import model.Utente;
 import model.UtenteAmministratore;
 import model.UtenteGenerico;
 import model.Volo;
@@ -18,16 +17,13 @@ import dao.UtenteDAO;
 import dao.implementazioniPostgresDAO.UtenteImplementazionePostgresDAO;
 
 import javax.swing.*;
-import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import database.ConnessioneDatabase;
+import java.sql.SQLException;
 
 import dao.VoloDAO;
 import dao.implementazioniPostgresDAO.VoloImplementazionePostgresDAO;
-import model.Utente;
 
 
 /**
@@ -51,52 +47,35 @@ public class Controller {
     public void doLogoutUser() { u=null; }
 
     /**
-     * Autentica un utente e apre la home corrispondente al ruolo.
+     * Autentica un utente sulla base delle credenziali fornite.
      *
-     * <p>In caso di credenziali non valide o errori DB mostra un {@link JOptionPane} con il messaggio.</p>
+     * <p>Il risultato dell’autenticazione viene restituito al login,
+     * che provvede ad aggiornare l’interfaccia grafica e a mostrare la schermata appropriata.</p>
      *
-     * @param user  username inserito
-     * @param pass  password inserita
-     * @param frame frame padre per i messaggi/modali
+     * @param user username inserito
+     * @param pass password inserita
+     * @return il ruolo dell’utente autenticato, oppure {@code null} se le credenziali non sono valide
+     * @throws SQLException in caso di errore di accesso al database
      */
-    public void doLogin(String user, String pass, JFrame frame) {
-        // Inizializziamo a null per sicurezza
-        UtenteDAO utenteDAO = null;
+    public RuoloUtente doLogin(String user, String pass) throws SQLException {
+
+        UtenteDAO utenteDAO = new UtenteImplementazionePostgresDAO();
 
         try {
-            // 1. TENTATIVO DI CONNESSIONE E ISTANZA DAO
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            utenteDAO = new UtenteImplementazionePostgresDAO(conn);
+            Utente logged = utenteDAO.login(user, pass);
 
-            // 2. TENTATIVO DI LOGIN
-            // Se le credenziali sono errate, il DAO lancia NullPointerException
-            u = utenteDAO.login(user, pass);
-
-            // 3. SE SIAMO QUI, IL LOGIN È RIUSCITO (u non è null)
-            if (u.getRuolo() == RuoloUtente.AMMINISTRATORE) {
-                new HomepageAmministratore(frame, this);
-            } else if (u.getRuolo() == RuoloUtente.GENERICO) {
-                new HomeUtenteGenerico(frame, this);
-            } else {
-                JOptionPane.showMessageDialog(frame, "Ruolo utente non riconosciuto");
-                return;
+            if (logged == null) {
+                return null; // credenziali errate
             }
 
-            System.out.println("Loggato con -> Username: " + u.getUsername() + " | Password: " + u.getPassword());
+            this.u = logged;
+            return logged.getRuolo();
 
         } catch (NullPointerException ex) {
-            // Cattura il "throw new NullPointerException" che hai messo nel DAO
-            JOptionPane.showMessageDialog(frame, "Credenziali non valide!");
-
-        } catch (SQLException ex) {
-            // Cattura errori di rete, database o driver
-            JOptionPane.showMessageDialog(frame, "Errore Database:\n" + ex.getMessage());
-
-        } catch (Exception ex) {
-            // Cattura qualsiasi altro errore (es. utenteDAO che è rimasto null)
-            JOptionPane.showMessageDialog(frame, "Errore imprevisto:\n" + ex.getMessage());
+            return null;
         }
     }
+
 
 
     /**
@@ -115,10 +94,9 @@ public class Controller {
 
             UtenteDAO utenteDAO=null;
 
-            //Try del dao
+        // Connessione DB
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            utenteDAO = new UtenteImplementazionePostgresDAO(conn);
+            utenteDAO = new UtenteImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -142,13 +120,24 @@ public class Controller {
             return;
         }
 
+        RuoloUtente ruoloEnum;
+        try {
+            ruoloEnum = RuoloUtente.valueOf(ruolo);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(frame, "Ruolo non valido.");
+            return;
+        }
+
         //REGISTRAZIONE UTENTE
         Utente utenteRegistrato = null;
 
-        if (ruolo.equals(RuoloUtente.GENERICO)) {
+        if (ruoloEnum == RuoloUtente.GENERICO) {
             utenteRegistrato = new UtenteGenerico(username, password);
-        } else {
+        } else if (ruoloEnum == RuoloUtente.AMMINISTRATORE) {
             utenteRegistrato = new UtenteAmministratore(username, password);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Ruolo utente non riconosciuto.");
+            return;
         }
 
         try {
@@ -208,8 +197,7 @@ public class Controller {
         // DAO
         VoloDAO voloDAO = null;
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            voloDAO = new VoloImplementazionePostgresDAO(conn);
+            voloDAO = new VoloImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
             return;
@@ -237,8 +225,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            voloDAO = new VoloImplementazionePostgresDAO(conn);
+            voloDAO = new VoloImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -273,8 +260,7 @@ public class Controller {
         Prenotazione prenotazione = new Prenotazione(null, this.getUsernameUtente(), codiceVolo, nomePasseggero, cognomePasseggero, posto, stato, codicefiscalepasseggero);
 
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            PrenotazioneDAO prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO(conn);
+            PrenotazioneDAO prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO();
             prenotazioneDAO.inserisciPrenotazione(prenotazione);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore durante l'inserimento della prenotazione:\n" + ex.getMessage());
@@ -297,8 +283,7 @@ public class Controller {
 
         // Connessione al DB
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO(conn);
+            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());return false;
         }
@@ -346,8 +331,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            voloDAO = new VoloImplementazionePostgresDAO(conn);
+            voloDAO = new VoloImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -388,8 +372,7 @@ public class Controller {
         //Istanzia il DAO con connessione
         VoloDAO voloDAO;
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            voloDAO = new VoloImplementazionePostgresDAO(conn);
+            voloDAO = new VoloImplementazionePostgresDAO();
         } catch (Exception ex) {
             throw new RuntimeException("Errore connessione DB: " + ex.getMessage(), ex);
         }
@@ -420,8 +403,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            voloDAO = new VoloImplementazionePostgresDAO(conn);
+            voloDAO = new VoloImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -452,8 +434,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            gateDAO = new GateImplementazionePostgresDAO(conn);
+            gateDAO = new GateImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -484,8 +465,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO(conn);
+            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -522,8 +502,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            voloDAO = new VoloImplementazionePostgresDAO(conn);
+            voloDAO = new VoloImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }
@@ -564,8 +543,7 @@ public class Controller {
 
         //Connessione al db
         try {
-            Connection conn = ConnessioneDatabase.getInstance().getConnection();
-            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO(conn);
+            prenotazioneDAO = new PrenotazioneImplementazionePostgresDAO();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Errore connessione DB:\n" + ex.getMessage());
         }

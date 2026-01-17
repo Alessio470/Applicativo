@@ -1,10 +1,12 @@
 package gui;
 
 import controller.Controller;
+import model.enums.RuoloUtente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 
 /**
@@ -41,9 +43,14 @@ public class Login {
 
 
     /**
-     * Inizializza la schermata di login e registra i listener dei pulsanti.
-     * <p>Login: invoca {@link controller.Controller#doLogin(String, String, JFrame)} e nasconde il frame.
-     * <p>Registrati: apre la finestra di registrazione e nasconde il frame.
+     * Inizializza la schermata di login.
+     *
+     * <p>Il pulsante Login delega l’autenticazione al {@link controller.Controller},
+     * valuta l’esito restituito e, in base al ruolo dell’utente autenticato,
+     * apre la schermata home appropriata.</p>
+     *
+     * <p>Il pulsante Registrati apre la finestra di registrazione
+     * mantenendo la gestione della navigazione all’interno della GUI.</p>
      */
     public Login() {
         controller = new Controller();
@@ -52,10 +59,41 @@ public class Login {
         ButtonLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.doLogin(FieldUsername.getText().trim(), new String(FieldPassword.getPassword()), frame);
-                frame.setVisible(false);
+
+                String username = FieldUsername.getText().trim();
+                String password = new String(FieldPassword.getPassword());
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Inserisci username e password.");
+                    return;
+                }
+
+                try {
+                    RuoloUtente ruolo = controller.doLogin(username, password);
+
+                    if (ruolo == null) {
+                        JOptionPane.showMessageDialog(frame, "Credenziali non valide!");
+                        return;
+                    }
+
+                    if (ruolo == RuoloUtente.AMMINISTRATORE) {
+                        new HomepageAmministratore(frame, controller);
+                        frame.setVisible(false);
+                    } else if (ruolo == RuoloUtente.GENERICO) {
+                        new HomeUtenteGenerico(frame, controller);
+                        frame.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Ruolo utente non riconosciuto.");
+                    }
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frame, "Errore Database:\n" + ex.getMessage());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "Errore imprevisto:\n" + ex.getMessage());
+                }
             }
-        });//Parentesi ButtonLogin
+        });
+
 
         //Listener "Registrati" (placeholder finché non implementi la GUI)
         ButtonRegistrati.addActionListener(new ActionListener() {

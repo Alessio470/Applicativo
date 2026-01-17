@@ -3,6 +3,8 @@ package dao.implementazioniPostgresDAO;
 import dao.PrenotazioneDAO;
 import model.Prenotazione;
 import model.Volo;
+import database.ConnessioneDatabase;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,16 +21,8 @@ import java.util.List;
  */
 public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
 
-    /** Connessione JDBC attiva verso il database. */
-    private final Connection conn;
-
-    /**
-     * Crea un {@code PrenotazioneImplementazionePostgresDAO} con la connessione fornita.
-     *
-     * @param conn connessione JDBC da utilizzare
-     */
-    public PrenotazioneImplementazionePostgresDAO(Connection conn) {
-        this.conn = conn;
+    private Connection conn() throws SQLException {
+        return ConnessioneDatabase.getInstance().getConnection();
     }
 
     // ------------------------------------------------------------
@@ -46,7 +40,7 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
                         "nomepasseggero, cognomepasseggero, codicefiscalepasseggero" +
                         ") VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn().prepareStatement(sql)) {
 
             ps.setString(1, prenotazione.getPosto());
             // Nel codice originale veniva usato ordinal(), quindi manteniamo il comportamento
@@ -79,7 +73,7 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
                         "JOIN volo AS v ON p.codvolo = v.codicevolo " +
                         "WHERE p.username = ?";
 
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try (PreparedStatement ps = conn().prepareStatement(query)) {
             ps.setString(1, username);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -146,7 +140,7 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
                 "DELETE FROM prenotazione " +
                         "WHERE numerobiglietto = ? AND username = ?";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn().prepareStatement(sql)) {
             ps.setString(1, numeroBiglietto);
             ps.setString(2, username);
 
@@ -208,7 +202,7 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
         }
         // --- Fine costruzione dinamica ---
 
-        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+        try (PreparedStatement ps = conn().prepareStatement(sql.toString())) {
 
             // Inserimento dinamico dei parametri
             for (int i = 0; i < parameters.size(); i++) {
