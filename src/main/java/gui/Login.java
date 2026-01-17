@@ -34,7 +34,7 @@ public class Login {
     private JLabel LabelTitolo;
 
     /**
-     * The constant frame.
+     * Frame principale della schermata di login.
      */
     public static JFrame frame;
     private Controller controller;
