@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"controller"},{"l":"DAO"},{"l":"database"},{"l":"gui"},{"l":"model"},{"l":"model.enums"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"controller"},{"l":"dao"},{"l":"dao.implementazioniPostgresDAO"},{"l":"database"},{"l":"gui"},{"l":"model"},{"l":"model.enums"}];updateSearchResults();
