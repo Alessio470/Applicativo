@@ -40,15 +40,15 @@ public class Volo {
     /**
      * Crea un volo specificando lo stato come enum.
      *
-     * @param codicev codice del volo
-     * @param compagnia compagnia aerea
-     * @param aeroportoOrigine aeroporto di partenza
+     * @param codicev               codice del volo
+     * @param compagnia             compagnia aerea
+     * @param aeroportoOrigine      aeroporto di partenza
      * @param aeroportoDestinazione aeroporto di arrivo
-     * @param data data in formato {@code dd/MM/yyyy}
-     * @param orario orario in formato {@code HH:mm}
-     * @param ritardoMinuti ritardo in minuti
-     * @param stato stato operativo
-     * @param gate gate assegnato (facoltativo)
+     * @param data                  data in formato {@code dd/MM/yyyy}
+     * @param orario                orario in formato {@code HH:mm}
+     * @param ritardoMinuti         ritardo in minuti
+     * @param stato                 stato operativo
+     * @param gate                  gate assegnato (facoltativo)
      */
     public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, StatoVolo stato, String gate) {
         this.codicevolo = codicev;
@@ -66,15 +66,15 @@ public class Volo {
      * Crea un volo specificando lo stato come intero.
      * <p>La conversione segue {@link #fromInt(int)}.</p>
      *
-     * @param codicev codice del volo
-     * @param compagnia compagnia aerea
-     * @param aeroportoOrigine aeroporto di partenza
+     * @param codicev               codice del volo
+     * @param compagnia             compagnia aerea
+     * @param aeroportoOrigine      aeroporto di partenza
      * @param aeroportoDestinazione aeroporto di arrivo
-     * @param data data in formato {@code dd/MM/yyyy}
-     * @param orario orario in formato {@code HH:mm}
-     * @param ritardoMinuti ritardo in minuti
-     * @param stato codice numerico dello stato
-     * @param gate gate assegnato (facoltativo)
+     * @param data                  data in formato {@code dd/MM/yyyy}
+     * @param orario                orario in formato {@code HH:mm}
+     * @param ritardoMinuti         ritardo in minuti
+     * @param stato                 codice numerico dello stato
+     * @param gate                  gate assegnato (facoltativo)
      * @throws IllegalArgumentException se il codice di stato non è supportato
      */
     public Volo(String codicev, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, int ritardoMinuti, int stato, String gate) {
@@ -226,7 +226,7 @@ public class Volo {
      *
      * @return {@code true} se l’aeroporto di origine è “Napoli”
      */
-    // Helper per distinguere arrivi e partenze
+// Helper per distinguere arrivi e partenze
     public boolean isPartenzaDaNapoli() { return "Napoli".equalsIgnoreCase(aeroportoOrigine); }
 
     /**

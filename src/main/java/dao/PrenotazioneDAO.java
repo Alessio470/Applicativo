@@ -34,7 +34,7 @@ public interface PrenotazioneDAO {
      * Cancella una prenotazione dato il numero di biglietto e lo username.
      *
      * @param numeroBiglietto numero del biglietto (PK della tabella prenotazione)
-     * @param username username proprietario della prenotazione
+     * @param username        username proprietario della prenotazione
      * @return numero di righe cancellate (0 se nessuna trovata)
      * @throws SQLException in caso di errore SQL
      */

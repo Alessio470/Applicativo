@@ -5,10 +5,16 @@ package model.enums;
  * <p>Indica l’esito del processo di richiesta/acquisto.</p>
  */
 public enum StatoPrenotazione {
-    /** Prenotazione confermata. */
+    /**
+     * Prenotazione confermata.
+     */
     CONFERMATA,
-    /** Prenotazione registrata ma in attesa di conferma. */
+    /**
+     * Prenotazione registrata ma in attesa di conferma.
+     */
     IN_ATTESA,
-    /** Prenotazione annullata. */
+    /**
+     * Prenotazione annullata.
+     */
     CANCELLATA
 }

@@ -5,14 +5,24 @@ package model.enums;
  * <p>Coprono l’intero ciclo: pianificazione, partenza, eventuale ritardo, arrivo, cancellazione.</p>
  */
 public enum StatoVolo {
-    /** Volo pianificato e non ancora partito. */
+    /**
+     * Volo pianificato e non ancora partito.
+     */
     PROGRAMMATO,
-    /** Volo decollato. */
+    /**
+     * Volo decollato.
+     */
     DECOLLATO,
-    /** Volo con ritardo comunicato. */
+    /**
+     * Volo con ritardo comunicato.
+     */
     IN_RITARDO,
-    /** Volo atterrato. */
+    /**
+     * Volo atterrato.
+     */
     ATTERRATO,
-    /** Volo cancellato. */
+    /**
+     * Volo cancellato.
+     */
     CANCELLATO
 }

@@ -270,6 +270,12 @@ public class Controller {
      *
      * <p>Genera l’oggetto {@link Prenotazione} con stato CONFERMATA e
      * lo inserisce tramite {@link PrenotazioneDAO#inserisciPrenotazione(Prenotazione)}.</p>
+     *
+     * @param codiceVolo              il codice volo
+     * @param nomePasseggero          il nome del passeggero
+     * @param cognomePasseggero       il cognome del passeggero
+     * @param posto                   il codice del posto
+     * @param codicefiscalepasseggero il codice fiscale del passeggero
      */
     public void effettuaPrenotazione(String codiceVolo, String nomePasseggero, String cognomePasseggero, String posto, String codicefiscalepasseggero) {
 
@@ -513,13 +519,13 @@ public class Controller {
     /**
      * Cerca i voli in base a diversi criteri.
      *
-     * @param codiceVolo Il codice del volo da cercare.
-     * @param compagnia La compagnia aerea del volo.
-     * @param aeroportoOrigine L'aeroporto di origine del volo.
+     * @param codiceVolo            Il codice del volo da cercare.
+     * @param compagnia             La compagnia aerea del volo.
+     * @param aeroportoOrigine      L'aeroporto di origine del volo.
      * @param aeroportoDestinazione L'aeroporto di destinazione del volo.
-     * @param data La data del volo.
-     * @param orario L'orario del volo.
-     * @param gate Il gate del volo.
+     * @param data                  La data del volo.
+     * @param orario                L'orario del volo.
+     * @param gate                  Il gate del volo.
      * @return una lista di voli che corrispondono ai criteri di ricerca.
      */
     public List<Volo> cercaVoli(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, String gate) {

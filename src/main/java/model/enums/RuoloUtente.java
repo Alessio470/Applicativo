@@ -5,8 +5,12 @@ package model.enums;
  * <p>Distingue tra utenti standard e amministratori.</p>
  */
 public enum RuoloUtente {
-    /** Utente con privilegi standard. */
+    /**
+     * Utente con privilegi standard.
+     */
     GENERICO,
-    /** Utente con privilegi amministrativi. */
+    /**
+     * Utente con privilegi amministrativi.
+     */
     AMMINISTRATORE
 }

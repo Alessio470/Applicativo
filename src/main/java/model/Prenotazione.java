@@ -42,13 +42,13 @@ public class Prenotazione {
     /**
      * Crea una prenotazione specificando tutti i dati, con lo stato come valore dell’enum {@link StatoPrenotazione}.
      *
-     * @param numeroBiglietto identificativo del biglietto
-     * @param usernameUtente username dell’utente (facoltativo)
-     * @param codiceVolo codice del volo
-     * @param nomePasseggero nome del passeggero
-     * @param cognomePasseggero cognome del passeggero
-     * @param posto posto a sedere
-     * @param stato stato della prenotazione
+     * @param numeroBiglietto         identificativo del biglietto
+     * @param usernameUtente          username dell’utente (facoltativo)
+     * @param codiceVolo              codice del volo
+     * @param nomePasseggero          nome del passeggero
+     * @param cognomePasseggero       cognome del passeggero
+     * @param posto                   posto a sedere
+     * @param stato                   stato della prenotazione
      * @param codicefiscalepasseggero codice fiscale del passeggero
      */
     public Prenotazione(String numeroBiglietto,String usernameUtente, String codiceVolo, String nomePasseggero,String cognomePasseggero,String posto, StatoPrenotazione stato, String codicefiscalepasseggero) {
@@ -67,13 +67,13 @@ public class Prenotazione {
      * Crea una prenotazione specificando lo stato come intero (verrà convertito).
      * <p>La conversione usa {@link #fromInt(int)} con la mappatura: 1→IN_ATTESA, 2→CONFERMATA, 3→CANCELLATA.</p>
      *
-     * @param numeroBiglietto identificativo del biglietto
-     * @param usernameUtente username dell’utente (facoltativo)
-     * @param codiceVolo codice del volo
-     * @param nomePasseggero nome del passeggero
-     * @param cognomePasseggero cognome del passeggero
-     * @param posto posto a sedere
-     * @param stato stato della prenotazione come intero (1, 2, 3)
+     * @param numeroBiglietto         identificativo del biglietto
+     * @param usernameUtente          username dell’utente (facoltativo)
+     * @param codiceVolo              codice del volo
+     * @param nomePasseggero          nome del passeggero
+     * @param cognomePasseggero       cognome del passeggero
+     * @param posto                   posto a sedere
+     * @param stato                   stato della prenotazione come intero (1, 2, 3)
      * @param codicefiscalepasseggero codice fiscale del passeggero
      * @throws IllegalArgumentException se il codice stato non è supportato
      */
@@ -95,7 +95,7 @@ public class Prenotazione {
      *
      * @return username (se presente)
      */
-    // --- Getter ---
+// --- Getter ---
     public String getUsernameUtente() { return usernameUtente; }
 
     /**
@@ -161,7 +161,7 @@ public class Prenotazione {
      *
      * @param usernameUtente username da impostare
      */
-    // --- Setter ---
+// --- Setter ---
     public void setUsernameUtente(String usernameUtente) { this.usernameUtente = usernameUtente; }
 
     /**
@@ -226,7 +226,7 @@ public class Prenotazione {
      *
      * @return {@code true} se lo stato è CONFERMATA, altrimenti {@code false}
      */
-    // --- Metodi utili ---
+// --- Metodi utili ---
     public boolean isConfermata() {
         return stato == StatoPrenotazione.CONFERMATA;
     }

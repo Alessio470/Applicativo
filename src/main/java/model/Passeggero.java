@@ -19,8 +19,8 @@ public class Passeggero {
     /**
      * Crea un passeggero con i dati forniti.
      *
-     * @param nome nome del passeggero
-     * @param cognome cognome del passeggero
+     * @param nome          nome del passeggero
+     * @param cognome       cognome del passeggero
      * @param codiceFiscale codice fiscale del passeggero
      */
     public Passeggero(String nome, String cognome, String codiceFiscale) {
