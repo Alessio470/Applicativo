@@ -40,6 +40,9 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         this.conn = conn;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int registraVolo(Volo v) throws SQLException {
 
@@ -63,6 +66,9 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Volo> getVoliPrenotabili() throws SQLException {
 
@@ -94,6 +100,9 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         return voli;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Volo> getVoli() throws SQLException {
 
@@ -127,6 +136,9 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         return voli;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Volo> getVoliDaPerNapoli() throws SQLException {
 
@@ -160,6 +172,9 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         return resultDB;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateVolo(Volo v) throws SQLException {
 
@@ -191,6 +206,9 @@ public class VoloImplementazionePostgresDAO implements VoloDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Volo> cercaVoli(Volo v) throws SQLException {
         List<Volo> voli = new ArrayList<>();

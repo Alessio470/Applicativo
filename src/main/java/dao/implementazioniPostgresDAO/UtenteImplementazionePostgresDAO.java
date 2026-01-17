@@ -18,6 +18,11 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
 
     private final Connection conn;
 
+    /**
+     * Costruisce un'istanza di UtenteImplementazionePostgresDAO.
+     *
+     * @param conn la connessione al database.
+     */
     public UtenteImplementazionePostgresDAO(Connection conn) {
         this.conn = conn;
     }
@@ -25,6 +30,9 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
     // ------------------------------------------------------------
     //  usernameExists
     // ------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean usernameExists(String username) throws SQLException {
         final String sql = "SELECT 1 FROM public.utente WHERE username = ?";
@@ -79,6 +87,9 @@ public class UtenteImplementazionePostgresDAO implements UtenteDAO {
     // ------------------------------------------------------------
     //  registraUtente
     // ------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int registraUtente(Utente utenteRegistrato) throws SQLException {
 

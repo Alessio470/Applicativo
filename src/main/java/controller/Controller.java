@@ -256,9 +256,8 @@ public class Controller {
     /**
      * Effettua una prenotazione confermata per l’utente loggato.
      *
-     * <p>Genera l’oggetto {@link Prenotazione} con stato confermato e invoca
-     * {@link PrenotazioneDAO#inserisciPrenotazione(Prenotazione)}.
-     * Eventuali errori vengono loggati/mostrati.</p>
+     * <p>Genera l’oggetto {@link Prenotazione} con stato CONFERMATA e
+     * lo inserisce tramite {@link PrenotazioneDAO#inserisciPrenotazione(Prenotazione)}.</p>
      *
      * @param codiceVolo codice del volo
      * @param nomePasseggero nome del passeggero
@@ -511,6 +510,18 @@ public class Controller {
     }//Fine Parentesi getPrenotazioniUtente
 
 
+    /**
+     * Cerca i voli in base a diversi criteri.
+     *
+     * @param codiceVolo Il codice del volo da cercare.
+     * @param compagnia La compagnia aerea del volo.
+     * @param aeroportoOrigine L'aeroporto di origine del volo.
+     * @param aeroportoDestinazione L'aeroporto di destinazione del volo.
+     * @param data La data del volo.
+     * @param orario L'orario del volo.
+     * @param gate Il gate del volo.
+     * @return una lista di voli che corrispondono ai criteri di ricerca.
+     */
     public List<Volo> cercaVoli(String codiceVolo, String compagnia, String aeroportoOrigine, String aeroportoDestinazione, String data, String orario, String gate) {
         List<Volo> resultDB = new ArrayList<>();
         VoloDAO voloDAO = null;
@@ -547,6 +558,12 @@ public class Controller {
     }
 
 
+    /**
+     * Cerca le prenotazioni in base ai criteri specificati.
+     *
+     * @param p L'oggetto Prenotazione con i criteri di ricerca.
+     * @return una lista di prenotazioni che corrispondono ai criteri di ricerca.
+     */
     public List<Prenotazione> getCercaPrenotazioni(Prenotazione p) {
 
         PrenotazioneDAO prenotazioneDAO=null;

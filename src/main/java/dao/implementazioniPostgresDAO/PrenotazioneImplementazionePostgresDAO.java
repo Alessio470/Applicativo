@@ -35,6 +35,9 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
     // INSERT
     // ------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int inserisciPrenotazione(Prenotazione prenotazione) throws SQLException {
         final String sql =
@@ -63,6 +66,9 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
     // SELECT
     // ------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Prenotazione> getPrenotazioniUtente(String username) throws SQLException {
         List<Prenotazione> prenotazioni = new ArrayList<>();
@@ -131,6 +137,9 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
     // SELECT
     // ------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int cancellaPrenotazione(String numeroBiglietto, String username) throws SQLException {
         final String sql =
@@ -148,6 +157,9 @@ public class PrenotazioneImplementazionePostgresDAO implements PrenotazioneDAO {
     // ------------------------------------------------------------
     // DELETE
     // ------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p) throws SQLException {
         List<Prenotazione> prenotazioni = new ArrayList<>();

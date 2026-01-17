@@ -40,5 +40,12 @@ public interface PrenotazioneDAO {
      */
     int cancellaPrenotazione(String numeroBiglietto, String username) throws SQLException;
 
+    /**
+     * Restituisce le prenotazioni di un utente che corrispondono ai criteri di ricerca.
+     *
+     * @param p l'oggetto Prenotazione con i criteri di ricerca
+     * @return una lista di prenotazioni che corrispondono ai criteri di ricerca
+     * @throws SQLException in caso di errore SQL
+     */
     List<Prenotazione> getPrenotazioniUtenteSearch(Prenotazione p) throws SQLException;
 }
